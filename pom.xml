@@ -1,0 +1,79 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>net.sf.michael-o</groupId>
+		<artifactId>michael-o-parent</artifactId>
+		<version>1</version>
+	</parent>
+
+	<groupId>net.sf.michael-o.dirctxsrc</groupId>
+	<artifactId>dircontextsource</artifactId>
+	<version>0.9-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<name>JNDI DirContextSource</name>
+	<description>JNDI DirContext source builder utility</description>
+	<url>http://dirctxsrc.sourceforge.net</url>
+	<inceptionYear>2012</inceptionYear>
+
+	<mailingLists>
+		<mailingList>
+			<name>General Discussion</name>
+			<post>general@discussion.dirctxsrc.p.re.sf.net</post>
+			<archive>http://sourceforge.net/p/dirctxsrc/discussion/general</archive>
+		</mailingList>
+	</mailingLists>
+
+	<scm>
+		<connection>scm:svn:http://svn.code.sf.net/p/dirctxsrc/code/trunk</connection>
+		<developerConnection>scm:svn:https://svn.code.sf.net/p/dirctxsrc/code/trunk</developerConnection>
+		<url></url>
+	</scm>
+	<issueManagement>
+		<system>SourceForge.net Tickets</system>
+		<url>http://sourceforge.net/p/dirctxsrc/tickets</url>
+	</issueManagement>
+
+	<dependencies>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.6</version>
+		</dependency>
+	</dependencies>
+	
+	<build>
+		<defaultGoal>package</defaultGoal>
+		<plugins>
+			<plugin>
+				<artifactId>maven-shade-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<filters>
+								<filter>
+									<artifact>commons-lang:commons-lang</artifact>
+									<includes>
+										<include>org/apache/commons/lang/StringUtils.class</include>
+									</includes>
+								</filter>
+							</filters>
+							<relocations>
+								<relocation>
+									<pattern>org.apache.commons.lang</pattern>
+									<shadedPattern>internal.org.apache.commons.lang</shadedPattern>
+								</relocation>
+							</relocations>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
