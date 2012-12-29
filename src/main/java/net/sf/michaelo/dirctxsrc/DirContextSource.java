@@ -13,20 +13,27 @@ import javax.naming.directory.InitialDirContext;
 import javax.security.auth.Subject;
 import javax.security.auth.login.LoginContext;
 import javax.security.auth.login.LoginException;
+import javax.sql.DataSource;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Validate;
 
 /**
  * A handy utility to create a {@link DirContext} with a fluent interface. It
  * has built-in support for anonymous and GSS-API with Kerberos 5
- * authentication. <br />
+ * authentication.<br />
  * <em>Note:</em> Make sure that your environment is well configured if you
  * intend to use GSS-API with Kerberos 5.
+ * <p>
+ * The basic idea is borrowed from {@link DataSource} where you get a database
+ * connection. Same does this class with directory contexts.
+ * </p>
  * <p>
  * A minimal example how to create a {@code DirContextSource}:
  * 
  * <pre>
- * DirContextSource.Builder builder = new DirContextSource.Builder(&quot;ldap://servername&quot;);
+ * DirContextSource.Builder builder = new DirContextSource.Builder(
+ * 		&quot;ldap://servername&quot;);
  * DirContextSource contextSource = builder.build();
  * DirContext context = contextSource.getDirContext();
  * // Perform operations
@@ -54,6 +61,12 @@ import org.apache.commons.lang.StringUtils;
  * A complete overview of all {@code DirContext} properties can be found <a
  * href= "http://docs.oracle.com/javase/1.5.0/docs/guide/jndi/jndi-ldap-gl.html"
  * >here</a>.
+ * 
+ * <p>
+ * An {@code IllegalStateException} is thrown by every property method if this
+ * builder has already been used to build a {@code DirContextSource}. In this
+ * case, create a new builder.
+ * </p>
  * 
  * @version $Id$
  */
@@ -103,13 +116,25 @@ public class DirContextSource {
 		 * Constructs a new builder for {@link DirContextSource} with anonymous
 		 * authentication.
 		 * 
-		 * @param url
-		 *            The URL or URLs separated by spaces of the directory
-		 *            server(s). It may contain a root DN.
+		 * @param urls
+		 *            The URL(s) of the directory server(s). It/they may contain
+		 *            a root DN.
+		 * @throws NullPointerException
+		 *             if {@code urls} is null
+		 * @throws IllegalArgumentException
+		 *             if {@code urls} is empty
 		 */
-		public Builder(String url) {
+		public Builder(String... urls) {
 			auth(Auth.NONE);
-			contextSource.env.put(Context.PROVIDER_URL, url);
+			url(urls);
+		}
+
+		private Builder url(String... urls) {
+			check();
+			Validate.notEmpty(urls, "Property 'urls' cannot be null/empty");
+			contextSource.env.put(Context.PROVIDER_URL,
+					StringUtils.join(urls, ' '));
+			return this;
 		}
 
 		/**
@@ -117,10 +142,13 @@ public class DirContextSource {
 		 * 
 		 * @param auth
 		 *            the auth to be used
+		 * @throws NullPointerException
+		 *             if {@code auth} is null
 		 * @return this builder
 		 */
 		public Builder auth(Auth auth) {
 			check();
+			Validate.notNull(auth, "Property 'auth' cannot be null");
 			contextSource.auth = auth;
 			contextSource.env.put(Context.SECURITY_AUTHENTICATION,
 					auth.getSecurityAuthName());
@@ -133,10 +161,16 @@ public class DirContextSource {
 		 * @param loginEntryName
 		 *            the login entry name which retrieves the GSS-API
 		 *            credential
+		 * @throws NullPointerException
+		 *             if {@code loginEntryName} is null
+		 * @throws IllegalArgumentException
+		 *             if {@code loginEntryName} is empty
 		 * @return this builder
 		 */
 		public Builder loginEntryName(String loginEntryName) {
 			check();
+			Validate.notEmpty(loginEntryName,
+					"Property 'loginEntryName' cannot be null/empty");
 			contextSource.loginEntryName = loginEntryName;
 			return this;
 		}
@@ -165,6 +199,10 @@ public class DirContextSource {
 		 * @param loginEntryName
 		 *            the login entry name which retrieves the GSS-API
 		 *            credential
+		 * @throws NullPointerException
+		 *             if {@code loginEntryName} is null
+		 * @throws IllegalArgumentException
+		 *             if {@code loginEntryName} is empty
 		 * @see #loginEntryName(String)
 		 * @return this builder
 		 */
@@ -178,10 +216,16 @@ public class DirContextSource {
 		 * 
 		 * @param contextFactory
 		 *            the context factory class name
+		 * @throws NullPointerException
+		 *             if {@code contextFactory} is null
+		 * @throws IllegalArgumentException
+		 *             if {@code contextFactory} is empty
 		 * @return this builder
 		 */
 		public Builder contextFactory(String contextFactory) {
 			check();
+			Validate.notEmpty(contextFactory,
+					"Property 'contextFactory' cannot be null/empty");
 			contextSource.env.put(Context.INITIAL_CONTEXT_FACTORY,
 					contextFactory);
 			return this;
@@ -191,12 +235,19 @@ public class DirContextSource {
 		 * Sets the object factories for this directory context.
 		 * 
 		 * @param objectFactories
-		 *            the objectFactories class name
+		 *            the objectFactories class names
+		 * @throws NullPointerException
+		 *             if {@code objectFactories} is null
+		 * @throws IllegalArgumentException
+		 *             if {@code objectFactories} is empty
 		 * @return this builder
 		 */
-		public Builder objectFactories(String objectFactories) {
+		public Builder objectFactories(String... objectFactories) {
 			check();
-			contextSource.env.put(Context.OBJECT_FACTORIES, objectFactories);
+			Validate.notEmpty(objectFactories,
+					"Property 'objectFactories' cannot be null/empty");
+			contextSource.env.put(Context.OBJECT_FACTORIES,
+					StringUtils.join(objectFactories, ':'));
 			return this;
 		}
 
@@ -228,7 +279,7 @@ public class DirContextSource {
 		}
 
 		/**
-		 * Sets the quality of protection with which the connection to the
+		 * Sets the quality of protection(s) with which the connection to the
 		 * directory server is secured. Valid values are {@code auth},
 		 * {@code auth-int}, and {@code auth-conf}. This only works with SASL
 		 * mechanisms which support this feature, e.g. Digest MD5 or GSS-API.
@@ -236,14 +287,20 @@ public class DirContextSource {
 		 * "http://docs.oracle.com/javase/jndi/tutorial/ldap/security/sasl.html#qop"
 		 * >here</a> for details.
 		 * 
-		 * @param qop
-		 *            The quality of protection of the connection. Multiple
-		 *            values may be passed as a comma-separated list.
+		 * @param qops
+		 *            the quality of protection(s) for this dir context
+		 *            connection
+		 * @throws NullPointerException
+		 *             if {@code qops} is null
+		 * @throws IllegalArgumentException
+		 *             if {@code qops} is empty
 		 * @return this builder
 		 */
-		public Builder qop(String qop) {
+		public Builder qop(String... qops) {
 			check();
-			contextSource.env.put("javax.security.sasl.qop", qop);
+			Validate.notEmpty(qops, "Property 'urls' cannot be null/empty");
+			contextSource.env.put("javax.security.sasl.qop",
+					StringUtils.join(qops, ','));
 			return this;
 		}
 
@@ -280,11 +337,15 @@ public class DirContextSource {
 		 * Redirects the LDAP debug output to a {@link PrintWriter}.
 		 * 
 		 * @param writer
-		 *            a print writer where debug output will be written to
+		 *            a {@code PrintWriter} where debug output will be written
+		 *            to
+		 * @throws NullPointerException
+		 *             if {@code qops} is null
 		 * @return this builder
 		 */
 		public Builder debug(PrintWriter writer) {
 			check();
+			Validate.notNull(writer, "Property 'writer' cannot be null");
 			contextSource.env.put("com.sun.jndi.ldap.trace.ber", writer);
 			return this;
 		}
@@ -295,10 +356,15 @@ public class DirContextSource {
 		 * @param retries
 		 *            The number of retries. This value must be a positive
 		 *            integer.
+		 * @throws IllegalArgumentException
+		 *             if {@code retries} is not a positive integer
 		 * @return this builder
 		 */
 		public Builder retries(int retries) {
 			check();
+			Validate.isTrue(retries > 0,
+					"Property 'retries' must be greater than zero but is ",
+					retries);
 			contextSource.retries = retries;
 			return this;
 		}
@@ -309,10 +375,15 @@ public class DirContextSource {
 		 * @param retryWait
 		 *            The wait time in milliseconds. This value must be a
 		 *            positive integer.
+		 * @throws IllegalArgumentException
+		 *             if {@code retryWait} is not a positive integer
 		 * @return this builder
 		 */
 		public Builder retryWait(int retryWait) {
 			check();
+			Validate.isTrue(retryWait > 0,
+					"Property 'retryWait' must be greater than zero but is ",
+					retryWait);
 			contextSource.retryWait = retryWait;
 			return this;
 		}
@@ -324,14 +395,19 @@ public class DirContextSource {
 		 * >here</a> for details.
 		 * 
 		 * @param attributes
-		 *            The attributes to be returned as byte array. Multiple
-		 *            values may be passed as a space-separated list.
+		 *            the attributes to be returned as byte array
+		 * @throws NullPointerException
+		 *             if {@code attributes} is null
+		 * @throws IllegalArgumentException
+		 *             if {@code attributes} is empty
 		 * @return this builder
 		 */
-		public Builder binaryAttributes(String attributes) {
+		public Builder binaryAttributes(String... attributes) {
 			check();
+			Validate.notEmpty(attributes,
+					"Property 'attributes' cannot be null/empty");
 			contextSource.env.put("java.naming.ldap.attributes.binary",
-					attributes);
+					StringUtils.join(attributes, ' '));
 			return this;
 		}
 
@@ -341,13 +417,18 @@ public class DirContextSource {
 		 * 
 		 * @param name
 		 *            name of the property
-		 * 
 		 * @param value
 		 *            value of the property
+		 * @throws NullPointerException
+		 *             if {@code name} is null
+		 * @throws IllegalArgumentException
+		 *             if {@code value} is empty
 		 * @return this builder
 		 */
 		public Builder additionalProperty(String name, Object value) {
 			check();
+			Validate.notEmpty(name,
+					"Additional property's name cannot be null/empty");
 			contextSource.env.put(name, value);
 			return this;
 		}
@@ -375,17 +456,17 @@ public class DirContextSource {
 			if (StringUtils.isEmpty((String) contextSource.env
 					.get(Context.PROVIDER_URL)))
 				throw new IllegalStateException(
-						"Builder incomplete: URL is empty");
+						"Builder incomplete: Property 'urls' is empty");
 
 			if (contextSource.auth == null)
 				throw new IllegalStateException(
-						"Builder incomplete: Auth scheme is not set");
+						"Builder incomplete: Property 'auth' is not set");
 
 			switch (contextSource.auth) {
 			case GSSAPI:
 				if (StringUtils.isEmpty(contextSource.loginEntryName))
 					throw new IllegalStateException(
-							"Builder incomplete: Login entry name is not set for auth scheme GSS-API");
+							"Builder incomplete: Property 'LoginEntryName' is empty for auth scheme GSS-API");
 				break;
 
 			default:

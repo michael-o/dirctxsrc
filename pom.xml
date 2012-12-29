@@ -38,9 +38,9 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>commons-lang</groupId>
-			<artifactId>commons-lang</artifactId>
-			<version>2.6</version>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.1</version>
 		</dependency>
 	</dependencies>
 	
@@ -58,16 +58,17 @@
 						<configuration>
 							<filters>
 								<filter>
-									<artifact>commons-lang:commons-lang</artifact>
+									<artifact>org.apache.commons:commons-lang3</artifact>
 									<includes>
-										<include>org/apache/commons/lang/StringUtils.class</include>
+										<include>org/apache/commons/lang3/StringUtils.class</include>
+										<include>org/apache/commons/lang3/Validate.class</include>
 									</includes>
 								</filter>
 							</filters>
 							<relocations>
 								<relocation>
-									<pattern>org.apache.commons.lang</pattern>
-									<shadedPattern>internal.org.apache.commons.lang</shadedPattern>
+									<pattern>org.apache.commons.lang3</pattern>
+									<shadedPattern>internal.org.apache.commons.lang3</shadedPattern>
 								</relocation>
 							</relocations>
 						</configuration>
