@@ -1,3 +1,21 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
 package net.sf.michaelo.dirctxsrc;
 
 import java.io.PrintWriter;
@@ -13,27 +31,28 @@ import javax.naming.directory.InitialDirContext;
 import javax.security.auth.Subject;
 import javax.security.auth.login.LoginContext;
 import javax.security.auth.login.LoginException;
-import javax.sql.DataSource;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 
 /**
- * A handy utility to create a {@link DirContext} with a fluent interface. It
- * has built-in support for anonymous and GSS-API with Kerberos 5
- * authentication.<br />
+ * A JNDI directory context factory returning ready-to-use {@link DirContext}
+ * objects. The basic idea is borrowed from {@link javax.sql.DataSource} where
+ * you get a database connection. Same does this class with directory contexts.
+ * 
+ * <p>
+ * This directory context source has built-in support for anonymous and GSS-API
+ * with Kerberos 5 authentication.<br />
  * <em>Note:</em> Make sure that your environment is well configured if you
  * intend to use GSS-API with Kerberos 5.
- * <p>
- * The basic idea is borrowed from {@link DataSource} where you get a database
- * connection. Same does this class with directory contexts.
  * </p>
+ * 
  * <p>
- * A minimal example how to create a {@code DirContextSource}:
+ * A minimal example how to create a {@code DirContextSource} with the supplied
+ * builder:
  * 
  * <pre>
- * DirContextSource.Builder builder = new DirContextSource.Builder(
- * 		&quot;ldap://servername&quot;);
+ * DirContextSource.Builder builder = new DirContextSource.Builder(&quot;ldap://servername&quot;);
  * DirContextSource contextSource = builder.build();
  * DirContext context = contextSource.getDirContext();
  * // Perform operations
@@ -62,16 +81,13 @@ import org.apache.commons.lang3.Validate;
  * href= "http://docs.oracle.com/javase/1.5.0/docs/guide/jndi/jndi-ldap-gl.html"
  * >here</a>.
  * 
- * <p>
- * An {@code IllegalStateException} is thrown by every property method if this
- * builder has already been used to build a {@code DirContextSource}. In this
- * case, create a new builder.
- * </p>
- * 
  * @version $Id$
  */
 public class DirContextSource {
 
+	/**
+	 * Enum containing all supported authentication mechanisms.
+	 */
 	public static enum Auth {
 
 		NONE {
@@ -105,7 +121,14 @@ public class DirContextSource {
 	}
 
 	/**
-	 * A builder to construct a {@link DirContextSource}.
+	 * A builder to construct a {@link DirContextSource} with a fluent
+	 * interface.
+	 * 
+	 * <p>
+	 * <em>Note</em>: An {@code IllegalStateException} is thrown if a property
+	 * is modified and this builder has already been used to build a
+	 * {@code DirContextSource}. In this case, create a new builder.
+	 * </p>
 	 */
 	public static final class Builder {
 
@@ -340,7 +363,7 @@ public class DirContextSource {
 		 *            a {@code PrintWriter} where debug output will be written
 		 *            to
 		 * @throws NullPointerException
-		 *             if {@code qops} is null
+		 *             if {@code writer} is null
 		 * @return this builder
 		 */
 		public Builder debug(PrintWriter writer) {
@@ -435,7 +458,8 @@ public class DirContextSource {
 
 		/**
 		 * Builds a {@code DirContextSource} and marks this builder as
-		 * non-modifiable for future use.
+		 * non-modifiable for future use. You may call this method as often as you like,
+		 * it will return a new {@code DirContextSource} on every call.
 		 * <p>
 		 * <em>Note</em>: Before returning a context source this method will
 		 * check whether the necessary set of properties for an authentication
@@ -449,7 +473,7 @@ public class DirContextSource {
 		 * </p>
 		 * 
 		 * @throws IllegalStateException
-		 *             thrown is necessary properties are not set
+		 *             thrown if necessary properties are not set
 		 * @return a {@code DirContextSource} object
 		 */
 		public DirContextSource build() {
@@ -584,7 +608,7 @@ public class DirContextSource {
 	 * context after all operations.
 	 * 
 	 * @return a {@code DirContext}
-	 * @throws NamingException
+	 * @throws javax.naming.NamingException
 	 *             thrown if a problem with the creation arises
 	 */
 	public DirContext getDirContext() throws NamingException {

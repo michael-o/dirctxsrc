@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>net.sf.michael-o</groupId>
 		<artifactId>michael-o-parent</artifactId>
-		<version>1</version>
+		<version>2-SNAPSHOT</version>
 	</parent>
 
 	<groupId>net.sf.michael-o.dirctxsrc</groupId>
@@ -14,7 +14,7 @@
 	<packaging>jar</packaging>
 
 	<name>JNDI DirContextSource</name>
-	<description>JNDI DirContext source builder utility</description>
+	<description>A JNDI DirContext factory which works very like DataSource returning ready-to-use DirContext objects</description>
 	<url>http://dirctxsrc.sourceforge.net</url>
 	<inceptionYear>2012</inceptionYear>
 
@@ -43,7 +43,7 @@
 			<version>3.1</version>
 		</dependency>
 	</dependencies>
-	
+
 	<build>
 		<defaultGoal>package</defaultGoal>
 		<plugins>
