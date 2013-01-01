@@ -14,7 +14,7 @@
 	<packaging>jar</packaging>
 
 	<name>JNDI DirContextSource</name>
-	<description>A JNDI DirContext factory which works very like DataSource returning ready-to-use DirContext objects</description>
+	<description>A JNDI DirContext factory which works very like DataSource returning ready-to-use DirContext objects.</description>
 	<url>http://dirctxsrc.sourceforge.net</url>
 	<inceptionYear>2012</inceptionYear>
 
