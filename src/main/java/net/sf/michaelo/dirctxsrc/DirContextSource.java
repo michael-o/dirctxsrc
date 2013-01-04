@@ -36,18 +36,18 @@ import org.apache.commons.lang3.Validate;
  * A JNDI directory context factory returning ready-to-use {@link DirContext}
  * objects. The basic idea is borrowed from {@link javax.sql.DataSource} where
  * you get a database connection. Same does this class with directory contexts.
- * 
+ *
  * <p>
  * This directory context source has built-in support for anonymous and GSS-API
  * with Kerberos 5 authentication.<br />
  * <em>Note:</em> Make sure that your environment is well configured if you
  * intend to use GSS-API with Kerberos 5.
  * </p>
- * 
+ *
  * <p>
  * A minimal example how to create a {@code DirContextSource} with the supplied
  * builder:
- * 
+ *
  * <pre>
  * DirContextSource.Builder builder = new DirContextSource.Builder(&quot;ldap://servername&quot;);
  * DirContextSource contextSource = builder.build();
@@ -55,9 +55,9 @@ import org.apache.commons.lang3.Validate;
  * // Perform operations
  * context.close();
  * </pre>
- * 
+ *
  * </p>
- * 
+ *
  * <p>
  * Before returning a {@code DirContext} the source will loop several times
  * until a connection has been established or the number of retries are
@@ -73,11 +73,11 @@ import org.apache.commons.lang3.Validate;
  * wait for 2000 ms between retries.</li>
  * </ol>
  * </p>
- * 
+ *
  * A complete overview of all {@code DirContext} properties can be found <a
  * href= "http://docs.oracle.com/javase/1.5.0/docs/guide/jndi/jndi-ldap-gl.html"
  * >here</a>.
- * 
+ *
  * @version $Id$
  */
 public class DirContextSource {
@@ -87,20 +87,18 @@ public class DirContextSource {
 	 */
 	public static enum Auth {
 
-		NONE {
-			@Override
-			String getSecurityAuthName() {
-				return "none";
-			}
-		},
-		GSSAPI {
-			@Override
-			String getSecurityAuthName() {
-				return "GSSAPI";
-			}
-		};
+		NONE("none"),
+		GSSAPI("GSSAPI");
 
-		abstract String getSecurityAuthName();
+		private String securityAuthName;
+
+		Auth(String securityAuthName) {
+			this.securityAuthName = securityAuthName;
+		}
+
+		String getSecurityAuthName() {
+			return securityAuthName;
+		}
 	}
 
 	private static final Logger logger = Logger
@@ -120,7 +118,7 @@ public class DirContextSource {
 	/**
 	 * A builder to construct a {@link DirContextSource} with a fluent
 	 * interface.
-	 * 
+	 *
 	 * <p>
 	 * <em>Note</em>: An {@code IllegalStateException} is thrown if a property
 	 * is modified and this builder has already been used to build a
@@ -135,7 +133,7 @@ public class DirContextSource {
 		/**
 		 * Constructs a new builder for {@link DirContextSource} with anonymous
 		 * authentication.
-		 * 
+		 *
 		 * @param urls
 		 *            The URL(s) of the directory server(s). It/they may contain
 		 *            a root DN.
@@ -159,7 +157,7 @@ public class DirContextSource {
 
 		/**
 		 * Sets the authentication scheme.
-		 * 
+		 *
 		 * @param auth
 		 *            the auth to be used
 		 * @throws NullPointerException
@@ -177,7 +175,7 @@ public class DirContextSource {
 
 		/**
 		 * Sets the login entry name for GSS-API authentication.
-		 * 
+		 *
 		 * @param loginEntryName
 		 *            the login entry name which retrieves the GSS-API
 		 *            credential
@@ -197,7 +195,7 @@ public class DirContextSource {
 
 		/**
 		 * Enables anonymous authentication.
-		 * 
+		 *
 		 * @return this builder
 		 */
 		public Builder anonymousAuth() {
@@ -206,7 +204,7 @@ public class DirContextSource {
 
 		/**
 		 * Enables GSS-API authentication with a default login entry name.
-		 * 
+		 *
 		 * @return this builder
 		 */
 		public Builder gssApiAuth() {
@@ -215,7 +213,7 @@ public class DirContextSource {
 
 		/**
 		 * Enables GSS-API authentication with a custom login entry name.
-		 * 
+		 *
 		 * @param loginEntryName
 		 *            the login entry name which retrieves the GSS-API
 		 *            credential
@@ -233,7 +231,7 @@ public class DirContextSource {
 
 		/**
 		 * Sets the context factory for this directory context.
-		 * 
+		 *
 		 * @param contextFactory
 		 *            the context factory class name
 		 * @throws NullPointerException
@@ -253,7 +251,7 @@ public class DirContextSource {
 
 		/**
 		 * Sets the object factories for this directory context.
-		 * 
+		 *
 		 * @param objectFactories
 		 *            the objectFactories class names
 		 * @throws NullPointerException
@@ -275,7 +273,7 @@ public class DirContextSource {
 		 * Enables the mutual authentication between client and directory
 		 * server. This only works with SASL mechanisms which support this
 		 * feature, e.g. GSS-API.
-		 * 
+		 *
 		 * @return this builder
 		 */
 		public Builder mutualAuth() {
@@ -286,9 +284,9 @@ public class DirContextSource {
 		 * Enables or disables the mutual authentication between client and
 		 * directory server. This only works with SASL mechanisms which support
 		 * this feature, e.g. GSS-API.
-		 * 
+		 *
 		 * @param mutualAuth
-		 *            the mutual authentication indication
+		 *            the mutual authentication flag
 		 * @return this builder
 		 */
 		public Builder mutualAuth(boolean mutualAuth) {
@@ -306,7 +304,7 @@ public class DirContextSource {
 		 * See <a href=
 		 * "http://docs.oracle.com/javase/jndi/tutorial/ldap/security/sasl.html#qop"
 		 * >here</a> for details.
-		 * 
+		 *
 		 * @param qops
 		 *            the quality of protection(s) for this dir context
 		 *            connection
@@ -327,7 +325,7 @@ public class DirContextSource {
 		/**
 		 * Enables the redirection of the LDAP debug output to
 		 * {@code System.err}.
-		 * 
+		 *
 		 * @see #debug(boolean)
 		 * @return this builder
 		 */
@@ -338,9 +336,9 @@ public class DirContextSource {
 		/**
 		 * Enables or disables the redirection of the LDAP debug output to
 		 * {@code System.err}.
-		 * 
+		 *
 		 * @param debug
-		 *            the debug indication
+		 *            the debug flag
 		 * @return this builder
 		 */
 		public Builder debug(boolean debug) {
@@ -355,7 +353,7 @@ public class DirContextSource {
 
 		/**
 		 * Redirects the LDAP debug output to a {@link PrintWriter}.
-		 * 
+		 *
 		 * @param writer
 		 *            a {@code PrintWriter} where debug output will be written
 		 *            to
@@ -372,7 +370,7 @@ public class DirContextSource {
 
 		/**
 		 * Sets the number or connection retries.
-		 * 
+		 *
 		 * @param retries
 		 *            The number of retries. This value must be a positive
 		 *            integer.
@@ -391,7 +389,7 @@ public class DirContextSource {
 
 		/**
 		 * Sets the wait interval between reconnections.
-		 * 
+		 *
 		 * @param retryWait
 		 *            The wait time in milliseconds. This value must be a
 		 *            positive integer.
@@ -413,7 +411,7 @@ public class DirContextSource {
 		 * instead of {@code String}. See <a href=
 		 * "http://docs.oracle.com/javase/1.5.0/docs/guide/jndi/jndi-ldap-gl.html#LDAPPROPS"
 		 * >here</a> for details.
-		 * 
+		 *
 		 * @param attributes
 		 *            the attributes to be returned as byte array
 		 * @throws NullPointerException
@@ -434,7 +432,7 @@ public class DirContextSource {
 		/**
 		 * Sets an additional property not available through the builder
 		 * interface.
-		 * 
+		 *
 		 * @param name
 		 *            name of the property
 		 * @param value
@@ -468,7 +466,7 @@ public class DirContextSource {
 		 * <li>GSS-API auth: The URL and a login entry name</li>
 		 * </ul>
 		 * </p>
-		 * 
+		 *
 		 * @throws IllegalStateException
 		 *             thrown if necessary properties are not set
 		 * @return a {@code DirContextSource} object
@@ -603,7 +601,7 @@ public class DirContextSource {
 	/**
 	 * Returns a ready-to-use {@code DirContext}. Do not forget to close the
 	 * context after all operations.
-	 * 
+	 *
 	 * @return a {@code DirContext}
 	 * @throws javax.naming.NamingException
 	 *             thrown if a problem with the creation arises
