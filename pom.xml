@@ -42,6 +42,11 @@
 		</mailingList>
 	</mailingLists>
 
+	<!-- Not inherited due to http://jira.codehaus.org/browse/MNG-2423 -->
+	<prerequisites>
+		<maven>2.2.1</maven>
+	</prerequisites>
+
 	<scm>
 		<connection>scm:svn:http://svn.code.sf.net/p/dirctxsrc/code/trunk</connection>
 		<developerConnection>scm:svn:https://svn.code.sf.net/p/dirctxsrc/code/trunk</developerConnection>
