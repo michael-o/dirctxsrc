@@ -135,6 +135,9 @@ public class DirContextSource {
 	 * interface.
 	 *
 	 * <p>
+	 * <em>Note</em>: This class is not thread-safe. Configure the builder
+	 * in your main thread, build the object and pass it on to your forked threads.
+	 * <br />
 	 * <em>Note</em>: An {@code IllegalStateException} is thrown if a property
 	 * is modified and this builder has already been used to build a
 	 * {@code DirContextSource}, simply create a new builder.
@@ -162,14 +165,11 @@ public class DirContextSource {
 		/**
 		 * Constructs a new builder for {@link DirContextSource} with anonymous
 		 * authentication.
-		 * <p>
-		 * <em>Note</em>: This class is not thread-safe. Configure the builder
-		 * in your main thread and pass the built object on to your forked threads.
-		 * </p>
 		 *
 		 * @param urls
-		 *            The URL(s) of the directory server(s). It/they may contain
-		 *            a root DN.
+		 *            The URLs of directory servers. They may contain root DNs.
+		 *            The connection routine iterates through all URLs/servers
+		 *            until one is reachable.
 		 * @throws NullPointerException
 		 *             if {@code urls} is null
 		 * @throws IllegalArgumentException
