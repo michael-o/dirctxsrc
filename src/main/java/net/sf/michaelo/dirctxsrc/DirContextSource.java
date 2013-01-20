@@ -18,7 +18,9 @@ package net.sf.michaelo.dirctxsrc;
 import java.io.OutputStream;
 import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
+import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.logging.Logger;
 
 import javax.naming.Context;
@@ -135,12 +137,17 @@ public class DirContextSource {
 	 * interface.
 	 *
 	 * <p>
-	 * <em>Note</em>: This class is not thread-safe. Configure the builder
-	 * in your main thread, build the object and pass it on to your forked threads.
-	 * <br />
-	 * <em>Note</em>: An {@code IllegalStateException} is thrown if a property
-	 * is modified and this builder has already been used to build a
-	 * {@code DirContextSource}, simply create a new builder.
+	 * <em>Notes:</em>
+	 * <ol>
+	 * <li>This class is not thread-safe. Configure the builder in your main
+	 * thread, build the object and pass it on to your forked threads.</li>
+	 * <li>An {@code IllegalStateException} is thrown if a property is modified
+	 * after this builder has already been used to build a {@code DirContextSource},
+	 * simply create a new builder in this case.</li>
+	 * <li>All passed arrays will be defensively copied and null/empty values
+	 * will be skipped except when all elements are invalid, an exception will
+	 * be raised.</li>
+	 * </ol>
 	 * </p>
 	 */
 	public static final class Builder {
@@ -166,25 +173,30 @@ public class DirContextSource {
 		 * Constructs a new builder for {@link DirContextSource} with anonymous
 		 * authentication.
 		 *
-		 * @param urls
-		 *            The URLs of directory servers. They may contain root DNs.
-		 *            The connection routine iterates through all URLs/servers
-		 *            until one is reachable.
+		 * <p><em>Note</em>: The default context factory 
+		 * {@code com.sun.jndi.ldap.LdapCtxFactory} will iterate through all
+		 * URLs/servers until the first one is reachable/available.
+		 * </p>
+		 * 
+		 * @param url
+		 *            The URL of a directory server. It may contain root DNs.
+		 * @param additionalUrls
+		 *            The URLs of additional directory servers. They may contain
+		 *            root DNs. (optional)
 		 * @throws NullPointerException
 		 *             if {@code urls} is null
 		 * @throws IllegalArgumentException
 		 *             if {@code urls} is empty
 		 */
-		public Builder(String... urls) {
+		public Builder(String url, String... additionalUrls) {
 			// Initialize default values first as mentioned in the class' JavaDoc
 			contextFactory("com.sun.jndi.ldap.LdapCtxFactory");
 			auth(Auth.NONE);
-			loginEntryName("DirContextSource");
 			retries(3);
 			retryWait(2000);
 			additionalProperties = new Hashtable<String, Object>();
 
-			urls(urls);
+			urls(url, additionalUrls);
 		}
 
 		/**
@@ -205,11 +217,39 @@ public class DirContextSource {
 			this.contextFactory = contextFactory;
 			return this;
 		}
+		
+		private String[] validateAndReturnStringArray(String name, String[] value) {
+			Validate.notEmpty(value, "Property '%s' cannot be null or empty", name);
+			
+			List<String> validatedElements = new ArrayList<String>();
+			for (String elem : value)
+				if (StringUtils.isNotEmpty(elem))
+					validatedElements.add(elem);
+			
+			Validate.notEmpty(validatedElements, "Property '%s' cannot be null or empty", name);
+			
+			return validatedElements.toArray(new String[validatedElements.size()]);
+		}
+		
+		private String validateAndReturnString(String name, String value) {
+			return Validate.notEmpty(value, "Property '%s' cannot be null or empty", name);
+		}
+		
+		private <T> T validateAndReturnObject(String name, T value) {
+			return Validate.notNull(value, "Property '%s' cannot be null", name);
+		}
 
-		private Builder urls(String... urls) {
+		private Builder urls(String url, String... additionalUrls) {
 			check();
-			Validate.notEmpty(urls, "Property 'urls' cannot be null or empty");
-			this.urls = urls;
+			String validatedUrl = validateAndReturnString("url", url);
+			List<String> validatedElements = new ArrayList<String>();
+			validatedElements.add(validatedUrl);
+			if(additionalUrls != null)
+				for (String elem : additionalUrls)
+					if (StringUtils.isNotEmpty(elem))
+						validatedElements.add(elem);
+				
+			this.urls = validatedElements.toArray(new String[validatedElements.size()]);
 			return this;
 		}
 
@@ -224,8 +264,7 @@ public class DirContextSource {
 		 */
 		public Builder auth(Auth auth) {
 			check();
-			Validate.notNull(auth, "Property 'auth' cannot be null");
-			this.auth = auth;
+			this.auth = validateAndReturnObject("auth", auth);
 			return this;
 		}
 
@@ -243,9 +282,7 @@ public class DirContextSource {
 		 */
 		public Builder loginEntryName(String loginEntryName) {
 			check();
-			Validate.notEmpty(loginEntryName,
-					"Property 'loginEntryName' cannot be null or empty");
-			this.loginEntryName = loginEntryName;
+			this.loginEntryName = validateAndReturnString("loginEntryName", loginEntryName);
 			return this;
 		}
 
@@ -264,7 +301,7 @@ public class DirContextSource {
 		 * @return this builder
 		 */
 		public Builder gssApiAuth() {
-			return auth(Auth.GSSAPI);
+			return auth(Auth.GSSAPI).loginEntryName("DirContextSource");
 		}
 
 		/**
@@ -298,9 +335,7 @@ public class DirContextSource {
 		 */
 		public Builder objectFactories(String... objectFactories) {
 			check();
-			Validate.notEmpty(objectFactories,
-					"Property 'objectFactories' cannot be null or empty");
-			this.objectFactories = objectFactories;
+			this.objectFactories = validateAndReturnStringArray("objectFactories", objectFactories);
 			return this;
 		}
 
@@ -350,8 +385,7 @@ public class DirContextSource {
 		 */
 		public Builder qops(String... qops) {
 			check();
-			Validate.notEmpty(qops, "Property 'urls' cannot be null or empty");
-			this.qops = qops;
+			this.qops = validateAndReturnStringArray("qops", qops);
 			return this;
 		}
 
@@ -392,9 +426,8 @@ public class DirContextSource {
 		 */
 		public Builder debug(OutputStream stream) {
 			check();
-			Validate.notNull(stream, "Property 'stream' cannot be null");
-			debug();
-			this.debugStream = stream;
+			this.debugStream = validateAndReturnObject("stream", stream);
+			this.debug = true;
 			return this;
 		}
 
@@ -452,9 +485,7 @@ public class DirContextSource {
 		 */
 		public Builder binaryAttributes(String... attributes) {
 			check();
-			Validate.notEmpty(attributes,
-					"Property 'attributes' cannot be null or empty");
-			this.binaryAttributes = attributes;
+			this.binaryAttributes = validateAndReturnStringArray("binaryAttributes", attributes);
 			return this;
 		}
 
@@ -483,12 +514,18 @@ public class DirContextSource {
 		/**
 		 * Builds a {@code DirContextSource} and marks this builder as
 		 * non-modifiable for future use. You may call this method as often as
-		 * you like, it will return a new {@code DirContextSource} instance
-		 * on every call.
-		 *
+		 * you like, it will return a new {@code DirContextSource} instance on
+		 * every call.
+		 * 
+		 * @throws IllegalStateException
+		 *             if a combination of necessary attributes is not set
 		 * @return a {@code DirContextSource} object
 		 */
 		public DirContextSource build() {
+			
+			if (auth == Auth.GSSAPI && StringUtils.isEmpty(loginEntryName))
+				throw new IllegalStateException("Auth 'GSS-API' is set but no login entry name configured");
+			
 			DirContextSource contextSource = new DirContextSource(this);
 			done = true;
 
@@ -550,8 +587,6 @@ public class DirContextSource {
 					});
 
 			lc.logout();
-		} catch (PrivilegedActionException e) {
-			throw (NamingException) e.getException();
 		} catch (LoginException e) {
 			NamingException ne = new NamingException(e.getMessage());
 			ne.initCause(e);
@@ -560,6 +595,8 @@ public class DirContextSource {
 			NamingException ne = new NamingException(e.getMessage());
 			ne.initCause(e);
 			throw ne;
+		} catch (PrivilegedActionException e) {
+			throw (NamingException) e.getException();
 		}
 
 		return context;
