@@ -69,6 +69,7 @@
 			<version>4.10</version>
 			<scope>test</scope>
 		</dependency>
+		<!-- Not directly used, rather abused as a dependency aggregator for JUnit tests -->
 		<dependency>
 			<groupId>org.apache.directory.server</groupId>
 			<artifactId>apacheds-core-integ</artifactId>
