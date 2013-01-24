@@ -1,4 +1,4 @@
-~~ Copyright 2012 Michael Osipov
+~~ Copyright 2013 Michael Osipov
 ~~
 ~~ Licensed under the Apache License, Version 2.0 (the "License");
 ~~ you may not use this file except in compliance with the License.
@@ -19,10 +19,25 @@
                             ----------------------
                                Michael Osipov
                             ----------------------
-                                 2013-01-xx
+                                 2013-01-13
                             ----------------------
-#macro(property $property)${project.properties.getProperty($property)}#end
+#macro(property $property)${project.properties.get($property)}#end
 
-Title goes here...
+User guide
 
   This library requires Java #property("maven.compiler.target") run.
+
+* Basic example
+
+
+* Advanced example
+
+  Too hard
+
+* Authentication
+
+  Yes!
+
+* Logging
+
+  Yes!
