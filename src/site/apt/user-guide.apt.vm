@@ -38,7 +38,7 @@ import javax.naming.directory.DirContext;
 DirContextSource.Builder builder = new DirContextSource.Builder("ldap://hostname");
 DirContextSource contextSource = builder.build();
 // try and catch block omitted for the sake of brevity,
-// handle NamingException as appropriate 
+// handle NamingException as appropriate
 DirContext context = contextSource.getDirContext();
 // Perform operations
 context.close();
@@ -64,7 +64,7 @@ builder.retries(5).retryWait(5000);
 
 DirContextSource contextSource = builder.build();
 // try and catch block omitted for the sake of brevity,
-// handle NamingException as appropriate 
+// handle NamingException as appropriate
 DirContext context = contextSource.getDirContext();
 // Perform operations
 context.close();
@@ -75,10 +75,10 @@ context.close();
 
   The <<<DirContextSource>>> supports two types of authentication mechanisms,
   none/anonymous and GSS-API with Kerberos 5.
-  
+
     [Note] Other mechanisms are not directly supported because I never needed
            them. If you need any, please file a {{{./issue-tracking.html}ticket}}.
-  
+
   * <Anonymous> auth: works out of the box, the builder is configured for this
     mechanism by default.
 
@@ -91,7 +91,7 @@ context.close();
 builder.gssApiAuth();
 [...]
 +--------------
-    
+
     The above example presumes that you have configured your JAAS login file with
     the default login entry name <<<DirContentSource>>>. If you prefer an alternative
     name configure as follows:
@@ -100,12 +100,12 @@ builder.gssApiAuth();
 [...]
 builder.gssApiAuth("MyAlternativeName");
 [...]
-+--------------    
-  
++--------------
+
   There are a few more options for this authentication mechanism, like mutual auth
   or auth integrity and/or privacy protection. See the builder's {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}JavaDoc}}
-  for more details. 
-  
+  for more details.
+
   []
 
 * Logging
