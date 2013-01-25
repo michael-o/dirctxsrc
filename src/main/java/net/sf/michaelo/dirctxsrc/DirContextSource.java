@@ -52,6 +52,7 @@ import org.apache.commons.lang3.Validate;
  * <pre>
  * DirContextSource.Builder builder = new DirContextSource.Builder(&quot;ldap://hostname&quot;);
  * DirContextSource contextSource = builder.build();
+ * // try and catch block omitted for the sake of brevity, handle NamingException as appropriate
  * DirContext context = contextSource.getDirContext();
  * // Perform operations
  * context.close();
