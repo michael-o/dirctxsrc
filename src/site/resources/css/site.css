@@ -16,9 +16,20 @@
 .nav-header {
 	text-transform: none;	
 }
-/*
+/* TODO File tickets in Fluido Skin's Jira for several deficiencies */
+
 div.source {
-	margin-left: 7px;
 	margin-right: 7px;
 }
-*/
+
+div.section > div.source {
+	margin-left: 7px;
+}
+
+pre.prettyprint {
+	padding: 5px;
+}
+
+.section li > p {
+	margin-left: 0px;
+}
