@@ -59,9 +59,9 @@
 
 	<distributionManagement>
 		<site>
-			<id>sourceforge.net</id>
+			<id>dirctxsrc.sf.net</id>
 			<name>SourceForge.net Project Web</name>
-			<url>sftp://web.sourceforge.net/home/project-web/dirctxsrc/htdocs</url>
+			<url>scp://shell.sourceforge.net/home/project-web/dirctxsrc/htdocs</url>
 		</site>
 	</distributionManagement>
 
