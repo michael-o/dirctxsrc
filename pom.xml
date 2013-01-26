@@ -57,6 +57,14 @@
 		<url>http://sourceforge.net/p/dirctxsrc/tickets</url>
 	</issueManagement>
 
+	<distributionManagement>
+		<site>
+			<id>sourceforge.net</id>
+			<name>SourceForge.net Project Web</name>
+			<url>sftp://web.sourceforge.net/home/project-web/dirctxsrc/htdocs</url>
+		</site>
+	</distributionManagement>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
