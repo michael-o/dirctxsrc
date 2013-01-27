@@ -157,7 +157,7 @@
 						<artifactId>maven-assembly-plugin</artifactId>
 						<executions>
 							<execution>
-								<id>build-assemblies</id>
+								<id>build-src-assembly</id>
 								<phase>package</phase>
 								<goals>
 									<goal>single</goal>
@@ -166,6 +166,18 @@
 									<attach>false</attach>
 									<descriptors>
 										<descriptor>src/assembly/src.xml</descriptor>
+									</descriptors>
+								</configuration>
+							</execution>
+							<execution>
+								<id>build-bin-assembly</id>
+								<phase>site</phase>
+								<goals>
+									<goal>single</goal>
+								</goals>
+								<configuration>
+									<attach>false</attach>
+									<descriptors>
 										<descriptor>src/assembly/bin.xml</descriptor>
 									</descriptors>
 								</configuration>
@@ -198,14 +210,28 @@
 						<artifactId>wagon-maven-plugin</artifactId>
 						<executions>
 							<execution>
-								<id>upload-sourceforge-release-assemblies</id>
+								<id>upload-sourceforge-release-src-assembly</id>
 								<phase>deploy</phase>
 								<goals>
 									<goal>upload</goal>
 								</goals>
 								<configuration>
 									<fromDir>${project.build.directory}</fromDir>
-									<includes>${project.artifactId}-${project.version}-bin.*,${project.artifactId}-${project.version}-src.*</includes>
+									<includes>${project.artifactId}-${project.version}-src.*</includes>
+									<serverId>sourceforge.net</serverId>
+									<url>sftp://frs.sourceforge.net/home/frs/project/dirctxsrc</url>
+									<toDir>${project.version}</toDir>
+								</configuration>
+							</execution>
+							<execution>
+								<id>upload-sourceforge-release-bin-assembly</id>
+								<phase>site-deploy</phase>
+								<goals>
+									<goal>upload</goal>
+								</goals>
+								<configuration>
+									<fromDir>${project.build.directory}</fromDir>
+									<includes>${project.artifactId}-${project.version}-bin.*</includes>
 									<serverId>sourceforge.net</serverId>
 									<url>sftp://frs.sourceforge.net/home/frs/project/dirctxsrc</url>
 									<toDir>${project.version}</toDir>
