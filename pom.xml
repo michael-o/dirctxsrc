@@ -173,12 +173,33 @@
 						</executions>
 					</plugin>
 					<plugin>
+						<artifactId>maven-resources-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>prepare-sourceforge-release-files</id>
+								<phase>process-resources</phase>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${project.build.directory}/sf-release</outputDirectory>
+									<resources>
+										<resource>
+											<directory>src/sf-release</directory>
+											<filtering>true</filtering>
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
 						<groupId>org.codehaus.mojo</groupId>
 						<artifactId>wagon-maven-plugin</artifactId>
 						<version>1.0-beta-4</version>
 						<executions>
 							<execution>
-								<id>upload-assemblies-frs</id>
+								<id>upload-sourceforge-release-assemblies</id>
 								<phase>deploy</phase>
 								<goals>
 									<goal>upload</goal>
@@ -186,6 +207,19 @@
 								<configuration>
 									<fromDir>${project.build.directory}</fromDir>
 									<includes>${project.artifactId}-${project.version}-bin.*,${project.artifactId}-${project.version}-src.*</includes>
+									<serverId>sourceforge.net</serverId>
+									<url>sftp://frs.sourceforge.net/home/frs/project/dirctxsrc</url>
+									<toDir>${project.version}</toDir>
+								</configuration>
+							</execution>
+							<execution>
+								<id>upload-sourceforge-release-files</id>
+								<phase>deploy</phase>
+								<goals>
+									<goal>upload</goal>
+								</goals>
+								<configuration>
+									<fromDir>${project.build.directory}/sf-release</fromDir>
 									<serverId>sourceforge.net</serverId>
 									<url>sftp://frs.sourceforge.net/home/frs/project/dirctxsrc</url>
 									<toDir>${project.version}</toDir>
