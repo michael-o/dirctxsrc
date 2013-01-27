@@ -141,9 +141,6 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-release-plugin</artifactId>
-				<configuration>
-					<arguments combine.children="append">-Psourceforge-release</arguments>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>
