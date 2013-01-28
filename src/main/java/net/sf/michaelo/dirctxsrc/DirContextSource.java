@@ -122,8 +122,8 @@ public class DirContextSource {
 		if(builder.objectFactories != null)
 			env.put(Context.OBJECT_FACTORIES, StringUtils.join(builder.objectFactories, ':'));
 		env.put("javax.security.sasl.server.authentication", Boolean.toString(builder.mutualAuth));
-		if(builder.qops != null)
-			env.put("javax.security.sasl.qop", StringUtils.join(builder.qops, ','));
+		if(builder.qop != null)
+			env.put("javax.security.sasl.qop", StringUtils.join(builder.qop, ','));
 		if(builder.debug)
 			env.put("com.sun.jndi.ldap.trace.ber", builder.debugStream);
 		retries = builder.retries;
@@ -160,7 +160,7 @@ public class DirContextSource {
 		private String loginEntryName;
 		private String[] objectFactories;
 		private boolean mutualAuth;
-		private String[] qops;
+		private String[] qop;
 		private boolean debug;
 		private OutputStream debugStream;
 		private int retries;
@@ -179,17 +179,15 @@ public class DirContextSource {
 		 * URLs/servers until the first one is reachable/available.
 		 * </p>
 		 * 
-		 * @param url
-		 *            The URL of a directory server. It may contain root DNs.
-		 * @param additionalUrls
-		 *            The URLs of additional directory servers. They may contain
-		 *            root DNs. (optional)
+		 * @param urls
+		 *            The URL(s) of a directory server. It/they may contain root
+		 *            DNs.
 		 * @throws NullPointerException
 		 *             if {@code urls} is null
 		 * @throws IllegalArgumentException
 		 *             if {@code urls} is empty
 		 */
-		public Builder(String url, String... additionalUrls) {
+		public Builder(String... urls) {
 			// Initialize default values first as mentioned in the class' JavaDoc
 			contextFactory("com.sun.jndi.ldap.LdapCtxFactory");
 			auth(Auth.NONE);
@@ -197,7 +195,7 @@ public class DirContextSource {
 			retryWait(2000);
 			additionalProperties = new Hashtable<String, Object>();
 
-			urls(url, additionalUrls);
+			urls(urls);
 		}
 
 		/**
@@ -240,17 +238,9 @@ public class DirContextSource {
 			return Validate.notNull(value, "Property '%s' cannot be null", name);
 		}
 
-		private Builder urls(String url, String... additionalUrls) {
+		private Builder urls(String... urls) {
 			check();
-			String validatedUrl = validateAndReturnString("url", url);
-			List<String> validatedElements = new ArrayList<String>();
-			validatedElements.add(validatedUrl);
-			if(additionalUrls != null)
-				for (String elem : additionalUrls)
-					if (StringUtils.isNotEmpty(elem))
-						validatedElements.add(elem);
-				
-			this.urls = validatedElements.toArray(new String[validatedElements.size()]);
+			this.urls = validateAndReturnStringArray("urls", urls);
 			return this;
 		}
 
@@ -367,26 +357,27 @@ public class DirContextSource {
 		}
 
 		/**
-		 * Sets the quality of protection(s) with which the connection to the
-		 * directory server is secured. Valid values are {@code auth},
-		 * {@code auth-int}, and {@code auth-conf}. This only works with SASL
-		 * mechanisms which support this feature, e.g., Digest MD5 or GSS-API.
+		 * Sets the quality of protection in preference order with which the
+		 * connection to the directory server is secured. The first negotiated
+		 * quality is used. Valid values are {@code auth}, {@code auth-int}, and
+		 * {@code auth-conf}. This only works with SASL mechanisms which support
+		 * this feature, e.g., Digest MD5 or GSS-API.
 		 * See <a href=
 		 * "http://docs.oracle.com/javase/jndi/tutorial/ldap/security/sasl.html#qop"
 		 * >here</a> for details.
 		 *
-		 * @param qops
-		 *            the quality of protection(s) for this dir context
+		 * @param qop
+		 *            the quality of protection for this dir context
 		 *            connection
 		 * @throws NullPointerException
-		 *             if {@code qops} is null
+		 *             if {@code qop} is null
 		 * @throws IllegalArgumentException
-		 *             if {@code qops} is empty
+		 *             if {@code qop} is empty
 		 * @return this builder
 		 */
-		public Builder qops(String... qops) {
+		public Builder qop(String... qop) {
 			check();
-			this.qops = validateAndReturnStringArray("qops", qops);
+			this.qop = validateAndReturnStringArray("qop", qop);
 			return this;
 		}
 

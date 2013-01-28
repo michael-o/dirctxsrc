@@ -137,7 +137,7 @@ public class DirContextSourceAnonAuthTest {
 	public void anonAuthFullyConfigured() throws NamingException {
 		DirContextSource.Builder builder = new DirContextSource.Builder(
 				"ldap://localhost:11389");
-		builder.debug().binaryAttributes("objectSid").qops("auth")
+		builder.debug().binaryAttributes("objectSid").qop("auth")
 				.objectFactories("net.sf.michaelo.dirctxsrc.NoOpFactory");
 		DirContextSource contextSource = builder.build();
 

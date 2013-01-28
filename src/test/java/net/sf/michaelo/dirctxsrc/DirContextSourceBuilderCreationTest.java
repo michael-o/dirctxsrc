@@ -22,19 +22,18 @@ import org.junit.Test;
 public class DirContextSourceBuilderCreationTest {
 
 	@Test(expected = NullPointerException.class)
-	public void nullUrl() {
-		new DirContextSource.Builder(null);
+	public void nullUrls() {
+		new DirContextSource.Builder((String[]) null);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void emptyUrl() {
-		new DirContextSource.Builder("");
+	public void emptyUrls() {
+		new DirContextSource.Builder(new String[0]);
 	}
-
-	@Test
-	public void nullAdditionalUrlsIgnored() {
-		Assert.assertNotNull(new DirContextSource.Builder("ldap:///",
-				(String[]) null));
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void emptyUrls2() {
+		new DirContextSource.Builder("");
 	}
 
 	@Test

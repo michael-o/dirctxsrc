@@ -91,7 +91,7 @@ public class DirContextSourceBuilderConfigurationTest {
 
 	@Test
 	public void configureQops() {
-		assertNotNull(newInstance().qops("auth-int", "auth-conf"));
+		assertNotNull(newInstance().qop("auth-int", "auth-conf"));
 	}
 
 	@Test
