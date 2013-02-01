@@ -37,10 +37,10 @@ import org.apache.commons.lang3.math.NumberUtils;
  * 
  * @since 0.10
  * @version $Id$
- *
+ * 
  */
 public class DirContextSourceFactory implements ObjectFactory {
-	
+
 	protected static final String SPLIT_CHARS = ", ";
 
 	protected static final String PROP_CONTEXT_FACTORY = "contextFactory";
@@ -55,16 +55,20 @@ public class DirContextSourceFactory implements ObjectFactory {
 	protected static final String PROP_RETRY_WAIT = "retryWait";
 	protected static final String PROP_BINARY_ATTRIBUTES = "binaryAttributes";
 	protected static final String PROP_ADDITIONAL_PROPERTIES = "additionalProperties";
-	
 
-	protected static final List<String> PROPERTIES_NAMES = Collections.unmodifiableList(Arrays.asList(new String[] {
-			PROP_CONTEXT_FACTORY, PROP_URLS, PROP_AUTH, PROP_LOGIN_ENTRY_NAME, PROP_OBJECT_FACTORIES, PROP_MUTUAL_AUTH,
-			PROP_QOP, PROP_DEBUG, PROP_RETRIES, PROP_RETRY_WAIT, PROP_BINARY_ATTRIBUTES, PROP_ADDITIONAL_PROPERTIES }));
+	protected static final List<String> PROPERTIES_NAMES = Collections
+			.unmodifiableList(Arrays.asList(new String[] {
+					PROP_CONTEXT_FACTORY, PROP_URLS, PROP_AUTH,
+					PROP_LOGIN_ENTRY_NAME, PROP_OBJECT_FACTORIES,
+					PROP_MUTUAL_AUTH, PROP_QOP, PROP_DEBUG, PROP_RETRIES,
+					PROP_RETRY_WAIT, PROP_BINARY_ATTRIBUTES,
+					PROP_ADDITIONAL_PROPERTIES }));
 
 	protected final Properties properties = new Properties();
 
 	@Override
-	public Object getObjectInstance(Object obj, Name name, Context ctx, Hashtable<?, ?> environment) throws Exception {
+	public Object getObjectInstance(Object obj, Name name, Context ctx,
+			Hashtable<?, ?> environment) throws Exception {
 
 		if ((obj == null) || !(obj instanceof Reference))
 			return null;
@@ -82,16 +86,18 @@ public class DirContextSourceFactory implements ObjectFactory {
 		}
 
 		String str = getProperty(PROP_URLS);
-		DirContextSource.Builder builder = new DirContextSource.Builder(StringUtils.split(str, SPLIT_CHARS));
+		DirContextSource.Builder builder = new DirContextSource.Builder(
+				StringUtils.split(str, SPLIT_CHARS));
 
 		str = getProperty(PROP_CONTEXT_FACTORY);
 		if (StringUtils.isNotEmpty(str))
 			builder.contextFactory(str);
-		
+
 		str = getProperty(PROP_AUTH);
 		if (StringUtils.isNotEmpty(str))
-			builder.auth(DirContextSource.Auth.valueOf(str.toUpperCase(Locale.ENGLISH)));
-		
+			builder.auth(DirContextSource.Auth.valueOf(str
+					.toUpperCase(Locale.ENGLISH)));
+
 		str = getProperty(PROP_LOGIN_ENTRY_NAME);
 		if (StringUtils.isNotEmpty(str))
 			builder.loginEntryName(str);
@@ -102,38 +108,41 @@ public class DirContextSourceFactory implements ObjectFactory {
 		str = getProperty(PROP_QOP);
 		if (StringUtils.isNotEmpty(str))
 			builder.qop(StringUtils.split(str, SPLIT_CHARS));
-		
+
 		str = getProperty(PROP_DEBUG);
 		builder.debug(BooleanUtils.toBoolean(str));
 
 		str = getProperty(PROP_RETRIES);
 		if (StringUtils.isNotEmpty(str)) {
-			if(NumberUtils.isNumber(str))
+			if (NumberUtils.isNumber(str))
 				builder.retries(NumberUtils.toInt(str));
 			else
-				throw new IllegalArgumentException("Property 'retries' must be a number");
+				throw new IllegalArgumentException(
+						"Property 'retries' must be a number");
 		}
 
 		str = getProperty(PROP_RETRY_WAIT);
 		if (StringUtils.isNotEmpty(str)) {
-			if(NumberUtils.isNumber(str))
+			if (NumberUtils.isNumber(str))
 				builder.retryWait((NumberUtils.toInt(str)));
 			else
-				throw new IllegalArgumentException("Property 'retryWait' must be a number");
+				throw new IllegalArgumentException(
+						"Property 'retryWait' must be a number");
 		}
 
 		str = getProperty(PROP_BINARY_ATTRIBUTES);
 		if (StringUtils.isNotEmpty(str))
 			builder.binaryAttributes(StringUtils.split(str, SPLIT_CHARS));
-		
+
 		str = getProperty(PROP_ADDITIONAL_PROPERTIES);
 		if (StringUtils.isNotEmpty(str)) {
 			String[] additionalProperties = StringUtils.split(str, ';');
 			String[] splittedAdditionalProperty;
 			for (String additionalProperty : additionalProperties) {
-				splittedAdditionalProperty = StringUtils.split(additionalProperty, "=");
-				builder.additionalProperty(splittedAdditionalProperty[0], splittedAdditionalProperty[1]);
-				
+				splittedAdditionalProperty = StringUtils.split(
+						additionalProperty, "=");
+				builder.additionalProperty(splittedAdditionalProperty[0],
+						splittedAdditionalProperty[1]);
 			}
 		}
 

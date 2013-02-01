@@ -23,6 +23,9 @@
   <Listener className="org.apache.catalina.mbeans.GlobalResourcesLifecycleListener" />
 
   <GlobalNamingResources>
+  	<Resource name="ldap/apacheds" type="net.sf.michaelo.dirctxsrc.DirContextSource"
+  		factory="net.sf.michaelo.dirctxsrc.DirContextSourceFactory"
+  		urls="ldap://localhost:10389" />
   </GlobalNamingResources>
 
   <Service name="Catalina">

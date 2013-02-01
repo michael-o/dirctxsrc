@@ -16,5 +16,5 @@
   limitations under the License.
 -->
 <Context>
-    <WatchedResource>WEB-INF/web.xml</WatchedResource>
+	<WatchedResource>WEB-INF/web.xml</WatchedResource>
 </Context>
