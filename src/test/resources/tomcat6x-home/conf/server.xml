@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
   Licensed to the Apache Software Foundation (ASF) under one or more
   contributor license agreements.  See the NOTICE file distributed with
@@ -15,9 +15,9 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<Server port="28005" shutdown="SHUTDOWN">
+<Server port="28885" shutdown="SHUTDOWN">
 
-  <!-- <Listener className="org.apache.catalina.core.JasperListener" />  -->
+  <Listener className="org.apache.catalina.core.JasperListener" />
   <Listener className="org.apache.catalina.core.JreMemoryLeakPreventionListener" />
   <Listener className="org.apache.catalina.mbeans.ServerLifecycleListener" />
   <Listener className="org.apache.catalina.mbeans.GlobalResourcesLifecycleListener" />
@@ -25,12 +25,17 @@
   <GlobalNamingResources>
   	<Resource name="ldap/apacheds" type="net.sf.michaelo.dirctxsrc.DirContextSource"
   		factory="net.sf.michaelo.dirctxsrc.DirContextSourceFactory"
-  		urls="ldap://localhost:10389" />
+  		urls="ldap://localhost:11389" />
+  		
+  	<Resource name="ldap/dead" type="net.sf.michaelo.dirctxsrc.DirContextSource"
+  		factory="net.sf.michaelo.dirctxsrc.DirContextSourceFactory"
+  		urls="ldap://localhost:11390" auth="none" qop="auth-conf" mutualAuth="true"
+  		debug="true" retries="5" retryWait="5000" binaryAttributes="objectSid certificate" />
   </GlobalNamingResources>
 
   <Service name="Catalina">
   
-    <Connector port="28080" protocol="HTTP/1.1" redirectPort="28443" />
+    <Connector port="28888" protocol="HTTP/1.1" redirectPort="28443" />
 
     <Engine name="Catalina" defaultHost="localhost">
 
