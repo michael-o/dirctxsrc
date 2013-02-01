@@ -95,6 +95,24 @@
 			<version>1.6.6</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>catalina</artifactId>
+			<version>6.0.35</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>juli</artifactId>
+			<version>6.0.35</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>coyote</artifactId>
+			<version>6.0.35</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -115,6 +133,8 @@
 									<includes>
 										<include>org/apache/commons/lang3/StringUtils.class</include>
 										<include>org/apache/commons/lang3/Validate.class</include>
+										<include>org/apache/commons/lang3/BooleanUtils.class</include>
+										<include>org/apache/commons/lang3/math/NumberUtils.class</include>
 									</includes>
 								</filter>
 							</filters>
