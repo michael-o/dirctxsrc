@@ -38,7 +38,7 @@ import javax.naming.directory.DirContext;
 DirContextSource.Builder builder = new DirContextSource.Builder("ldap://hostname");
 DirContextSource contextSource = builder.build();
 // try and catch block omitted for the sake of brevity,
-// handle NamingException as appropriate
+// handle NamingException appropriately
 DirContext context = contextSource.getDirContext();
 // Perform operations
 context.close();
@@ -64,7 +64,7 @@ builder.retries(5).retryWait(5000);
 
 DirContextSource contextSource = builder.build();
 // try and catch block omitted for the sake of brevity,
-// handle NamingException as appropriate
+// handle NamingException appropriately
 DirContext context = contextSource.getDirContext();
 // Perform operations
 context.close();

@@ -1,0 +1,161 @@
+~~ Copyright 2013 Michael Osipov
+~~
+~~ Licensed under the Apache License, Version 2.0 (the "License");
+~~ you may not use this file except in compliance with the License.
+~~ You may obtain a copy of the License at
+~~
+~~     http://www.apache.org/licenses/LICENSE-2.0
+~~
+~~ Unless required by applicable law or agreed to in writing, software
+~~ distributed under the License is distributed on an "AS IS" BASIS,
+~~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+~~ See the License for the specific language governing permissions and
+~~ limitations under the License.
+
+~~ $Id$
+
+                            ----------------------
+                         Using DirContextSourceFactory
+                            ----------------------
+                               Michael Osipov
+                            ----------------------
+                                 2013-02-02
+                            ----------------------
+
+Using DirContextSourceFactory
+
+  Ever wondered why it is a snap to use a JDBC <<<DataSource>>> in a servlet
+  container but not a JNDI <<<DirContext>>>? Now it is!
+  
+  Most containers support resource management for a webapp through factories by
+  implementing {{{http://docs.oracle.com/javase/6/docs/api/javax/naming/spi/ObjectFactory.html}<<<javax.naming.spi.ObjectFactory>>>}}.
+  This factory implements this interface and allows you to use the <<<DirContextSource>>>
+  in your webapp but fully managed by your container.
+  
+    [Notice] I haven't tried this in any other container except Apache Tomcat
+             6.0.x but this should everywhere JNDI and the <<<InitialContent>>>
+             are supported. I would be glad to hear other success stories.
+    
+  Before using this factory and the context source, make sure that the artifact
+  is in the class path of your Tomcat installation, i.e., in <<<$CATALINA_BASE/lib/${project.artifactId}-${project.version}.jar>>>.
+
+* Resource declaration examples
+
+  Generally, you have two options to declare a resource in Apache Tomcat. As a
+  global resource and then linking into the webapps or as a local resource
+  within an application.
+  
+    [Tip] There is a complete JUnit test case which bootstraps an Apache DS and 
+          a Tomcat instance, loads a webapp, retrieves a context source and
+          writes out a few attributes to the response. See
+          class {{{./xref-test/net/sf/michaelo/dirctxsrc/DirContextSourceFactoryTest.html}<<<DirContextSourceFactoryTest>>>}}
+          and directory {{{http://sourceforge.net/p/dirctxsrc/code/HEAD/tree/tags/${project.version}/src/test/resources/tomcat6x-home}<<<src/test/resources/tomcat6x-home>>>}}.
+  
+** As a global resource
+
+  Navigate in your in your <<<server.xml>>> to <<</Server/GlobalNamingResources>>>
+  and add the following element:
+
++----------------------------
+[...]
+<GlobalNamingResources>
+  <!-- Add this -->
+  <Resource name="ldap/name" type="net.sf.michaelo.dirctxsrc.DirContextSource"
+    factory="net.sf.michaelo.dirctxsrc.DirContextSourceFactory"
+    urls="ldap://hostname ldap://another-hostname" />
+</GlobalNamingResources>
+[...]
++----------------------------
+
+  Now this resource must be linked to your application(s). Open or create your
+  app's <<<context.xml>>> and add:
+
++----------------------------
+<Context>
+[...]
+  <!-- Add this -->
+  <ResourceLink global="ldap/name" name="ldap/localname"
+    type="net.sf.michaelo.dirctxsrc.DirContextSource" />
+[...]
+</Context>
++----------------------------
+
+  Now you have successfully linked a global resource to your webapp. It is now
+  ready to use.
+  
+** As a local resource
+
+  If you prefer to keep resources locally, open or create your app's <<<context.xml>>>
+  and add:
+  
++----------------------------
+<Context>
+[...]
+  <!-- Add this -->
+  <Resource name="ldap/localname" type="net.sf.michaelo.dirctxsrc.DirContextSource"
+    factory="net.sf.michaelo.dirctxsrc.DirContextSourceFactory"
+    urls="ldap://hostname ldap://another-hostname" />
+[...]
+</Context>
++----------------------------
+
+* Using the resource
+
+  It takes now only a few lines of code to get that resource in your app's code,
+  regardless whether it's a global or a local resource.
+  
+** From a regular webapp
+
+  Open up a class and go ahead as follows:
+  
++----------------------------
+[...]
+Context initCtx = new InitialContext();
+Context envCtx = (Context) initCtx.lookup("java:comp/env");
+DirContextSource contextSource = (DirContextSource) envCtx.lookup("ldap/localname");
+// try and catch block omitted for the sake of brevity,
+// handle NamingException appropriately
+DirContext context = contextSource.getDirContext();
+// Perform operations
+context.close();
+[...]
++----------------------------
+  
+** From a Spring 3.x webapp
+
+  In the first step, you have to tell Spring to get that bean from JNDI and in
+  the second step, let Spring autowire this bean with your class.
+  
+  Add this to your <<<root-context.ml>>> or <<<servlet-context.xml>>>:
+
++----------------------------
+<beans ...>
+<!-- Don't forget to add the JEE namespace! -->
+[...]
+  <!-- Add this -->
+  <jee:jndi-lookup id="myContentSource" jndi-name="ldap/localname"/>
+[...]
+</beans>
++----------------------------
+
+  Now wire this to your class of choice:
+  
++----------------------------
+[...]
+  @Autowired
+  private DirContextSource contextSource;
+  // Alternatively, you can use setter injection
+[...]  
+  public void myMethod() {
+    // Now use the context source as same as in a regular webapp
+  }
+[...]
++----------------------------
+
+    [Attention] This won't work if you intend to use it with Spring LDAP, because
+                it requires a custom object factory to be set before building the
+                context source.
+
+* Configuration options
+
+  Yes!
