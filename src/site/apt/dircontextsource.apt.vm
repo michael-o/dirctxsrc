@@ -26,6 +26,10 @@ Using DirContextSource
 
   This user guide is comprised of two examples of the <<<DirContextSource>>> and
   also several notes on authentication and logging.
+  
+    Contents:
+
+%{toc|fromDepth=2}
 
 * Basic example
 

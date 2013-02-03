@@ -26,16 +26,20 @@ Using DirContextSourceFactory
 
   Ever wondered why it is a snap to use a JDBC <<<DataSource>>> in a servlet
   container but not a JNDI <<<DirContext>>>? Now it is!
-  
+
   Most containers support resource management for a webapp through factories by
   implementing {{{http://docs.oracle.com/javase/6/docs/api/javax/naming/spi/ObjectFactory.html}<<<javax.naming.spi.ObjectFactory>>>}}.
   This factory implements this interface and allows you to use the <<<DirContextSource>>>
   in your webapp but fully managed by your container.
-  
+
+  Contents:
+
+%{toc|fromDepth=2}
+
     [Notice] I haven't tried this in any other container except Apache Tomcat
              6.0.x but this should everywhere JNDI and the <<<InitialContent>>>
              are supported. I would be glad to hear other success stories.
-    
+
   Before using this factory and the context source, make sure that the artifact
   is in the class path of your Tomcat installation, i.e., in <<<$CATALINA_BASE/lib/${project.artifactId}-${project.version}.jar>>>.
 
@@ -44,13 +48,13 @@ Using DirContextSourceFactory
   Generally, you have two options to declare a resource in Apache Tomcat. As a
   global resource and then linking into the webapps or as a local resource
   within an application.
-  
-    [Tip] There is a complete JUnit test case which bootstraps an Apache DS and 
+
+    [Tip] There is a complete JUnit test case which bootstraps an Apache DS and
           a Tomcat instance, loads a webapp, retrieves a context source and
           writes out a few attributes to the response. See
           class {{{./xref-test/net/sf/michaelo/dirctxsrc/DirContextSourceFactoryTest.html}<<<DirContextSourceFactoryTest>>>}}
           and directory {{{http://sourceforge.net/p/dirctxsrc/code/HEAD/tree/tags/${project.version}/src/test/resources/tomcat6x-home}<<<src/test/resources/tomcat6x-home>>>}}.
-  
+
 ** As a global resource
 
   Navigate in your in your <<<server.xml>>> to <<</Server/GlobalNamingResources>>>
@@ -82,12 +86,12 @@ Using DirContextSourceFactory
 
   Now you have successfully linked a global resource to your webapp. It is now
   ready to use.
-  
+
 ** As a local resource
 
   If you prefer to keep resources locally, open or create your app's <<<context.xml>>>
   and add:
-  
+
 +----------------------------
 <Context>
 [...]
@@ -103,11 +107,11 @@ Using DirContextSourceFactory
 
   It takes now only a few lines of code to get that resource in your app's code,
   regardless whether it's a global or a local resource.
-  
+
 ** From a regular webapp
 
   Open up a class and go ahead as follows:
-  
+
 +----------------------------
 [...]
 Context initCtx = new InitialContext();
@@ -120,12 +124,12 @@ DirContext context = contextSource.getDirContext();
 context.close();
 [...]
 +----------------------------
-  
+
 ** From a Spring 3.x webapp
 
   In the first step, you have to tell Spring to get that bean from JNDI and in
   the second step, let Spring autowire this bean with your class.
-  
+
   Add this to your <<<root-context.ml>>> or <<<servlet-context.xml>>>:
 
 +----------------------------
@@ -139,13 +143,13 @@ context.close();
 +----------------------------
 
   Now wire this to your class of choice:
-  
+
 +----------------------------
 [...]
   @Autowired
   private DirContextSource contextSource;
   // Alternatively, you can use setter injection
-[...]  
+[...]
   public void myMethod() {
     // Now use the context source as same as in a regular webapp
   }
@@ -158,4 +162,25 @@ context.close();
 
 * Configuration options
 
-  Yes!
+  Basically, the factory offers the same configuration properties as the builder
+  class but exposes them as XML attributes. I.e, this factory is fully backed by
+  the {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}<<<Builder>>>}}
+  class.\
+  Due to this fact, please note the following prior setting up a resource:
+
+  [[1]] All values are passed as strings but are preprocessed by the builder
+        before building the actual context source. Incompatible values will cause
+        an exception to be thrown.
+
+  [[2]] Multivalued attributes may be passed separated either with a comma or a
+        space character.
+
+  [[3]] Omitted attributes are subject to the default values set by the builder.
+
+  []
+
+*------------*-----------*-----------------*---------------*
+|| Attribute || Optional || Valid value(s) || Description  |
+*------------:-----------:-----------------:---------------:
+| Attribute  | Optional  | Valid value(s)  | Description   |
+*------------+-----------+-----------------+---------------+
