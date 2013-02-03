@@ -16,7 +16,7 @@
 .nav-header {
 	text-transform: none;	
 }
-/* TODO File tickets in Fluido Skin's Jira for several deficiencies */
+/* TODO File tickets in Fluido Skin's/Doxia's Jira for several deficiencies */
 
 div.source {
 	margin-right: 7px;
@@ -32,4 +32,8 @@ pre.prettyprint {
 
 .section li > p {
 	margin-left: 0px;
+}
+
+table.table, table.table th, table.table td {
+	border-style: hidden;
 }
