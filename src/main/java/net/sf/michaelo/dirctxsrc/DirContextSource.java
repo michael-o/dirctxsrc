@@ -70,8 +70,8 @@ import org.apache.commons.lang3.Validate;
  * <li>The default authentication scheme is set to none/anonymous.</li>
  * <li>If GSS-API authentication is used the login entry name defaults to
  * {@code DirContextSource}.</li>
- * <li>By default a context source will retry up to three times to connect and
- * will wait for 2000 ms between retries.</li>
+ * <li>By default a context source will retry up to three (3) times to connect
+ * and will wait for 2000 ms between retries.</li>
  * </ol>
  * </p>
  *

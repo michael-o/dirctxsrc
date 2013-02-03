@@ -41,8 +41,6 @@ import org.apache.commons.lang3.math.NumberUtils;
  */
 public class DirContextSourceFactory implements ObjectFactory {
 
-	protected static final String SPLIT_CHARS = ", ";
-
 	protected static final String PROP_CONTEXT_FACTORY = "contextFactory";
 	protected static final String PROP_URLS = "urls";
 	protected static final String PROP_AUTH = "auth";
@@ -87,7 +85,7 @@ public class DirContextSourceFactory implements ObjectFactory {
 
 		String str = getProperty(PROP_URLS);
 		DirContextSource.Builder builder = new DirContextSource.Builder(
-				StringUtils.split(str, SPLIT_CHARS));
+				StringUtils.split(str));
 
 		str = getProperty(PROP_CONTEXT_FACTORY);
 		if (StringUtils.isNotEmpty(str))
@@ -107,7 +105,7 @@ public class DirContextSourceFactory implements ObjectFactory {
 
 		str = getProperty(PROP_QOP);
 		if (StringUtils.isNotEmpty(str))
-			builder.qop(StringUtils.split(str, SPLIT_CHARS));
+			builder.qop(StringUtils.split(str));
 
 		str = getProperty(PROP_DEBUG);
 		builder.debug(BooleanUtils.toBoolean(str));
@@ -132,7 +130,7 @@ public class DirContextSourceFactory implements ObjectFactory {
 
 		str = getProperty(PROP_BINARY_ATTRIBUTES);
 		if (StringUtils.isNotEmpty(str))
-			builder.binaryAttributes(StringUtils.split(str, SPLIT_CHARS));
+			builder.binaryAttributes(StringUtils.split(str));
 
 		str = getProperty(PROP_ADDITIONAL_PROPERTIES);
 		if (StringUtils.isNotEmpty(str)) {
