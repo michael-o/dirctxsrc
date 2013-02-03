@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 .nav-header {
-	text-transform: none;	
+	text-transform: none;
 }
 /* TODO File tickets in Fluido Skin's/Doxia's Jira for several deficiencies */
 
@@ -36,4 +36,18 @@ pre.prettyprint {
 
 table.table, table.table th, table.table td {
 	border-style: hidden;
+}
+
+dl {
+	background-color: #FFFFCC;
+	border-radius: 4px;
+	/** Applies in original to dt only but should apply only here */
+	margin-right: 7px;
+	margin-left: 7px;
+	border: 1px dashed #888888;
+	padding: 5px;
+}
+
+dd {
+	margin-left: 20px;
 }
