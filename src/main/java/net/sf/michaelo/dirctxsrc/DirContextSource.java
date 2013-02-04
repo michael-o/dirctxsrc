@@ -408,7 +408,7 @@ public class DirContextSource {
 		}
 
 		/**
-		 * Redirects the LDAP debug output to a {@link OutputStream}.
+		 * Redirects the LDAP debug output to an {@link OutputStream}.
 		 *
 		 * @param stream
 		 *            an {@code OutputStream} where debug output will be written to
