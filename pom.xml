@@ -20,7 +20,7 @@
 	<parent>
 		<groupId>net.sf.michael-o</groupId>
 		<artifactId>michael-o-parent</artifactId>
-		<version>2</version>
+		<version>3-SNAPSHOT</version>
 	</parent>
 
 	<groupId>net.sf.michael-o.dirctxsrc</groupId>
@@ -173,12 +173,6 @@
 						<org.slf4j.simplelogger.defaultlog>warn</org.slf4j.simplelogger.defaultlog>
 					</systemPropertyVariables>
 					<redirectTestOutputToFile>true</redirectTestOutputToFile>
-				</configuration>
-			</plugin>
-			<plugin>
-				<artifactId>maven-release-plugin</artifactId>
-				<configuration>
-					<arguments>-Psonatype-oss-release,sourceforge-release</arguments>
 				</configuration>
 			</plugin>
 		</plugins>
