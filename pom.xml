@@ -170,6 +170,7 @@
 				<configuration>
 					<systemPropertyVariables>
 						<buildDirectory>${project.build.directory}</buildDirectory>
+						<java.util.logging.config.file>${project.build.directory}/test-classes/tomcat6x-home/conf/logging.properties</java.util.logging.config.file>
 						<org.slf4j.simplelogger.defaultlog>warn</org.slf4j.simplelogger.defaultlog>
 					</systemPropertyVariables>
 					<redirectTestOutputToFile>true</redirectTestOutputToFile>
