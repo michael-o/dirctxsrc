@@ -68,7 +68,7 @@ public class DirContextSourceFactory implements ObjectFactory {
 	public Object getObjectInstance(Object obj, Name name, Context ctx,
 			Hashtable<?, ?> environment) throws Exception {
 
-		if ((obj == null) || !(obj instanceof Reference))
+		if (obj == null || !(obj instanceof Reference))
 			return null;
 
 		Reference ref = (Reference) obj;
@@ -122,7 +122,7 @@ public class DirContextSourceFactory implements ObjectFactory {
 		str = getProperty(PROP_RETRY_WAIT);
 		if (StringUtils.isNotEmpty(str)) {
 			if (NumberUtils.isNumber(str))
-				builder.retryWait((NumberUtils.toInt(str)));
+				builder.retryWait(NumberUtils.toInt(str));
 			else
 				throw new IllegalArgumentException(
 						"Property 'retryWait' must be a number");
