@@ -44,8 +44,8 @@ Download ${project.name}
 
 * Building from source
 
-  If you rather prefer building from source you either check out a working copy
-  from the project's public {{{./source-repository.html}Subversion repository}},
+  If you rather prefer building from source you either have to check out a working
+  copy from the project's public {{{./source-repository.html}Subversion repository}},
   or download a source tarball from the
   {{{http://sourceforge.net/projects/dirctxsrc/files/${project.version}}SourceForge Files directory}}.
 
