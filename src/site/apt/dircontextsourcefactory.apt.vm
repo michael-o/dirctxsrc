@@ -48,7 +48,7 @@ Using DirContextSourceFactory
 * Resource declaration examples
 
   There are two ways to declare a resource in Apache Tomcat. As a global resource
-  and then linking into the webapps or as a local resource within an application.
+  and then linking into the webapp or as a local resource within an application.
 
     [Tip] There is a complete JUnit test case which bootstraps an Apache DS and
           a Tomcat instance, loads a webapp, retrieves a context source and
@@ -72,7 +72,7 @@ Using DirContextSourceFactory
 [...]
 +----------------------------
 
-  Now this resource must be linked to your application(s). Open or create your
+  Now this resource must be linked to your application. Open or create your
   app's <<<context.xml>>> and add:
 
 +----------------------------
@@ -129,9 +129,9 @@ context.close();
 ** From a Spring 3.x webapp
 
   In the first step, you have to tell Spring to get that bean from JNDI and in
-  the second step, let Spring autowire this bean with your class.
+  the second step, let Spring autowire this bean to your class.
 
-  Add this to your <<<root-context.ml>>> or <<<servlet-context.xml>>>:
+  Add this to your <<<root-context.xml>>> or <<<servlet-context.xml>>>:
 
 +----------------------------
 <beans ...>

@@ -33,13 +33,13 @@ Download ${project.name}
 * Obtaining binaries
 
  The preferred way to obtain this artifact is through dependency management.
- It is available, along with its sources and javadoc JAR, on the
+ It is available, along with its sources and javadoc JAR, in the
  {{{http://search.maven.org/#search|ga|1|g%3A%22${project.groupId}%22%20AND%20a%3A%22${project.artifactId}%22%20AND%20v%3A%22${project.version}%22}Maven Central repository}}.
  See the {{{./dependency-info.html}dependency information}} report for further
  integration details for your build tool of choice.
 
- Alternatively, you can obtain a binary distribution with the main and attached
- artifacts plus the entire site for offline browsing from the project's
+ Alternatively, you can obtain a binary distribution with all JARS plus the
+ entire site for offline browsing from the project's
  {{{http://sourceforge.net/projects/dirctxsrc/files/${project.version}}SourceForge.net Files directory}}.
 
 * Building from source
@@ -52,4 +52,4 @@ Download ${project.name}
   After you have obtained the source code, navigate to the source code directory
   and type <<<mvn install>>>. Prior to that, make sure that you have at least Maven
   $project.prerequisites.maven and Java #property("maven.compiler.target") installed.
-  After sucessful execution the artifact will be installed to your local repository.
+  After successful execution the artifact will be installed to your local repository.
