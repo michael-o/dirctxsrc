@@ -38,7 +38,7 @@ Download ${project.name}
  See the {{{./dependency-info.html}dependency information}} report for further
  integration details for your build tool of choice.
 
- Alternatively, you can obtain a binary distribution with all JARS plus the
+ Alternatively, you can obtain a binary distribution with all JARs plus the
  entire site for offline browsing from the project's
  {{{http://sourceforge.net/projects/dirctxsrc/files/${project.version}}SourceForge.net Files directory}}.
 
