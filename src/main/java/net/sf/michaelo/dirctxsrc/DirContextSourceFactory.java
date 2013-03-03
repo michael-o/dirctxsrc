@@ -33,11 +33,34 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
 /**
- * TODO Document me!
- * 
+ * An object factory for creating {@link DirContextSource} instances backed by a
+ * {@link DirContextSource.Builder}.
+ *
+ * This factory should work in any servlet container which JNDI support but was
+ * tested under Apache Tomcat 6.0.x only.
+ *
+ * <p>
+ * Integration in your {@code context.xml} is as simple as:
+ *
+ * <pre>
+ * &lt;Context&gt;
+ * [...]
+ *   &lt;!-- Add this --&gt;
+ *   &lt;Resource name="ldap/localname" type="net.sf.michaelo.dirctxsrc.DirContextSource"
+ *     factory="net.sf.michaelo.dirctxsrc.DirContextSourceFactory"
+ *     urls="ldap://hostname ldap://another-hostname" /&gt;
+ * [...]
+ * &lt;/Context&gt;
+ * </pre>
+ *
+ * For a complete reference, see <a
+ * href="http://dirctxsrc.sourceforge.net/dircontextsourcefactory.html"
+ * >documentation site</a>.
+ * </p>
+ *
  * @since 0.10
  * @version $Id$
- * 
+ *
  */
 public class DirContextSourceFactory implements ObjectFactory {
 
