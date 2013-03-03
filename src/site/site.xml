@@ -27,9 +27,8 @@
 				<item name="DirContextSourceFactory" href="dircontextsourcefactory.html" />
 			</item>
 		</menu>
-		
+
 		<menu ref="reports" />
-		<!-- Footer cannot be right-aliged due to http://jira.codehaus.org/browse/MSKINS-72 -->
 	</body>
 
 </project>
