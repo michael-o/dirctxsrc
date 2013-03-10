@@ -201,12 +201,6 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<artifactId>maven-release-plugin</artifactId>
-				<configuration>
-					<arguments>-Pmichael-o-release,sourceforge-release -X</arguments>
-				</configuration>
-			</plugin>
 		</plugins>
 	</build>
 
