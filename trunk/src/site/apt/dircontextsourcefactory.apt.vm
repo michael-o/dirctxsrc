@@ -1,0 +1,214 @@
+#*
+ * Copyright 2013 Michael Osipov
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *#
+
+## $Id$
+
+                            ----------------------
+                         Using DirContextSourceFactory
+                            ----------------------
+                               Michael Osipov
+                            ----------------------
+                                 2013-02-02
+                            ----------------------
+
+Using DirContextSourceFactory
+
+  Have you ever wondered why it is a snap to use a JDBC <<<DataSource>>> in a
+  servlet container but not a JNDI <<<DirContext>>>? Now it is!
+
+  Most containers support resource management for a webapp through factories by
+  implementing {{{http://docs.oracle.com/javase/6/docs/api/javax/naming/spi/ObjectFactory.html}<<<javax.naming.spi.ObjectFactory>>>}}.
+  This factory implements this interface and allows you to use the <<<DirContextSource>>>
+  in your webapp but fully managed by your container.
+
+  Contents:
+
+%{toc|fromDepth=2}
+
+    [Notice] I have not tried this in any other container except Apache Tomcat
+             6.0.x but this should everywhere JNDI and the <<<InitialContent>>>
+             are supported. I would be glad to hear other success stories.
+
+  Before using this factory and the context source, make sure that the artifact
+  is in the class path of your Tomcat installation, i.e., in <<<$CATALINA_BASE/lib/${project.artifactId}-${project.version}.jar>>>.
+
+* Resource declaration examples
+
+  There are two ways to declare a resource in Apache Tomcat. As a global resource
+  and then linking into the webapp or as a local resource within an application.
+
+    [Tip] There is a complete JUnit test case which bootstraps an Apache DS and
+          a Tomcat instance, loads a webapp, retrieves a context source and
+          writes out a few attributes to the response. See
+          class {{{./xref-test/net/sf/michaelo/dirctxsrc/DirContextSourceFactoryTest.html}<<<DirContextSourceFactoryTest>>>}}
+          and directory {{{http://sourceforge.net/p/dirctxsrc/code/HEAD/tree/tags/${project.version}/src/test/resources/tomcat6x-home}<<<src/test/resources/tomcat6x-home>>>}}.
+
+** As a global resource
+
+  Navigate in your <<<server.xml>>> to <<</Server/GlobalNamingResources>>> and
+  add the following element:
+
++----------------------------
+[...]
+<GlobalNamingResources>
+  <!-- Add this -->
+  <Resource name="ldap/name" type="net.sf.michaelo.dirctxsrc.DirContextSource"
+    factory="net.sf.michaelo.dirctxsrc.DirContextSourceFactory"
+    urls="ldap://hostname ldap://another-hostname" />
+</GlobalNamingResources>
+[...]
++----------------------------
+
+  Now this resource must be linked to your application. Open or create your
+  app's <<<context.xml>>> and add:
+
++----------------------------
+<Context>
+[...]
+  <!-- Add this -->
+  <ResourceLink global="ldap/name" name="ldap/localname"
+    type="net.sf.michaelo.dirctxsrc.DirContextSource" />
+[...]
+</Context>
++----------------------------
+
+  Now you have successfully linked a global resource to your webapp. It is now
+  ready to use.
+
+** As a local resource
+
+  If you prefer to keep resources locally, open or create your app's <<<context.xml>>>
+  and add:
+
++----------------------------
+<Context>
+[...]
+  <!-- Add this -->
+  <Resource name="ldap/localname" type="net.sf.michaelo.dirctxsrc.DirContextSource"
+    factory="net.sf.michaelo.dirctxsrc.DirContextSourceFactory"
+    urls="ldap://hostname ldap://another-hostname" />
+[...]
+</Context>
++----------------------------
+
+* Using the resource
+
+  It takes now only a few lines of code to get that resource in your app's code,
+  regardless whether it's a global or a local resource.
+
+** From a regular webapp
+
+  Open a class and go ahead as follows:
+
++----------------------------
+[...]
+Context initCtx = new InitialContext();
+Context envCtx = (Context) initCtx.lookup("java:comp/env");
+DirContextSource contextSource = (DirContextSource) envCtx.lookup("ldap/localname");
+// try and catch block omitted for the sake of brevity,
+// handle NamingException appropriately
+DirContext context = contextSource.getDirContext();
+// Perform operations
+context.close();
+[...]
++----------------------------
+
+** From a Spring 3.x webapp
+
+  In the first step, you have to tell Spring to get that bean from JNDI and in
+  the second step, let Spring autowire this bean to your class.
+
+  Add this to your <<<root-context.xml>>> or <<<servlet-context.xml>>>:
+
++----------------------------
+<beans ...>
+<!-- Don't forget to add the JEE namespace! -->
+[...]
+  <!-- Add this -->
+  <jee:jndi-lookup id="myContentSource" jndi-name="ldap/localname"/>
+[...]
+</beans>
++----------------------------
+
+  Now wire this to your class of choice:
+
++----------------------------
+[...]
+  @Autowired
+  private DirContextSource contextSource;
+  // Alternatively, you can use setter injection
+[...]
+  public void myMethod() {
+    // Now use the context source as same as in a regular webapp
+  }
+[...]
++----------------------------
+
+    [Attention] This will not work if you intend to use it with Spring LDAP,
+                because it requires a custom object factory to be set before
+                building the context source.
+
+* Configuration options
+
+  The factory offers the same configuration properties as the builder class but
+  exposes them as XML attributes. I.e., this factory is fully backed by the
+  {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}<<<Builder>>>}}
+  class. Due to this fact, please note the following prior setting up a resource:
+
+  [[1]] All values are passed as strings but are preprocessed by the builder
+        before building the actual context source. Incompatible values will cause
+        an exception to be thrown.
+
+  [[2]] Multi valued attributes may be passed separated by a whitespace character.
+
+  [[3]] Omitted attributes are subject to the default values set by the builder.
+        See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.html}JavaDoc}} for details.
+
+  []
+
+*------------*---------------------*-----------*-----------------*--------------------------*
+|| Attribute || Builder equivalent || Optional || Valid value(s) || Description             |
+*------------+---------------------+-----------+-----------------+--------------------------+
+| name       | \u2013              | no        | any string      | A name for this resouce relative to <<<java:comp/env>>>. |
+*------------+---------------------+-----------+-----------------+--------------------------+
+| type       | \u2013              | no        | <<<net.sf.michaelo.dirctxsrc.DirContextSource>>> | Pregiven class name of this resource. |
+*------------+---------------------+-----------+-----------------+--------------------------+
+| factory    | \u2013              | no        | <<<net.sf.michaelo.dirctxsrc.DirContextSourceFactory>>> | Pregiven class name of this resource's factory. |
+*------------+---------------------+-----------+-----------------+--------------------------+
+| contextFactory | <<<contextFactory(String)>>> | yes       | Any class (name) implementing the <<<{{{http://docs.oracle.com/javase/6/docs/api/javax/naming/spi/InitialContextFactory.html}InitialContentFactory}}>>> interface | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}JavaDoc}}. |
+*------------+---------------------+-----------+-----------------+--------------------------+
+| urls       | <<<Builder(String...)>>> | no   | A list of LDAP urls | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}JavaDoc}}. |
+*------------+---------------------+-----------+-----------------+--------------------------+
+| auth       | <<<auth(Auth)>>>    | yes       | <<<none>>> or <<<gssapi>>> (case-insensitive) | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}JavaDoc}}. |
+*------------+---------------------+-----------+-----------------+--------------------------+
+| loginEntryName | <<<loginEntryName(String)>>> | yes       | any string      | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}JavaDoc}}. |
+*------------+---------------------+-----------+-----------------+--------------------------+
+| objectFactories | <<<objectFactories(String...)>>> | yes       | A list of classes (names) implementing either the <<<{{{http://docs.oracle.com/javase/6/docs/api/javax/naming/spi/ObjectFactory.html}ObjectFactory}}>>> or the <<<{{{http://docs.oracle.com/javase/6/docs/api/javax/naming/spi/DirObjectFactory.html}DirObjectFactory}}>>> interface | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}JavaDoc}}. |
+*------------+---------------------+-----------+-----------------+--------------------------+
+| mutualAuth | <<<mutualAuth(boolean)>>> | yes | <<<true>>> or <<<false>>> (boolean) | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}JavaDoc}}. |
+*------------+---------------------+-----------+-----------------+--------------------------+
+| qop        | <<<qop(String...)>>> | yes      |  A list of <<<auth>>>, <<<auth-int>>> and/or <<<auth-conf>>> | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}JavaDoc}}. |
+*------------+---------------------+-----------+-----------------+--------------------------+
+| debug      | <<<debug(boolean)>>> | yes      | <<<true>>> or <<<false>>> (boolean) | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}JavaDoc}}. |
+*------------+---------------------+-----------+-----------------+--------------------------+
+| retries    | <<<retries(int)>>>  | yes       | positive integer | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}JavaDoc}}. |
+*------------+---------------------+-----------+-----------------+--------------------------+
+| retryWait  | <<<retryWait(int)>>> | yes      | positive integer | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}JavaDoc}}. |
+*------------+---------------------+-----------+-----------------+--------------------------+
+| binaryAttributes | <<<binaryAttributes(String...)>>> | yes      | A list or attribute names | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}JavaDoc}}. |
+*------------+---------------------+-----------+-----------------+--------------------------+
+| additionalProperties | <<<additionalProperties(String, String)>>> | yes  | A list of properties and values | The is supposed to be like this <<<name=value;name2=value2>>> and so on. See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}JavaDoc}}. |
+*------------+---------------------+-----------+-----------------+--------------------------+
