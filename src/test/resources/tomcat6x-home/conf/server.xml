@@ -17,33 +17,33 @@
 <!-- $Id$ -->
 <Server port="28885" shutdown="SHUTDOWN">
 
-  <Listener className="org.apache.catalina.core.JasperListener" />
-  <Listener className="org.apache.catalina.core.JreMemoryLeakPreventionListener" />
-  <Listener className="org.apache.catalina.mbeans.ServerLifecycleListener" />
-  <Listener className="org.apache.catalina.mbeans.GlobalResourcesLifecycleListener" />
+	<Listener className="org.apache.catalina.core.JasperListener" />
+	<Listener className="org.apache.catalina.core.JreMemoryLeakPreventionListener" />
+	<Listener className="org.apache.catalina.mbeans.ServerLifecycleListener" />
+	<Listener className="org.apache.catalina.mbeans.GlobalResourcesLifecycleListener" />
 
-  <GlobalNamingResources>
-  	<Resource name="ldap/apacheds" type="net.sf.michaelo.dirctxsrc.DirContextSource"
-  		factory="net.sf.michaelo.dirctxsrc.DirContextSourceFactory"
-  		urls="ldap://localhost:11389" />
+	<GlobalNamingResources>
+		<Resource name="ldap/apacheds" type="net.sf.michaelo.dirctxsrc.DirContextSource"
+			factory="net.sf.michaelo.dirctxsrc.DirContextSourceFactory"
+			urls="ldap://localhost:11389" />
 
-  	<Resource name="ldap/dead" type="net.sf.michaelo.dirctxsrc.DirContextSource"
-  		factory="net.sf.michaelo.dirctxsrc.DirContextSourceFactory"
-  		urls="ldap://localhost:11390" auth="none" qop="auth-conf" mutualAuth="true"
-  		debug="true" retries="5" retryWait="5000" binaryAttributes="objectSid certificate" />
-  </GlobalNamingResources>
+		<Resource name="ldap/dead" type="net.sf.michaelo.dirctxsrc.DirContextSource"
+			factory="net.sf.michaelo.dirctxsrc.DirContextSourceFactory"
+			urls="ldap://localhost:11390" auth="none" qop="auth-conf" mutualAuth="true"
+			debug="true" retries="5" retryWait="5000" binaryAttributes="objectSid certificate" />
+	</GlobalNamingResources>
 
-  <Service name="Catalina">
+	<Service name="Catalina">
 
-    <Connector port="28888" protocol="HTTP/1.1" redirectPort="28443" />
+		<Connector port="28888" protocol="HTTP/1.1" redirectPort="28443" />
 
-    <Engine name="Catalina" defaultHost="localhost">
+		<Engine name="Catalina" defaultHost="localhost">
 
-      <Host name="localhost"  appBase="webapps"
-            unpackWARs="true" autoDeploy="true"
-            xmlValidation="false" xmlNamespaceAware="false">
+			<Host name="localhost" appBase="webapps"
+				unpackWARs="true" autoDeploy="true"
+				xmlValidation="false" xmlNamespaceAware="false">
 
-      </Host>
-    </Engine>
-  </Service>
+			</Host>
+		</Engine>
+	</Service>
 </Server>
