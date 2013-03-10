@@ -1,0 +1,54 @@
+#*
+ * Copyright 2013 Michael Osipov
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *#
+
+## $Id$
+
+                            ----------------------
+                                  Overview
+                            ----------------------
+                               Michael Osipov
+                            ----------------------
+                                 2013-01-02
+                            ----------------------
+
+About ${project.name}
+
+  ${project.description}
+
+  It is meant to ease the hassle of setting up a LDAP connection without memorizing
+  all the necessary environment properties to get running. A builder class with
+  a fluent API supports you to construct a <<<DirContextSource>>> to retrieve
+  objects from.
+
+    [Note] This library has by no means any pooling capability like Tomcat JDBC
+           Pool or similar it is rather designed to work like a regular object
+           factory, i.e., it always returns a new object.
+
+* Getting started
+
+  {{{./download.html}Download}} the artifact, read the {{{./user-guide.html}user guide}}
+  and get started.
+
+* Origin of this project
+
+  I was working with directory servers, Active Directory for example, in many
+  projects in my company for several years now and was tired of writing the same
+  boilerplate connection and configuration code over and over again. Finally,
+  I decided to write an easy to use factory inspired by JDBC's <<<DataSource>>>
+  and Spring's <<<ContextSource>>> with convention over configuration in mind.
+  This library has been in production in several projects, e.g., directly within
+  Apache Tomcat or the Spring Framework, for more than a year now with great
+  success.
