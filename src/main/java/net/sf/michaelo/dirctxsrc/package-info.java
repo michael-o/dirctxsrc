@@ -16,7 +16,7 @@
 
 /**
  * The base package for {@link net.sf.michaelo.dirctxsrc.DirContextSource}.
- * 
+ *
  * @version $Id$
  */
 package net.sf.michaelo.dirctxsrc;

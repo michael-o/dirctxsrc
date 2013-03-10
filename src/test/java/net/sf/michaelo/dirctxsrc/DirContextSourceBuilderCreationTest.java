@@ -30,7 +30,7 @@ public class DirContextSourceBuilderCreationTest {
 	public void emptyUrls() {
 		new DirContextSource.Builder(new String[0]);
 	}
-	
+
 	@Test(expected = IllegalArgumentException.class)
 	public void emptyUrls2() {
 		new DirContextSource.Builder("");

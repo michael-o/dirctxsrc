@@ -18,7 +18,7 @@
 <Context>
 	<ResourceLink global="ldap/apacheds" name="ldap/apacheds"
 		type="net.sf.michaelo.dirctxsrc.DirContextSource" />
-		
+
 	<ResourceLink global="ldap/dead" name="ldap/dead"
 		type="net.sf.michaelo.dirctxsrc.DirContextSource" />
 </Context>

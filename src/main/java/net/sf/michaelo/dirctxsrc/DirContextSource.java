@@ -174,11 +174,11 @@ public class DirContextSource {
 		 * Constructs a new builder for {@link DirContextSource} with anonymous
 		 * authentication.
 		 *
-		 * <p><em>Note</em>: The default context factory 
+		 * <p><em>Note</em>: The default context factory
 		 * {@code com.sun.jndi.ldap.LdapCtxFactory} will iterate through all
 		 * URLs/servers until the first one is reachable/available.
 		 * </p>
-		 * 
+		 *
 		 * @param urls
 		 *            The URL(s) of a directory server. It/they may contain root
 		 *            DNs.
@@ -216,24 +216,24 @@ public class DirContextSource {
 			this.contextFactory = contextFactory;
 			return this;
 		}
-		
+
 		private String[] validateAndReturnStringArray(String name, String[] value) {
 			Validate.notEmpty(value, "Property '%s' cannot be null or empty", name);
-			
+
 			List<String> validatedElements = new ArrayList<String>();
 			for (String elem : value)
 				if (StringUtils.isNotEmpty(elem))
 					validatedElements.add(elem);
-			
+
 			Validate.notEmpty(validatedElements, "Property '%s' cannot be null or empty", name);
-			
+
 			return validatedElements.toArray(new String[validatedElements.size()]);
 		}
-		
+
 		private String validateAndReturnString(String name, String value) {
 			return Validate.notEmpty(value, "Property '%s' cannot be null or empty", name);
 		}
-		
+
 		private <T> T validateAndReturnObject(String name, T value) {
 			return Validate.notNull(value, "Property '%s' cannot be null", name);
 		}
@@ -508,16 +508,16 @@ public class DirContextSource {
 		 * non-modifiable for future use. You may call this method as often as
 		 * you like, it will return a new {@code DirContextSource} instance on
 		 * every call.
-		 * 
+		 *
 		 * @throws IllegalStateException
 		 *             if a combination of necessary attributes is not set
 		 * @return a {@code DirContextSource} object
 		 */
 		public DirContextSource build() {
-			
+
 			if (auth == Auth.GSSAPI && StringUtils.isEmpty(loginEntryName))
 				throw new IllegalStateException("Auth 'GSS-API' is set but no login entry name configured");
-			
+
 			DirContextSource contextSource = new DirContextSource(this);
 			done = true;
 

@@ -33,13 +33,13 @@ import net.sf.michaelo.dirctxsrc.DirContextSource;
 public class JndiDeadDsServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -6883948998544312228L;
-	
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		resp.setContentType("text/plain");
 		resp.setCharacterEncoding("UTF-8");
-		
+
 		try {
 			Context initCtx = new InitialContext();
 			Context envCtx = (Context) initCtx.lookup("java:comp/env");
@@ -51,7 +51,7 @@ public class JndiDeadDsServlet extends HttpServlet {
 		} catch (NamingException e) {
 			throw new ServletException(e);
 		}
-		
+
 	}
 
 }

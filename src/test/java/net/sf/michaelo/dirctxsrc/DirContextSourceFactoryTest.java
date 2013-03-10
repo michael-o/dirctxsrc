@@ -45,12 +45,12 @@ import org.junit.Test;
 
 // $Id$
 public class DirContextSourceFactoryTest {
-	
+
 	private static Bootstrap bootstrap;
 	private static File catalinaHome;
 	private static DirectoryService directoryService;
 	private static LdapServer ldapServer;
-	
+
 	@BeforeClass
 	public static void prepareEnv() throws Exception {
 		String buildDirectory = System.getProperty("buildDirectory");
@@ -108,13 +108,13 @@ public class DirContextSourceFactoryTest {
 
 		directoryService.startup();
 		ldapServer.start();
-		
+
 		catalinaHome = new File(new File(buildDirectory, "test-classes"), "tomcat6x-home");
 		bootstrap = new Bootstrap();
 		bootstrap.setCatalinaHome(catalinaHome.getAbsolutePath());
 		bootstrap.start();
 	}
-	
+
 	@AfterClass
 	public static void stopEnv() throws Exception {
 		bootstrap.stop();
@@ -122,7 +122,7 @@ public class DirContextSourceFactoryTest {
 		directoryService.shutdown();
 		directoryService.getWorkingDirectory().delete();
 	}
-	
+
 	@Test
 	public void callDirContextSourceFromServlet() throws IOException {
 		URL url = new URL("http://localhost:28888/dircontextsource/apacheds");
@@ -134,7 +134,7 @@ public class DirContextSourceFactoryTest {
 		Assert.assertNotNull(content);
 		conn.disconnect();
 	}
-	
+
 	@Test
 	public void callDeadDirContextSourceFromServlet() throws IOException {
 		URL url = new URL("http://localhost:28888/dircontextsource/dead");
