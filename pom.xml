@@ -144,6 +144,11 @@
 							<goal>shade</goal>
 						</goals>
 						<configuration>
+							<artifactSet>
+								<includes>
+									<include>org.apache.commons:commons-lang3</include>
+								</includes>
+							</artifactSet>
 							<filters>
 								<filter>
 									<artifact>org.apache.commons:commons-lang3</artifact>
