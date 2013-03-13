@@ -30,7 +30,7 @@ User guide
 
   To make use of this library you must run at least Java #property("maven.compiler.target").
 
-  This site will guide you through the components of this libary:
+  This site will guide you through the components of this library:
 
   [[1]] {{{./dircontextsource.html}<<<DirContextSource>>>}}: the main component
         itself for creating a <<<DirContext>>> object with the ease of a builder.
