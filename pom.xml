@@ -136,6 +136,28 @@
 		<defaultGoal>package</defaultGoal>
 		<plugins>
 			<plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>delete-dependency-reduced-pom</id>
+						<phase>clean</phase>
+						<goals>
+							<goal>clean</goal>
+						</goals>
+						<configuration>
+							<filesets>
+								<filesets>
+									<directory>${basedir}</directory>
+									<includes>
+										<include>dependency-reduced-pom.xml</include>
+									</includes>
+								</filesets>
+							</filesets>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
 				<artifactId>maven-shade-plugin</artifactId>
 				<executions>
 					<execution>
