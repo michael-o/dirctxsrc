@@ -24,6 +24,8 @@
                                  2013-02-02
                             ----------------------
 
+#set($ellipsis = $esc.unicode('\u2026'))
+
 Using DirContextSourceFactory
 
   Have you ever wondered why it is a snap to use a JDBC <<<DataSource>>> in a
@@ -62,14 +64,14 @@ Using DirContextSourceFactory
   add the following element:
 
 +----------------------------
-[...]
+[$ellipsis]
 <GlobalNamingResources>
   <!-- Add this -->
   <Resource name="ldap/name" type="net.sf.michaelo.dirctxsrc.DirContextSource"
     factory="net.sf.michaelo.dirctxsrc.DirContextSourceFactory"
     urls="ldap://hostname ldap://another-hostname" />
 </GlobalNamingResources>
-[...]
+[$ellipsis]
 +----------------------------
 
   Now this resource must be linked to your application. Open or create your
@@ -77,11 +79,11 @@ Using DirContextSourceFactory
 
 +----------------------------
 <Context>
-[...]
+[$ellipsis]
   <!-- Add this -->
   <ResourceLink global="ldap/name" name="ldap/localname"
     type="net.sf.michaelo.dirctxsrc.DirContextSource" />
-[...]
+[$ellipsis]
 </Context>
 +----------------------------
 
@@ -95,12 +97,12 @@ Using DirContextSourceFactory
 
 +----------------------------
 <Context>
-[...]
+[$ellipsis]
   <!-- Add this -->
   <Resource name="ldap/localname" type="net.sf.michaelo.dirctxsrc.DirContextSource"
     factory="net.sf.michaelo.dirctxsrc.DirContextSourceFactory"
     urls="ldap://hostname ldap://another-hostname" />
-[...]
+[$ellipsis]
 </Context>
 +----------------------------
 
@@ -114,7 +116,7 @@ Using DirContextSourceFactory
   Open a class and go ahead as follows:
 
 +----------------------------
-[...]
+[$ellipsis]
 Context initCtx = new InitialContext();
 Context envCtx = (Context) initCtx.lookup("java:comp/env");
 DirContextSource contextSource = (DirContextSource) envCtx.lookup("ldap/localname");
@@ -123,7 +125,7 @@ DirContextSource contextSource = (DirContextSource) envCtx.lookup("ldap/localnam
 DirContext context = contextSource.getDirContext();
 // Perform operations
 context.close();
-[...]
+[$ellipsis]
 +----------------------------
 
 ** From a Spring 3.x webapp
@@ -134,27 +136,27 @@ context.close();
   Add this to your <<<root-context.xml>>> or <<<servlet-context.xml>>>:
 
 +----------------------------
-<beans ...>
+<beans $ellipsis>
 <!-- Don't forget to add the JEE namespace! -->
-[...]
+[$ellipsis]
   <!-- Add this -->
   <jee:jndi-lookup id="myContentSource" jndi-name="ldap/localname"/>
-[...]
+[$ellipsis]
 </beans>
 +----------------------------
 
   Now wire this to your class of choice:
 
 +----------------------------
-[...]
+[$ellipsis]
   @Autowired
   private DirContextSource contextSource;
   // Alternatively, you can use setter injection
-[...]
+[$ellipsis]
   public void myMethod() {
     // Now use the context source as same as in a regular webapp
   }
-[...]
+[$ellipsis]
 +----------------------------
 
     [Attention] This will not work if you intend to use it with Spring LDAP,
@@ -190,17 +192,17 @@ context.close();
 *------------+---------------------+-----------+-----------------+--------------------------+
 | contextFactory | <<<contextFactory(String)>>> | yes       | Any class (name) implementing the <<<{{{http://docs.oracle.com/javase/6/docs/api/javax/naming/spi/InitialContextFactory.html}InitialContentFactory}}>>> interface | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}JavaDoc}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+
-| urls       | <<<Builder(String...)>>> | no   | A list of LDAP urls | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}JavaDoc}}. |
+| urls       | <<<Builder(String$ellipsis)>>> | no   | A list of LDAP URLs | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}JavaDoc}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+
 | auth       | <<<auth(Auth)>>>    | yes       | <<<none>>> or <<<gssapi>>> (case-insensitive) | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}JavaDoc}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+
 | loginEntryName | <<<loginEntryName(String)>>> | yes       | any string      | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}JavaDoc}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+
-| objectFactories | <<<objectFactories(String...)>>> | yes       | A list of classes (names) implementing either the <<<{{{http://docs.oracle.com/javase/6/docs/api/javax/naming/spi/ObjectFactory.html}ObjectFactory}}>>> or the <<<{{{http://docs.oracle.com/javase/6/docs/api/javax/naming/spi/DirObjectFactory.html}DirObjectFactory}}>>> interface | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}JavaDoc}}. |
+| objectFactories | <<<objectFactories(String$ellipsis)>>> | yes       | A list of classes (names) implementing either the <<<{{{http://docs.oracle.com/javase/6/docs/api/javax/naming/spi/ObjectFactory.html}ObjectFactory}}>>> or the <<<{{{http://docs.oracle.com/javase/6/docs/api/javax/naming/spi/DirObjectFactory.html}DirObjectFactory}}>>> interface | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}JavaDoc}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+
 | mutualAuth | <<<mutualAuth(boolean)>>> | yes | <<<true>>> or <<<false>>> (boolean) | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}JavaDoc}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+
-| qop        | <<<qop(String...)>>> | yes      |  A list of <<<auth>>>, <<<auth-int>>> and/or <<<auth-conf>>> | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}JavaDoc}}. |
+| qop        | <<<qop(String$ellipsis)>>> | yes      |  A list of <<<auth>>>, <<<auth-int>>> and/or <<<auth-conf>>> | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}JavaDoc}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+
 | debug      | <<<debug(boolean)>>> | yes      | <<<true>>> or <<<false>>> (boolean) | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}JavaDoc}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+
@@ -208,7 +210,7 @@ context.close();
 *------------+---------------------+-----------+-----------------+--------------------------+
 | retryWait  | <<<retryWait(int)>>> | yes      | positive integer | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}JavaDoc}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+
-| binaryAttributes | <<<binaryAttributes(String...)>>> | yes      | A list or attribute names | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}JavaDoc}}. |
+| binaryAttributes | <<<binaryAttributes(String$ellipsis)>>> | yes      | A list or attribute names | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}JavaDoc}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+
 | additionalProperties | <<<additionalProperties(String, String)>>> | yes  | A list of properties and values | The is supposed to be like this <<<name=value;name2=value2>>> and so on. See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}JavaDoc}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+

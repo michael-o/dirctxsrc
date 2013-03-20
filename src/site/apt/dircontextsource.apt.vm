@@ -24,6 +24,8 @@
                                  2013-01-13
                             ----------------------
 
+#set($ellipsis = $esc.unicode('\u2026'))
+
 Using DirContextSource
 
   This user guide is comprised of two examples of the <<<DirContextSource>>> and
@@ -40,7 +42,7 @@ Using DirContextSource
 +----------------------------
 import net.sf.michaelo.dirctxsrc.DirContextSource;
 import javax.naming.directory.DirContext;
-[...]
+[$ellipsis]
 DirContextSource.Builder builder = new DirContextSource.Builder("ldap://hostname");
 DirContextSource contextSource = builder.build();
 // try and catch block omitted for the sake of brevity,
@@ -48,7 +50,7 @@ DirContextSource contextSource = builder.build();
 DirContext context = contextSource.getDirContext();
 // Perform operations
 context.close();
-[...]
+[$ellipsis]
 +----------------------------
 
 * Advanced example
@@ -59,7 +61,7 @@ context.close();
 +----------------------------
 import net.sf.michaelo.dirctxsrc.DirContextSource;
 import javax.naming.directory.DirContext;
-[...]
+[$ellipsis]
 // Use several hostnames in the case if one fails
 DirContextSource.Builder builder = new DirContextSource.Builder("ldap://hostname",
                                  "ldap://hostname2", "ldap://distant-hostname");
@@ -74,7 +76,7 @@ DirContextSource contextSource = builder.build();
 DirContext context = contextSource.getDirContext();
 // Perform operations
 context.close();
-[...]
+[$ellipsis]
 +----------------------------
 
 * Authentication
@@ -93,9 +95,9 @@ context.close();
     builder:
 
 +--------------
-[...]
+[$ellipsis]
 builder.gssApiAuth();
-[...]
+[$ellipsis]
 +--------------
 
     The above example presumes that you have configured your JAAS login file with
@@ -103,9 +105,9 @@ builder.gssApiAuth();
     name configure as follows:
 
 +--------------
-[...]
+[$ellipsis]
 builder.gssApiAuth("MyAlternativeName");
-[...]
+[$ellipsis]
 +--------------
 
   There are a few more options for this authentication mechanism, like mutual auth
