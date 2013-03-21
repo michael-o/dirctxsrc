@@ -40,3 +40,6 @@ User guide
         available as a resource to servlet containers in a standard fashion.
 
   []
+
+  Before using this library, make sure that the artifact is in the class path of
+  your Tomcat installation, i.e., in <<<$CATALINA_BASE/lib>>>.

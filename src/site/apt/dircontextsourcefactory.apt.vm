@@ -44,9 +44,6 @@ Using DirContextSourceFactory
              6.0.x but this should everywhere JNDI and the <<<InitialContent>>>
              are supported. I would be glad to hear other success stories.
 
-  Before using this factory and the context source, make sure that the artifact
-  is in the class path of your Tomcat installation, i.e., in <<<$CATALINA_BASE/lib/${project.artifactId}-${project.version}.jar>>>.
-
 * Resource declaration examples
 
   There are two ways to declare a resource in Apache Tomcat. As a global resource
