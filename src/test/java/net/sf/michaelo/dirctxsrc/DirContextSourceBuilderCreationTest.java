@@ -38,14 +38,14 @@ public class DirContextSourceBuilderCreationTest {
 
 	@Test
 	public void someInvalidUrls() {
-		Assert.assertNotNull(new DirContextSource.Builder("ldap://one",
-				"ldap://two", "", null, "ldap://three"));
+		Assert.assertNotNull(new DirContextSource.Builder("ldap://one", "ldap://two", "", null,
+				"ldap://three"));
 	}
 
 	@Test
 	public void validUrls() {
-		Assert.assertNotNull(new DirContextSource.Builder("ldap://one",
-				"ldap://two", "ldap://three"));
+		Assert.assertNotNull(new DirContextSource.Builder("ldap://one", "ldap://two",
+				"ldap://three"));
 	}
 
 }

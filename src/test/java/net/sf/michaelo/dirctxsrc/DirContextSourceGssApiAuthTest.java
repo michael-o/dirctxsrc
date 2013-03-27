@@ -37,8 +37,7 @@ public class DirContextSourceGssApiAuthTest {
 
 	@Test(expected = SecurityException.class)
 	public void gssApiAuthNoLoginConfFile() throws Throwable {
-		DirContextSource.Builder builder = new DirContextSource.Builder(
-				"ldap://localhost:11389");
+		DirContextSource.Builder builder = new DirContextSource.Builder("ldap://localhost:11389");
 		DirContextSource contextSource = builder.gssApiAuth().build();
 		try {
 			contextSource.getDirContext();
@@ -54,13 +53,10 @@ public class DirContextSourceGssApiAuthTest {
 		systemProperties.putAll(System.getProperties());
 
 		System.setProperty("java.security.auth.login.config",
-				loginConfDirectory + System.getProperty("file.separator")
-						+ "login.conf");
+				loginConfDirectory + System.getProperty("file.separator") + "login.conf");
 
-		DirContextSource.Builder builder = new DirContextSource.Builder(
-				"ldap://localhost:11389");
-		DirContextSource contextSource = builder.gssApiAuth("NonExistingEntry")
-				.build();
+		DirContextSource.Builder builder = new DirContextSource.Builder("ldap://localhost:11389");
+		DirContextSource contextSource = builder.gssApiAuth("NonExistingEntry").build();
 		try {
 			contextSource.getDirContext();
 		} catch (NamingException e) {
@@ -77,11 +73,9 @@ public class DirContextSourceGssApiAuthTest {
 		systemProperties.putAll(System.getProperties());
 
 		System.setProperty("java.security.auth.login.config",
-				loginConfDirectory + System.getProperty("file.separator")
-						+ "login.conf");
+				loginConfDirectory + System.getProperty("file.separator") + "login.conf");
 
-		DirContextSource.Builder builder = new DirContextSource.Builder(
-				"ldap://localhost:11389");
+		DirContextSource.Builder builder = new DirContextSource.Builder("ldap://localhost:11389");
 		DirContextSource contextSource = builder.gssApiAuth().build();
 		try {
 			contextSource.getDirContext();

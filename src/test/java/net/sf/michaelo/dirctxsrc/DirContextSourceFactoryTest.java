@@ -65,15 +65,13 @@ public class DirContextSourceFactoryTest {
 		directoryService = new DefaultDirectoryService();
 		directoryService.setWorkingDirectory(workingDirectory);
 
-		SchemaPartition schemaPartition = directoryService.getSchemaService()
-				.getSchemaPartition();
+		SchemaPartition schemaPartition = directoryService.getSchemaService().getSchemaPartition();
 
 		LdifPartition ldifPartition = new LdifPartition();
 		File schemaRepository = new File(workingDirectory, "schema");
 		ldifPartition.setWorkingDirectory(schemaRepository.getPath());
 
-		SchemaLdifExtractor extractor = new DefaultSchemaLdifExtractor(
-				workingDirectory);
+		SchemaLdifExtractor extractor = new DefaultSchemaLdifExtractor(workingDirectory);
 		extractor.extractOrCopy(true);
 
 		schemaPartition.setWrappedPartition(ldifPartition);
@@ -93,8 +91,7 @@ public class DirContextSourceFactoryTest {
 
 		JdbmPartition systemPartition = new JdbmPartition();
 		systemPartition.setId("system");
-		systemPartition.setPartitionDir(new File(directoryService
-				.getWorkingDirectory(), "system"));
+		systemPartition.setPartitionDir(new File(directoryService.getWorkingDirectory(), "system"));
 		systemPartition.setSuffix(ServerDNConstants.SYSTEM_DN);
 		systemPartition.setSchemaManager(schemaManager);
 		directoryService.setSystemPartition(systemPartition);
@@ -128,7 +125,7 @@ public class DirContextSourceFactoryTest {
 		URL url = new URL("http://localhost:28888/dircontextsource/apacheds");
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		conn.connect();
-		InputStream is  = conn.getInputStream();
+		InputStream is = conn.getInputStream();
 		String content = IOUtils.toString(is, "UTF-8");
 		System.out.println("Received from URL: " + content);
 		Assert.assertNotNull(content);

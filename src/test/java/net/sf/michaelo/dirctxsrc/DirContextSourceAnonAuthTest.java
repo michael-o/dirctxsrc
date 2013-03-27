@@ -61,15 +61,13 @@ public class DirContextSourceAnonAuthTest {
 		directoryService = new DefaultDirectoryService();
 		directoryService.setWorkingDirectory(workingDirectory);
 
-		SchemaPartition schemaPartition = directoryService.getSchemaService()
-				.getSchemaPartition();
+		SchemaPartition schemaPartition = directoryService.getSchemaService().getSchemaPartition();
 
 		LdifPartition ldifPartition = new LdifPartition();
 		File schemaRepository = new File(workingDirectory, "schema");
 		ldifPartition.setWorkingDirectory(schemaRepository.getPath());
 
-		SchemaLdifExtractor extractor = new DefaultSchemaLdifExtractor(
-				workingDirectory);
+		SchemaLdifExtractor extractor = new DefaultSchemaLdifExtractor(workingDirectory);
 		extractor.extractOrCopy(true);
 
 		schemaPartition.setWrappedPartition(ldifPartition);
@@ -89,8 +87,7 @@ public class DirContextSourceAnonAuthTest {
 
 		JdbmPartition systemPartition = new JdbmPartition();
 		systemPartition.setId("system");
-		systemPartition.setPartitionDir(new File(directoryService
-				.getWorkingDirectory(), "system"));
+		systemPartition.setPartitionDir(new File(directoryService.getWorkingDirectory(), "system"));
 		systemPartition.setSuffix(ServerDNConstants.SYSTEM_DN);
 		systemPartition.setSchemaManager(schemaManager);
 		directoryService.setSystemPartition(systemPartition);
@@ -115,8 +112,7 @@ public class DirContextSourceAnonAuthTest {
 
 	@Test
 	public void anonAuth() throws NamingException {
-		DirContextSource.Builder builder = new DirContextSource.Builder(
-				"ldap://localhost:11389");
+		DirContextSource.Builder builder = new DirContextSource.Builder("ldap://localhost:11389");
 		DirContextSource contextSource = builder.build();
 
 		DirContext context = contextSource.getDirContext();
@@ -126,8 +122,7 @@ public class DirContextSourceAnonAuthTest {
 
 	@Test(expected = CommunicationException.class)
 	public void anonAuthWithDeadServer() throws NamingException {
-		DirContextSource.Builder builder = new DirContextSource.Builder(
-				"ldap://localhost:11390");
+		DirContextSource.Builder builder = new DirContextSource.Builder("ldap://localhost:11390");
 		DirContextSource contextSource = builder.build();
 		DirContext context = contextSource.getDirContext();
 		context.close();
@@ -135,8 +130,7 @@ public class DirContextSourceAnonAuthTest {
 
 	@Test
 	public void anonAuthFullyConfigured() throws NamingException {
-		DirContextSource.Builder builder = new DirContextSource.Builder(
-				"ldap://localhost:11389");
+		DirContextSource.Builder builder = new DirContextSource.Builder("ldap://localhost:11389");
 		builder.debug().binaryAttributes("objectSid").qop("auth")
 				.objectFactories("net.sf.michaelo.dirctxsrc.NoOpFactory");
 		DirContextSource contextSource = builder.build();

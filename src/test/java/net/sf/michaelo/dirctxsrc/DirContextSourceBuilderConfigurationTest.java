@@ -27,8 +27,7 @@ public class DirContextSourceBuilderConfigurationTest {
 
 	@Test
 	public void configureContextFactory() {
-		assertNotNull(newInstance().contextFactory(
-				"net.sf.michaelo.dirctxsrc.NoOpFactory"));
+		assertNotNull(newInstance().contextFactory("net.sf.michaelo.dirctxsrc.NoOpFactory"));
 	}
 
 	@Test(expected = NullPointerException.class)
@@ -48,8 +47,7 @@ public class DirContextSourceBuilderConfigurationTest {
 
 	@Test
 	public void partialVaragsValidation() {
-		assertNotNull(newInstance().objectFactories("valid", null, "",
-				"valid.again"));
+		assertNotNull(newInstance().objectFactories("valid", null, "", "valid.again"));
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -79,8 +77,7 @@ public class DirContextSourceBuilderConfigurationTest {
 
 	@Test
 	public void configureObjectFactories() {
-		assertNotNull(newInstance().objectFactories(
-				"net.sf.michaelo.dirctxsrc.NoOpFactory",
+		assertNotNull(newInstance().objectFactories("net.sf.michaelo.dirctxsrc.NoOpFactory",
 				"net.sf.michaelo.dirctxsrc.SuperNoOpFactory"));
 	}
 
