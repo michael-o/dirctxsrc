@@ -21,6 +21,9 @@ import java.util.Properties;
 import javax.naming.NamingException;
 import javax.security.auth.login.LoginException;
 
+import org.apache.commons.lang3.JavaVersion;
+import org.apache.commons.lang3.SystemUtils;
+import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -37,6 +40,8 @@ public class DirContextSourceGssApiAuthTest {
 
 	@Test(expected = SecurityException.class)
 	public void gssApiAuthNoLoginConfFile() throws Throwable {
+		Assume.assumeTrue(!SystemUtils.isJavaVersionAtLeast(JavaVersion.JAVA_1_7));
+
 		DirContextSource.Builder builder = new DirContextSource.Builder("ldap://localhost:11389");
 		DirContextSource contextSource = builder.gssApiAuth().build();
 		try {
