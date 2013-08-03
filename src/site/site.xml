@@ -14,15 +14,15 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<project xmlns="http://maven.apache.org/DECORATION/1.3.0"
+<project xmlns="http://maven.apache.org/DECORATION/1.4.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/DECORATION/1.3.0 http://maven.apache.org/xsd/decoration-1.3.0.xsd">
+	xsi:schemaLocation="http://maven.apache.org/DECORATION/1.4.0 http://maven.apache.org/xsd/decoration-1.4.0.xsd">
 
 	<body>
 		<menu name="${project.name}">
 			<item name="Overview" href="index.html" />
 			<item name="Download" href="download.html" />
-			<item name="User guide" collapse="true" href="user-guide.html">
+			<item name="User Guide" collapse="true" href="user-guide.html">
 				<item name="DirContextSource" href="dircontextsource.html" />
 				<item name="DirContextSourceFactory" href="dircontextsourcefactory.html" />
 			</item>

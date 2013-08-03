@@ -30,7 +30,7 @@ Download ${project.name}
 
   There are several ways to download the JAR of this project.
 
-* Obtaining binaries
+* Obtaining Binaries
 
  The preferred way to obtain this artifact is through dependency management.
  It is available, along with its sources and javadoc JAR, in the
@@ -42,7 +42,7 @@ Download ${project.name}
  entire site for offline browsing from the project's
  {{{http://sourceforge.net/projects/dirctxsrc/files/${project.version}}SourceForge.net Files directory}}.
 
-* Building from source
+* Building from Source
 
   If you rather prefer building from source you either have to check out a working
   copy from the project's public {{{./source-repository.html}Subversion repository}},

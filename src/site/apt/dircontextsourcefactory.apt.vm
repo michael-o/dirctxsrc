@@ -44,7 +44,7 @@ Using DirContextSourceFactory
              6.0.x but this should everywhere JNDI and the <<<InitialContent>>>
              are supported. I would be glad to hear other success stories.
 
-* Resource declaration examples
+* Resource Declaration Examples
 
   There are two ways to declare a resource in Apache Tomcat. As a global resource
   and then linking into the webapp or as a local resource within an application.
@@ -55,7 +55,7 @@ Using DirContextSourceFactory
           class {{{./xref-test/net/sf/michaelo/dirctxsrc/DirContextSourceFactoryTest.html}<<<DirContextSourceFactoryTest>>>}}
           and directory {{{http://sourceforge.net/p/dirctxsrc/code/HEAD/tree/tags/${project.version}/src/test/resources/tomcat6x-home}<<<src/test/resources/tomcat6x-home>>>}}.
 
-** As a global resource
+** As a Global Resource
 
   Navigate in your <<<server.xml>>> to <<</Server/GlobalNamingResources>>> and
   add the following element:
@@ -87,7 +87,7 @@ Using DirContextSourceFactory
   Now you have successfully linked a global resource to your webapp. It is now
   ready to use.
 
-** As a local resource
+** As a Local Resource
 
   If you prefer to keep resources locally, open or create your app's <<<context.xml>>>
   and add:
@@ -103,12 +103,12 @@ Using DirContextSourceFactory
 </Context>
 +----------------------------
 
-* Using the resource
+* Using the Resource
 
   It takes now only a few lines of code to get that resource in your app's code,
   regardless whether it's a global or a local resource.
 
-** From a regular webapp
+** From a Regular Webapp
 
   Open a class and go ahead as follows:
 
@@ -125,7 +125,7 @@ context.close();
 [$ellipsis]
 +----------------------------
 
-** From a Spring 3.x webapp
+** From a Spring 3.x Webapp
 
   In the first step, you have to tell Spring to get that bean from JNDI and in
   the second step, let Spring autowire this bean to your class.
@@ -160,7 +160,7 @@ context.close();
                 because it requires a custom object factory to be set before
                 building the context source.
 
-* Configuration options
+* Configuration Options
 
   The factory offers the same configuration properties as the builder class but
   exposes them as XML attributes. I.e., this factory is fully backed by the

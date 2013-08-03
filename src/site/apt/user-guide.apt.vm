@@ -17,7 +17,7 @@
 ## $Id$
 
                             ----------------------
-                                 User guide
+                                 User Guide
                             ----------------------
                                Michael Osipov
                             ----------------------
@@ -26,7 +26,7 @@
 
 #macro(property $property)${project.properties.get($property)}#end
 
-User guide
+User Guide
 
   To make use of this library you must run at least Java #property("maven.compiler.target").
 

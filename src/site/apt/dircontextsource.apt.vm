@@ -35,7 +35,7 @@ Using DirContextSource
 
 %{toc|fromDepth=2}
 
-* Basic example
+* Basic Example
 
   In few lines you have a usable <<<DirContextSource>>>:
 
@@ -53,7 +53,7 @@ context.close();
 [$ellipsis]
 +----------------------------
 
-* Advanced example
+* Advanced Example
 
   A more complex example includes several configuration options as described in
   the builder's {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}JavaDoc}}:

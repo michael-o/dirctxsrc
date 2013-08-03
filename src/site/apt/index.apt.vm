@@ -37,12 +37,12 @@ About ${project.name}
            Pool or similar it is rather designed to work like a regular object
            factory, i.e., it always returns a new object.
 
-* Getting started
+* Getting Started
 
   {{{./download.html}Download}} the artifact, read the {{{./user-guide.html}user guide}}
   and get started.
 
-* Origin of this project
+* Origin of this Project
 
   I was working with directory servers, Active Directory for example, in many
   projects in my company for several years now and was tired of writing the same
