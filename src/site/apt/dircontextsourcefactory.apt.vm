@@ -33,7 +33,7 @@ Using DirContextSourceFactory
 
   Most containers support resource management for a webapp through factories by
   implementing {{{http://docs.oracle.com/javase/6/docs/api/javax/naming/spi/ObjectFactory.html}<<<javax.naming.spi.ObjectFactory>>>}}.
-  This factory implements this interface and allows you to use the <<<DirContextSource>>>
+  This factory implements the {{{ObjectFactory}}} interface and allows you to use the <<<DirContextSource>>>
   in your webapp but fully managed by your container.
 
   Contents:
@@ -41,8 +41,8 @@ Using DirContextSourceFactory
 %{toc|fromDepth=2}
 
     [Notice] I have not tried this in any other container except Apache Tomcat
-             6.0.x but this should everywhere JNDI and the <<<InitialContent>>>
-             are supported. I would be glad to hear other success stories.
+             6.0 but it should everywhere JNDI and the <<<InitialContext>>>
+             are supported. I would be glad to hear your success stories.
 
 * Resource Declaration Examples
 
@@ -78,7 +78,7 @@ Using DirContextSourceFactory
 <Context>
 [$ellipsis]
   <!-- Add this -->
-  <ResourceLink global="ldap/name" name="ldap/localname"
+  <ResourceLink global="ldap/name" name="ldap/localName"
     type="net.sf.michaelo.dirctxsrc.DirContextSource" />
 [$ellipsis]
 </Context>
@@ -96,7 +96,7 @@ Using DirContextSourceFactory
 <Context>
 [$ellipsis]
   <!-- Add this -->
-  <Resource name="ldap/localname" type="net.sf.michaelo.dirctxsrc.DirContextSource"
+  <Resource name="ldap/localName" type="net.sf.michaelo.dirctxsrc.DirContextSource"
     factory="net.sf.michaelo.dirctxsrc.DirContextSourceFactory"
     urls="ldap://hostname ldap://another-hostname" />
 [$ellipsis]
@@ -116,7 +116,7 @@ Using DirContextSourceFactory
 [$ellipsis]
 Context initCtx = new InitialContext();
 Context envCtx = (Context) initCtx.lookup("java:comp/env");
-DirContextSource contextSource = (DirContextSource) envCtx.lookup("ldap/localname");
+DirContextSource contextSource = (DirContextSource) envCtx.lookup("ldap/localName");
 // try and catch block omitted for the sake of brevity,
 // handle NamingException appropriately
 DirContext context = contextSource.getDirContext();
@@ -137,7 +137,7 @@ context.close();
 <!-- Don't forget to add the JEE namespace! -->
 [$ellipsis]
   <!-- Add this -->
-  <jee:jndi-lookup id="myContentSource" jndi-name="ldap/localname"/>
+  <jee:jndi-lookup id="myContentSource" jndi-name="ldap/localName"/>
 [$ellipsis]
 </beans>
 +----------------------------
@@ -209,5 +209,5 @@ context.close();
 *------------+---------------------+-----------+-----------------+--------------------------+
 | binaryAttributes | <<<binaryAttributes(String$ellipsis)>>> | yes      | A list or attribute names | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}JavaDoc}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+
-| additionalProperties | <<<additionalProperties(String, String)>>> | yes  | A list of properties and values | The is supposed to be like this <<<name=value;name2=value2>>> and so on. See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}JavaDoc}}. |
+| additionalProperties | <<<additionalProperty(String, Object)>>> | yes  | A list of properties and values | The is supposed to be like this <<<name=value;name2=value2>>> and so on. See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}JavaDoc}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+

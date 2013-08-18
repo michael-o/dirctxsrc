@@ -28,10 +28,9 @@ About ${project.name}
 
   ${project.description}
 
-  It is meant to ease the hassle of setting up a LDAP connection without memorizing
-  all the necessary environment properties to get running. A builder class with
-  a fluent API supports you to construct a <<<DirContextSource>>> to retrieve
-  objects from.
+  It is meant to ease the pain of setting up a LDAP connection without memorizing all the necessary
+  environment properties. A builder class with a fluent API supports you to construct a
+  <<<DirContextSource>>> to retrieve objects from.
 
     [Note] This library has by no means any pooling capability like Tomcat JDBC
            Pool or similar it is rather designed to work like a regular object
