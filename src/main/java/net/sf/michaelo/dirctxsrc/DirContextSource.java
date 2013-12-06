@@ -200,8 +200,7 @@ public class DirContextSource {
 		 */
 		public Builder contextFactory(String contextFactory) {
 			check();
-			Validate.notEmpty(contextFactory, "Property 'contextFactory' cannot be null or empty");
-			this.contextFactory = contextFactory;
+			this.contextFactory = validateAndReturnString("contextFactory", contextFactory);
 			return this;
 		}
 
@@ -530,7 +529,7 @@ public class DirContextSource {
 								throw e;
 
 							String msg = String.format(
-									"Connecting to '%s' failed (%s), remaining retries: %s",
+									"Connecting to '%s' failed (%s), remaining retries: %d",
 									env.get(Context.PROVIDER_URL), e, r);
 							logger.warning(msg);
 
@@ -578,7 +577,7 @@ public class DirContextSource {
 				if (r == 0)
 					throw e;
 
-				String msg = String.format("Connecting to '%s' failed (%s), remaining retries: %s",
+				String msg = String.format("Connecting to '%s' failed (%s), remaining retries: %d",
 						env.get(Context.PROVIDER_URL), e, r);
 				logger.warning(msg);
 
