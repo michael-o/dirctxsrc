@@ -41,5 +41,5 @@ User Guide
 
   []
 
-  Before using this library, make sure that the artifact is in the class path of your Tomcat instance,
-  i.e., in <<<$CATALINA_BASE/lib>>> or <<<$CATALINA_HOME/lib>>>.
+  Before using this library, make sure that the artifact is in the class path of your application or
+  servlet container, e.g., your Tomcat instance, i.e., in <<<$CATALINA_BASE/lib>>> or <<<$CATALINA_HOME/lib>>>.

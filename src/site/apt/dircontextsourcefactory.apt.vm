@@ -41,7 +41,7 @@ Using DirContextSourceFactory
 %{toc|fromDepth=2}
 
     [Notice] I have not tried this in any other container except Apache Tomcat
-             6.0 but it should everywhere JNDI and the <<<InitialContext>>>
+             6.0 but it should work everywhere JNDI and the <<<InitialContext>>>
              are supported. I would be glad to hear your success stories.
 
 * Resource Declaration Examples
@@ -174,40 +174,40 @@ context.close();
   [[2]] Multi valued attributes may be passed separated by a whitespace character.
 
   [[3]] Omitted attributes are subject to the default values set by the builder.
-        See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.html}JavaDoc}} for details.
+        See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.html}Javadoc}} for details.
 
   []
 
 *------------*---------------------*-----------*-----------------*--------------------------*
 || Attribute || Builder equivalent || Optional || Valid value(s) || Description             |
 *------------+---------------------+-----------+-----------------+--------------------------+
-| name       | \u2013              | no        | any string      | A name for this resouce relative to <<<java:comp/env>>>. |
+| name       | \u2013              | no        | any string      | A name for this resource relative to <<<java:comp/env>>>. |
 *------------+---------------------+-----------+-----------------+--------------------------+
-| type       | \u2013              | no        | <<<net.sf.michaelo.dirctxsrc.DirContextSource>>> | Pregiven class name of this resource. |
+| type       | \u2013              | no        | <<<net.sf.michaelo.dirctxsrc.DirContextSource>>> | Preset class name of this resource. |
 *------------+---------------------+-----------+-----------------+--------------------------+
-| factory    | \u2013              | no        | <<<net.sf.michaelo.dirctxsrc.DirContextSourceFactory>>> | Pregiven class name of this resource's factory. |
+| factory    | \u2013              | no        | <<<net.sf.michaelo.dirctxsrc.DirContextSourceFactory>>> | Preset class name of this resource's factory. |
 *------------+---------------------+-----------+-----------------+--------------------------+
-| contextFactory | <<<contextFactory(String)>>> | yes       | Any class (name) implementing the <<<{{{http://docs.oracle.com/javase/6/docs/api/javax/naming/spi/InitialContextFactory.html}InitialContentFactory}}>>> interface | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}JavaDoc}}. |
+| contextFactory | <<<contextFactory(String)>>> | yes       | Any class (name) implementing the <<<{{{http://docs.oracle.com/javase/6/docs/api/javax/naming/spi/InitialContextFactory.html}InitialContentFactory}}>>> interface | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadoc}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+
-| urls       | <<<Builder(String$ellipsis)>>> | no   | A list of LDAP URLs | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}JavaDoc}}. |
+| urls       | <<<Builder(String$ellipsis)>>> | no   | A list of LDAP URLs | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadoc}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+
-| auth       | <<<auth(Auth)>>>    | yes       | <<<none>>> or <<<gssapi>>> (case-insensitive) | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}JavaDoc}}. |
+| auth       | <<<auth(Auth)>>>    | yes       | <<<none>>> or <<<gssapi>>> (case-insensitive) | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadoc}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+
-| loginEntryName | <<<loginEntryName(String)>>> | yes       | any string      | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}JavaDoc}}. |
+| loginEntryName | <<<loginEntryName(String)>>> | yes       | any string      | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadoc}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+
-| objectFactories | <<<objectFactories(String$ellipsis)>>> | yes       | A list of classes (names) implementing either the <<<{{{http://docs.oracle.com/javase/6/docs/api/javax/naming/spi/ObjectFactory.html}ObjectFactory}}>>> or the <<<{{{http://docs.oracle.com/javase/6/docs/api/javax/naming/spi/DirObjectFactory.html}DirObjectFactory}}>>> interface | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}JavaDoc}}. |
+| objectFactories | <<<objectFactories(String$ellipsis)>>> | yes       | A list of classes (names) implementing either the <<<{{{http://docs.oracle.com/javase/6/docs/api/javax/naming/spi/ObjectFactory.html}ObjectFactory}}>>> or the <<<{{{http://docs.oracle.com/javase/6/docs/api/javax/naming/spi/DirObjectFactory.html}DirObjectFactory}}>>> interface | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadoc}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+
-| mutualAuth | <<<mutualAuth(boolean)>>> | yes | <<<true>>> or <<<false>>> (boolean) | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}JavaDoc}}. |
+| mutualAuth | <<<mutualAuth(boolean)>>> | yes | <<<true>>> or <<<false>>> (boolean) | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadoc}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+
-| qop        | <<<qop(String$ellipsis)>>> | yes      |  A list of <<<auth>>>, <<<auth-int>>> and/or <<<auth-conf>>> | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}JavaDoc}}. |
+| qop        | <<<qop(String$ellipsis)>>> | yes      |  A list of <<<auth>>>, <<<auth-int>>> and/or <<<auth-conf>>> | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadoc}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+
-| debug      | <<<debug(boolean)>>> | yes      | <<<true>>> or <<<false>>> (boolean) | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}JavaDoc}}. |
+| debug      | <<<debug(boolean)>>> | yes      | <<<true>>> or <<<false>>> (boolean) | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadoc}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+
-| retries    | <<<retries(int)>>>  | yes       | positive integer | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}JavaDoc}}. |
+| retries    | <<<retries(int)>>>  | yes       | positive integer | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadoc}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+
-| retryWait  | <<<retryWait(int)>>> | yes      | positive integer | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}JavaDoc}}. |
+| retryWait  | <<<retryWait(int)>>> | yes      | positive integer | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadoc}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+
-| binaryAttributes | <<<binaryAttributes(String$ellipsis)>>> | yes      | A list or attribute names | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}JavaDoc}}. |
+| binaryAttributes | <<<binaryAttributes(String$ellipsis)>>> | yes      | A list or attribute names | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadoc}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+
-| additionalProperties | <<<additionalProperty(String, Object)>>> | yes  | A list of properties and values | The is supposed to be like this <<<name=value;name2=value2>>> and so on. See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}JavaDoc}}. |
+| additionalProperties | <<<additionalProperty(String, Object)>>> | yes  | A list of properties and values | The is supposed to be like this <<<name=value;name2=value2>>> and so on. See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadoc}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+
