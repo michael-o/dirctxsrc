@@ -43,11 +43,11 @@ About ${project.name}
 
 * Origin of this Project
 
-  I was working with directory servers, Active Directory for example, in many
+  I was working with directory servers, Active Directory specifically, in many
   projects in my company for several years now and was tired of writing the same
   boilerplate connection and configuration code over and over again. Finally,
-  I decided to write an easy to use factory inspired by JDBC's <<<DataSource>>>
+  I decided to write an easy-to-use factory inspired by JDBC's <<<DataSource>>>
   and Spring's <<<ContextSource>>> with convention over configuration in mind.
   This library has been in production in several projects, e.g., directly within
-  Apache Tomcat or the Spring Framework, for more than a year now with great
+  Apache Tomcat or the Spring Framework, for several years now \u2013 with great
   success.

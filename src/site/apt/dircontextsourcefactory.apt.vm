@@ -46,7 +46,7 @@ Using DirContextSourceFactory
 
 * Resource Declaration Examples
 
-  There are two ways to declare a resource in Apache Tomcat. As a global resource
+  There are two ways to declare a resource in Apache Tomcat: as a global resource
   and then linking into the webapp or as a local resource within an application.
 
     [Tip] There is a complete JUnit test case which bootstraps an Apache DS and
@@ -71,7 +71,7 @@ Using DirContextSourceFactory
 [$ellipsis]
 +----------------------------
 
-  Now this resource must be linked to your application. Open or create your
+  This resource still needs to be linked to your application. Open or create your
   app's <<<context.xml>>> and add:
 
 +----------------------------
@@ -130,7 +130,7 @@ context.close();
   In the first step, you have to tell Spring to get that bean from JNDI and in
   the second step, let Spring autowire this bean to your class.
 
-  Add this to your <<<root-context.xml>>> or <<<servlet-context.xml>>>:
+  Add this to your <<<beans.xml>>>, e.g., <<<root-context.xml>>> or <<<servlet-context.xml>>>:
 
 +----------------------------
 <beans $ellipsis>
@@ -179,7 +179,7 @@ context.close();
   []
 
 *------------*---------------------*-----------*-----------------*--------------------------*
-|| Attribute || Builder equivalent || Optional || Valid value(s) || Description             |
+|| Attribute || Builder Equivalent || Optional || Valid Value(s) || Description             |
 *------------+---------------------+-----------+-----------------+--------------------------+
 | name       | \u2013              | no        | any string      | A name for this resource relative to <<<java:comp/env>>>. |
 *------------+---------------------+-----------+-----------------+--------------------------+
@@ -209,5 +209,5 @@ context.close();
 *------------+---------------------+-----------+-----------------+--------------------------+
 | binaryAttributes | <<<binaryAttributes(String$ellipsis)>>> | yes      | A list or attribute names | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadoc}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+
-| additionalProperties | <<<additionalProperty(String, Object)>>> | yes  | A list of properties and values | The is supposed to be like this <<<name=value;name2=value2>>> and so on. See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadoc}}. |
+| additionalProperties | <<<additionalProperty(String, Object)>>> | yes  | A list of properties and values | Semicolon-separated name value pairs: <<<name=value;name2=value2;$ellipsis>>>. See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadoc}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+
