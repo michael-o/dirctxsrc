@@ -56,7 +56,7 @@ context.close();
 * Advanced Example
 
   A more complex example includes several configuration options as described in
-  the builder's {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadoc}}:
+  the builder's {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadocs}}:
 
 +----------------------------
 import net.sf.michaelo.dirctxsrc.DirContextSource;
@@ -111,7 +111,7 @@ builder.gssApiAuth("MyAlternativeName");
 +--------------
 
   There are a few more options for this authentication mechanism, like mutual auth
-  or auth integrity and/or privacy protection. See the builder's {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadoc}}
+  or auth integrity and/or privacy protection. See the builder's {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadocs}}
   for more details.
 
   []
