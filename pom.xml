@@ -66,15 +66,15 @@
 	</distributionManagement>
 
 	<properties>
-		<tomcat.version>6.0.41</tomcat.version>
-		<slf4j.version>1.7.7</slf4j.version>
+		<tomcat.version>6.0.44</tomcat.version>
+		<slf4j.version>1.7.15</slf4j.version>
 	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
-			<version>3.3.2</version>
+			<version>3.4</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
