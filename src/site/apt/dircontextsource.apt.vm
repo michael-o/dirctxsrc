@@ -106,7 +106,7 @@ builder.gssApiAuth();
 
 +--------------
 [$ellipsis]
-builder.gssApiAuth("MyAlternativeName");
+builder.gssApiAuth("MyAlternativeEntryName");
 [$ellipsis]
 +--------------
 

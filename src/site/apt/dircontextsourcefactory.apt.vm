@@ -125,41 +125,6 @@ context.close();
 [$ellipsis]
 +----------------------------
 
-** From a Spring 3.x Webapp
-
-  In the first step, you have to tell Spring to get that bean from JNDI and in
-  the second step, let Spring autowire this bean to your class.
-
-  Add this to your <<<beans.xml>>>, e.g., <<<root-context.xml>>> or <<<servlet-context.xml>>>:
-
-+----------------------------
-<beans $ellipsis>
-<!-- Don't forget to add the JEE namespace! -->
-[$ellipsis]
-  <!-- Add this -->
-  <jee:jndi-lookup id="myContentSource" jndi-name="ldap/localName"/>
-[$ellipsis]
-</beans>
-+----------------------------
-
-  Now wire this to your class of choice:
-
-+----------------------------
-[$ellipsis]
-  @Autowired
-  private DirContextSource contextSource;
-  // Alternatively, you can use setter injection
-[$ellipsis]
-  public void myMethod() {
-    // Now use the context source as same as in a regular webapp
-  }
-[$ellipsis]
-+----------------------------
-
-    [Attention] This will not work if you intend to use it with Spring LDAP,
-                because it requires a custom object factory to be set before
-                building the context source.
-
 * Configuration Options
 
   The factory offers the same configuration properties as the builder class but

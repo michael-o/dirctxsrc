@@ -1,0 +1,72 @@
+#*
+ * Copyright 2013–2016 Michael Osipov
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *#
+
+## $Id$
+
+                            ----------------------
+                     Using DirContextSource with Spring LDAP
+                            ----------------------
+                               Michael Osipov
+                            ----------------------
+                                 2016-02-25
+                            ----------------------
+
+#set($ellipsis = $esc.unicode('\u2026'))
+
+Using DirContextSource with Spring LDAP
+
+  <<<DirContextSource>>> nicely intergrates with Spring LDAP by providing a thin wrapper
+  around <<<DirContextSource.Builder>>> exposed as a <<<ContextSource>>> implementation:
+  {{{./apidocs/net/sf/michaelo/dirctxsrc/spring/DirContextSource.html}<<<net.sf.michaelo.dirctxsrc.spring.DirContextSource>>>}}.
+
+    [Attention] Contrary to previous statements, this library has to reside in the webapp
+                classpath along with its dependencies (<<<spring-ldap-core>>> and
+                <<<spring-beans>>>) to work properly.
+
+  In the first step, you have to tell Spring to create a bean and in the second step, let
+  Spring autowire this bean to your class.
+
+  Add this to your <<<beans.xml>>>, e.g., <<<root-context.xml>>> or <<<servlet-context.xml>>>:
+
++----------------------------
+<beans $ellipsis>
+[$ellipsis]
+  <!-- Add this -->
+  <beans:bean class="net.sf.michaelo.dirctxsrc.spring.DirContextSource">
+    <beans:constructor-arg>
+      <beans:array>
+        <beans:value>ldap://hostname</beans:value>
+      </beans:array>
+    </beans:constructor-arg>
+  </beans:bean>
+[$ellipsis]
+</beans>
++----------------------------
+
+  Now wire this to your class of choice:
+
++----------------------------
+[$ellipsis]
+  @Autowired
+  private ContextSource contextSource;
+  // Alternatively, you can use setter injection
+[$ellipsis]
+  public void myMethod() {
+    // Now use the context source as same as in a regular webapp along with the LdapTemplate
+  }
+[$ellipsis]
++----------------------------
+
