@@ -30,9 +30,14 @@ import javax.naming.directory.InitialDirContext;
 import javax.security.auth.Subject;
 import javax.security.auth.login.LoginContext;
 import javax.security.auth.login.LoginException;
+import javax.security.sasl.Sasl;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
+import org.ietf.jgss.GSSCredential;
+import org.ietf.jgss.GSSException;
+import org.ietf.jgss.GSSManager;
+import org.ietf.jgss.Oid;
 
 /**
  * A JNDI directory context factory returning ready-to-use {@link DirContext} objects. The basic
@@ -94,6 +99,43 @@ public class DirContextSource {
 		String getSecurityAuthName() {
 			return securityAuthName;
 		}
+	}
+
+	protected final static Oid KRB5_MECHANISM;
+
+	static {
+		try {
+			KRB5_MECHANISM = new Oid("1.2.840.113554.1.2.2");
+		} catch (GSSException e) {
+			throw new IllegalStateException("Failed to create OID for Kerberos 5 mechanism");
+		}
+	}
+
+	private static class GssApiInitialDirContext extends InitialDirContext {
+
+		public GssApiInitialDirContext(Hashtable<?, ?> environment) throws NamingException {
+			super(environment);
+		}
+
+		@Override
+		public void close() throws NamingException {
+			GSSCredential credential = null;
+
+			try {
+				credential = (GSSCredential) getEnvironment().get(Sasl.CREDENTIALS);
+			} finally {
+				super.close();
+			}
+
+			if(credential != null) {
+				try {
+					credential.dispose();
+				} catch (GSSException e) {
+					// ignore
+				}
+			}
+		}
+
 	}
 
 	private static final Logger logger = Logger.getLogger(DirContextSource.class.getName());
@@ -516,13 +558,25 @@ public class DirContextSource {
 
 				public DirContext run() throws NamingException {
 
+					GSSManager manager = GSSManager.getInstance();
+					GSSCredential credential;
+					try {
+						credential =  manager.createCredential(null, GSSCredential.INDEFINITE_LIFETIME,
+								KRB5_MECHANISM, GSSCredential.INITIATE_ONLY);
+					} catch (GSSException e) {
+						NamingException ne = new NamingException("Failed to obtain GSS credential");
+						ne.setRootCause(e);
+						throw ne;
+					}
+
 					int r = retries;
 					InitialDirContext idc = null;
 
 					while (r-- > 0) {
 
 						try {
-							idc = new InitialDirContext(env);
+							env.put(Sasl.CREDENTIALS, credential);
+							idc = new GssApiInitialDirContext(env);
 							break;
 						} catch (NamingException e) {
 							if (r == 0)
