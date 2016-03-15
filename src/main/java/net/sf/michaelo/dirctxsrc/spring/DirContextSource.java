@@ -35,6 +35,7 @@ import org.springframework.ldap.core.ContextSource;
  * </ol>
  *
  * @see net.sf.michaelo.dirctxsrc.DirContextSource
+ * @version $Id$
  */
 public class DirContextSource implements ContextSource, InitializingBean {
 
