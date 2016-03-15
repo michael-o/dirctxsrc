@@ -33,8 +33,8 @@ Using DirContextSource with Spring LDAP
   {{{./apidocs/net/sf/michaelo/dirctxsrc/spring/DirContextSource.html}<<<net.sf.michaelo.dirctxsrc.spring.DirContextSource>>>}}.
 
     [Attention] Contrary to previous statements, this library has to reside in the webapp
-                classpath along with its dependencies (<<<spring-ldap-core>>> and
-                <<<spring-beans>>>) to work properly.
+                classpath along with its dependencies (<<<spring-ldap-core>>> $context.get("spring-ldap.version")+
+                and <<<spring-beans>>> $context.get("spring.version")+) to work properly.
 
   In the first step, you have to tell Spring to create a bean and in the second step, let
   Spring autowire this bean to your class.

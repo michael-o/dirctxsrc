@@ -39,11 +39,11 @@ import org.springframework.ldap.core.ContextSource;
  */
 public class DirContextSource implements ContextSource, InitializingBean {
 
-	private net.sf.michaelo.dirctxsrc.DirContextSource.Builder builder;
+	private Builder builder;
 	private net.sf.michaelo.dirctxsrc.DirContextSource contextSource;
 
 	public DirContextSource(String... urls) {
-		builder = new net.sf.michaelo.dirctxsrc.DirContextSource.Builder(urls);
+		builder = new Builder(urls);
 		builder.objectFactories("org.springframework.ldap.core.support.DefaultDirObjectFactory");
 	}
 

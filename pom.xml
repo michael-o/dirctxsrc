@@ -66,6 +66,8 @@
 	<properties>
 		<tomcat.version>6.0.44</tomcat.version>
 		<slf4j.version>1.7.15</slf4j.version>
+		<spring-ldap.version>2.0.4.RELEASE</spring-ldap.version>
+		<spring.version>3.2.16.RELEASE</spring.version>
 	</properties>
 
 	<dependencies>
@@ -77,13 +79,13 @@
 		<dependency>
 			<groupId>org.springframework.ldap</groupId>
 			<artifactId>spring-ldap-core</artifactId>
-			<version>2.0.4.RELEASE</version>
+			<version>${spring-ldap.version}</version>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-beans</artifactId>
-			<version>3.2.13.RELEASE</version>
+			<version>${spring.version}</version>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
@@ -238,6 +240,15 @@
 						</configuration>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<configuration>
+					<links>
+						<link>http://docs.spring.io/spring-ldap/docs/${spring-ldap.version}/apidocs</link>
+						<link>http://docs.spring.io/spring/docs/${spring.version}/javadoc-api</link>
+					</links>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
