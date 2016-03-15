@@ -244,6 +244,7 @@
 			<plugin>
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<configuration>
+					<locale>en</locale>
 					<links>
 						<link>http://docs.spring.io/spring-ldap/docs/${spring-ldap.version}/apidocs</link>
 						<link>http://docs.spring.io/spring/docs/${spring.version}/javadoc-api</link>
