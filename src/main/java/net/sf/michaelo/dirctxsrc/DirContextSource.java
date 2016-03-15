@@ -42,16 +42,11 @@ import org.ietf.jgss.Oid;
 /**
  * A JNDI directory context factory returning ready-to-use {@link DirContext} objects. The basic
  * idea is borrowed from {@link javax.sql.DataSource} where you get a database connection. Same does
- * this class with directory contexts.
- *
+ * this class with directory contexts. This directory context source has built-in support for
+ * anonymous and GSS-API with Kerberos 5 authentication. If you intend to use the latter, make sure
+ * that your environment is properly configured.
  * <p>
- * This directory context source has built-in support for anonymous and GSS-API with Kerberos 5
- * authentication.<br />
- * <em>Note:</em> Make sure that your environment is well configured if you intend to use GSS-API
- * with Kerberos 5.
- * </p>
- *
- * A minimal example how to create a {@code DirContextSource} with the supplied builder:
+ * Here is a minimal example how to create a {@code DirContextSource} with the supplied builder:
  *
  * <pre>
  * DirContextSource.Builder builder = new DirContextSource.Builder(&quot;ldap://hostname&quot;);
@@ -62,22 +57,21 @@ import org.ietf.jgss.Oid;
  * context.close();
  * </pre>
  *
- * <p>
  * Before returning a {@code DirContext} the source will loop several times until a connection has
- * been established or the number of retries are exhausted, which ever comes first. <br />
+ * been established or the number of retries are exhausted, which ever comes first. <br>
  * A {@code DirContextSource} object will be initially preconfigured by its builder for you:
  * <ol>
- * <li>The context factory is set by default to <code>com.sun.jndi.ldap.LdapCtxFactory</code>.</li>
+ * <li>The context factory is set by default to {@code com.sun.jndi.ldap.LdapCtxFactory}.</li>
  * <li>The default authentication scheme is set to none/anonymous.</li>
- * <li>If GSS-API authentication is used the login entry name defaults to {@code DirContextSource}.</li>
+ * <li>If GSS-API authentication is used the login entry name defaults to {@code DirContextSource}.
+ * </li>
  * <li>By default a context source will retry up to three (3) times to connect and will wait for
  * 2000 ms between retries.</li>
  * </ol>
- * </p>
  *
- * A complete overview of all {@code DirContext} properties can be found <a href=
- * "http://docs.oracle.com/javase/1.5.0/docs/guide/jndi/jndi-ldap-gl.html" >here</a>. Make sure that
- * you pass reasonable/valid values only otherwise runtime behavior is undefined.
+ * A complete overview of all {@code DirContext} properties can be found
+ * <a href= "https://docs.oracle.com/javase/7/docs/technotes/guides/jndi/jndi-ldap.html">here</a>.
+ * Make sure that you pass reasonable/valid values only otherwise the behavior is undefined.
  *
  * @version $Id$
  */
@@ -111,9 +105,9 @@ public class DirContextSource {
 		}
 	}
 
-	private static class GssApiInitialDirContext extends InitialDirContext {
+	private static class GSSInitialDirContext extends InitialDirContext {
 
-		public GssApiInitialDirContext(Hashtable<?, ?> environment) throws NamingException {
+		public GSSInitialDirContext(Hashtable<?, ?> environment) throws NamingException {
 			super(environment);
 		}
 
@@ -182,7 +176,6 @@ public class DirContextSource {
 	 * <li>All passed arrays will be defensively copied and null/empty values will be skipped except
 	 * when all elements are invalid, an exception will be raised.</li>
 	 * </ol>
-	 * </p>
 	 */
 	public static final class Builder {
 
@@ -209,7 +202,6 @@ public class DirContextSource {
 		 * <p>
 		 * <em>Note</em>: The default context factory {@code com.sun.jndi.ldap.LdapCtxFactory} will
 		 * iterate through all URLs/servers until the first one is reachable/available.
-		 * </p>
 		 *
 		 * @param urls
 		 *            The URL(s) of a directory server. It/they may contain root DNs.
@@ -576,7 +568,7 @@ public class DirContextSource {
 
 						try {
 							env.put(Sasl.CREDENTIALS, credential);
-							idc = new GssApiInitialDirContext(env);
+							idc = new GSSInitialDirContext(env);
 							break;
 						} catch (NamingException e) {
 							if (r == 0)

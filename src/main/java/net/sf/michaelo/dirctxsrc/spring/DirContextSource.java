@@ -11,40 +11,36 @@ import net.sf.michaelo.dirctxsrc.DirContextSource.Builder;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.ldap.core.ContextSource;
 
+/**
+ * A Spring LDAP {@link ContextSource} wrapper for
+ * {@link net.sf.michaelo.dirctxsrc.DirContextSource DirContextSource}.
+ * <p>
+ * Here is a minimal example how to create a {@code DirContextSource} with the supplied builder:
+ *
+ * <pre>
+ * &lt;beans:bean class=&quot;net.sf.michaelo.dirctxsrc.spring.DirContextSource&quot;&gt;
+ *  &lt;beans:constructor-arg&gt;
+ *    &lt;beans:array&gt;
+ *      &lt;beans:value&gt;ldap://hostname&lt;/beans:value&gt;
+ *    &lt;/beans:array&gt;
+ *  &lt;/beans:constructor-arg&gt;
+ * &lt;/beans:bean&gt;
+ * </pre>
+ *
+ * <p>
+ * A {@code DirContextSource} object will be initially preconfigured by its builder for you:
+ * <ol>
+ * <li>The object factory is set by default to
+ * {@code org.springframework.ldap.core.support.DefaultDirObjectFactory}.</li>
+ * </ol>
+ *
+ * @see net.sf.michaelo.dirctxsrc.DirContextSource
+ */
 public class DirContextSource implements ContextSource, InitializingBean {
 
 	private net.sf.michaelo.dirctxsrc.DirContextSource.Builder builder;
 	private net.sf.michaelo.dirctxsrc.DirContextSource contextSource;
 
-	/**
-	 * A Spring LDAP {@link ContextSource} wrapper for
-	 * {@link net.sf.michaelo.dirctxsrc.DirContextSource DirContextSource}.
-	 *
-	 * <p>
-	 * A minimal example how to create a {@code DirContextSource} with the supplied builder:
-	 *
-	 * <pre>
-	 * &lt;beans:bean class=&quot;net.sf.michaelo.dirctxsrc.spring.DirContextSource&quot;&gt;
-	 *  &lt;beans:constructor-arg&gt;
-	 *    &lt;beans:array&gt;
-	 *      &lt;beans:value&gt;ldap://hostname&lt;/beans:value&gt;
-	 *    &lt;/beans:array&gt;
-	 *  &lt;/beans:constructor-arg&gt;
-	 * &lt;/beans:bean&gt;
-	 * </pre>
-	 *
-	 * </p>
-	 *
-	 * <p>
-	 * A {@code DirContextSource} object will be initially preconfigured by its builder for you:
-	 * <ol>
-	 * <li>The object factory is set by default to
-	 * <code>org.springframework.ldap.core.support.DefaultDirObjectFactory</code>.</li>
-	 * </ol>
-	 * </p>
-	 *
-	 * @see net.sf.michaelo.dirctxsrc.DirContextSource
-	 */
 	public DirContextSource(String... urls) {
 		builder = new net.sf.michaelo.dirctxsrc.DirContextSource.Builder(urls);
 		builder.objectFactories("org.springframework.ldap.core.support.DefaultDirObjectFactory");

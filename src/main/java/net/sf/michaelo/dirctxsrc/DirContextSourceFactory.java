@@ -38,7 +38,6 @@ import org.apache.commons.lang3.math.NumberUtils;
  *
  * This factory should work in any servlet container which JNDI support but was tested under Apache
  * Tomcat 6.0.x only.
- *
  * <p>
  * Integration in your {@code context.xml} is as simple as:
  *
@@ -54,10 +53,8 @@ import org.apache.commons.lang3.math.NumberUtils;
  * </pre>
  *
  * For a complete reference, see <a
- * href="http://dirctxsrc.sourceforge.net/dircontextsourcefactory.html" >documentation site</a>.
- * </p>
+ * href="http://dirctxsrc.sourceforge.net/dircontextsourcefactory.html">documentation site</a>.
  *
- * @since 0.10
  * @version $Id$
  *
  */
