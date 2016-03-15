@@ -166,7 +166,7 @@ public class DirContextSource {
 	 * A builder to construct a {@link DirContextSource} with a fluent interface.
 	 *
 	 * <p>
-	 * <em>Notes:</em>
+	 * <strong>Notes:</strong>
 	 * <ol>
 	 * <li>This class is not thread-safe. Configure the builder in your main thread, build the
 	 * object and pass it on to your forked threads.</li>
@@ -200,7 +200,7 @@ public class DirContextSource {
 		 * Constructs a new builder for {@link DirContextSource} with anonymous authentication.
 		 *
 		 * <p>
-		 * <em>Note</em>: The default context factory {@code com.sun.jndi.ldap.LdapCtxFactory} will
+		 * <strong>Note:</strong> The default context factory {@code com.sun.jndi.ldap.LdapCtxFactory} will
 		 * iterate through all URLs/servers until the first one is reachable/available.
 		 *
 		 * @param urls
