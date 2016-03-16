@@ -254,6 +254,21 @@
 		</plugins>
 	</build>
 
+	<reporting>
+		<plugins>
+			<plugin>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<configuration>
+					<locale>en</locale>
+					<links>
+						<link>http://docs.spring.io/spring-ldap/docs/${spring-ldap.version}/apidocs</link>
+						<link>http://docs.spring.io/spring/docs/${spring.version}/javadoc-api</link>
+					</links>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
+
 	<profiles>
 		<profile>
 			<id>sourceforge-release</id>
