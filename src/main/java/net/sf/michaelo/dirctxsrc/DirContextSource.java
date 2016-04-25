@@ -211,7 +211,7 @@ public class DirContextSource {
 		 *             if {@code urls} is empty
 		 */
 		public Builder(String... urls) {
-			// Initialize default values first as mentioned in the class' JavaDoc
+			// Initialize default values first as mentioned in the class' Javadoc
 			contextFactory("com.sun.jndi.ldap.LdapCtxFactory");
 			auth(Auth.NONE);
 			retries(3);

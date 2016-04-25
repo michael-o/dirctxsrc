@@ -1,4 +1,4 @@
-package net.sf.michaelo.dirctxsrc.locator;
+package net.sf.michaelo.dirctxsrc.ad;
 
 import java.util.Arrays;
 import java.util.Hashtable;
@@ -20,8 +20,35 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 
 /**
+ * A locator for various Active Directory services like LDAP, Global Catalog, Kerberos, etc. via DNS
+ * SRV RRs. This is a lightweight implementation of
+ * <a href="http://www.rfc-editor.org/info/rfc2782">RFC 2782<a> for the resource records depicted
+ * <a href="https://technet.microsoft.com/en-us/library/cc759550%28v=ws.10%29.aspx">here</a>, but
+ * with the limitation that only TCP is queried and the {@code _msdcs} subdomain is ignored. The
+ * server selection algorithm for failover is fully implemented.
+ * <p>
+ * Here is a minimal example how to create an {@code ActiveDirectoryServiceLocator} with the
+ * supplied builder:
  *
+ * <pre>
+ * ActiveDirectoryServiceLocator.Builder builder = new DirContextSource.Builder();
+ * ActiveDirectoryServiceLocator locator = builder.build();
+ * HostPort servers = locator.locate("ldap", "example.com");
+ * </pre>
  *
+ * An {@code ActiveDirectoryServiceLocator} object will be initially preconfigured by its builder
+ * for you:
+ * <ol>
+ * <li>The context factory is set by default to {@code com.sun.jndi.dns.DnsContextFactory}.</li>
+ * <li>By default the maximum amount of backup servers is set to one which means that at least two
+ * servers, main and backup will be returned, if the DNS server returns at least two records.</li>
+ * </ol>
+ *
+ * A complete overview of all {@code DirContext} properties can be found
+ * <a href= "https://docs.oracle.com/javase/7/docs/technotes/guides/jndi/jndi-dns.html">here</a>.
+ * Make sure that you pass reasonable/valid values only otherwise the behavior is undefined.
+ *
+ * @version $Id$
  */
 public class ActiveDirectoryServiceLocator {
 
@@ -70,6 +97,7 @@ public class ActiveDirectoryServiceLocator {
 
 		@Override
 		public int compareTo(SrvRecord that) {
+			// Comparing according to the RFC
 			if (priority > that.priority) {
 				return 1;
 			} else if (priority < that.priority) {
@@ -85,6 +113,9 @@ public class ActiveDirectoryServiceLocator {
 
 	}
 
+	/**
+	 * A mere container for a server and along a service port.
+	 */
 	public static class HostPort {
 
 		private String host;
@@ -131,7 +162,9 @@ public class ActiveDirectoryServiceLocator {
 	private static final String SRV_RR = "SRV";
 	private static final String[] SRV_RR_ATTR = new String[] { SRV_RR };
 
-	private static final Logger logger = Logger.getLogger(ActiveDirectoryServiceLocator.class.getName());
+	private static final Logger logger = Logger
+			.getLogger(ActiveDirectoryServiceLocator.class.getName());
+
 	private final Hashtable<String, Object> env;
 	private final int maxBackupServers;
 
@@ -144,6 +177,21 @@ public class ActiveDirectoryServiceLocator {
 		env.putAll(builder.additionalProperties);
 	}
 
+	/**
+	 * A builder to construct an {@link ActiveDirectoryServiceLocator} with a fluent interface.
+	 *
+	 * <p>
+	 * <strong>Notes:</strong>
+	 * <ol>
+	 * <li>This class is not thread-safe. Configure the builder in your main thread, build the
+	 * object and pass it on to your forked threads.</li>
+	 * <li>An {@code IllegalStateException} is thrown if a property is modified after this builder
+	 * has already been used to build an {@code ActiveDirectoryServiceLocator}, simply create a new
+	 * builder in this case.</li>
+	 * <li>All passed arrays will be defensively copied and null/empty values will be skipped except
+	 * when all elements are invalid, an exception will be raised.</li>
+	 * </ol>
+	 */
 	public static final class Builder {
 
 		// Builder properties
@@ -153,9 +201,11 @@ public class ActiveDirectoryServiceLocator {
 
 		private boolean done;
 
+		/**
+		 * Constructs a new builder for {@link ActiveDirectoryServiceLocator}.
+		 */
 		public Builder() {
-			// Initialize default values first as mentioned in the class'
-			// JavaDoc
+			// Initialize default values first as mentioned in the class' Javadoc
 			contextFactory("com.sun.jndi.dns.DnsContextFactory");
 			maxBackupServers(1);
 			additionalProperties = new Hashtable<String, Object>();
@@ -179,25 +229,26 @@ public class ActiveDirectoryServiceLocator {
 		}
 
 		/**
-		 * Sets the ...
+		 * Sets the maximum amount of backup servers. The total amount of servers returned is always
+		 * {@code maxBackupServers} + 1 unless the DNS server returns less resource records.
 		 *
 		 * @param maxBackupServers
-		 *            The .... This value must be a positive integer.
+		 *            The maximum amount of backup servers. This value must be a positive integer.
 		 * @throws IllegalArgumentException
 		 *             if {@code maxBackupServers} is not a positive integer
 		 * @return this builder
 		 */
 		public Builder maxBackupServers(int maxBackupServers) {
 			check();
-			Validate.isTrue(maxBackupServers > 0, "Property 'maxBackupServers' must be greater than zero but is %d",
+			Validate.isTrue(maxBackupServers > 0,
+					"Property 'maxBackupServers' must be greater than zero but is %d",
 					maxBackupServers);
 			this.maxBackupServers = maxBackupServers;
 			return this;
 		}
 
 		/**
-		 * Sets an additional property not available through the builder
-		 * interface.
+		 * Sets an additional property not available through the builder interface.
 		 *
 		 * @param name
 		 *            name of the property
@@ -217,14 +268,13 @@ public class ActiveDirectoryServiceLocator {
 		}
 
 		/**
-		 * Builds a {@code ActiveDirectoryServiceLocator} and marks this builder
-		 * as non-modifiable for future use. You may call this method as often
-		 * as you like, it will return a new
+		 * Builds an {@code ActiveDirectoryServiceLocator} and marks this builder as non-modifiable
+		 * for future use. You may call this method as often as you like, it will return a new
 		 * {@code ActiveDirectoryServiceLocator} instance on every call.
 		 *
 		 * @throws IllegalStateException
 		 *             if a combination of necessary attributes is not set
-		 * @return a {@code ActiveDirectoryServiceLocator} object
+		 * @return an {@code ActiveDirectoryServiceLocator} object
 		 */
 		public ActiveDirectoryServiceLocator build() {
 
@@ -273,9 +323,7 @@ public class ActiveDirectoryServiceLocator {
 				Scanner scanner = new Scanner(record);
 				scanner.useDelimiter(" ");
 
-				int priority = scanner.nextInt();// ;recordCnt == 0 ? 0 : ((int)
-													// (System.currentTimeMillis()
-													// % 6)) + 1;
+				int priority = scanner.nextInt();
 				int weight = scanner.nextInt();
 				int port = scanner.nextInt();
 				String target = scanner.next();
@@ -293,8 +341,12 @@ public class ActiveDirectoryServiceLocator {
 				}
 		}
 
-		if (srvRecords.length == 0
-				|| srvRecords.length == 1 && srvRecords[0].target.equals(SrvRecord.UNVAILABLE_SERVICE))
+		/*
+		 * No servers returned or explicit indication by the DNS server that this service is not
+		 * provided as described by the RFC.
+		 */
+		if (srvRecords.length == 0 || srvRecords.length == 1
+				&& srvRecords[0].target.equals(SrvRecord.UNVAILABLE_SERVICE))
 			return null;
 
 		return srvRecords;
@@ -304,18 +356,21 @@ public class ActiveDirectoryServiceLocator {
 		if (srvRecords == null)
 			return null;
 
+		// Apply the server selection algorithm
 		Arrays.sort(srvRecords);
 		System.out.println(srvRecords.length + ": " + Arrays.toString(srvRecords));
 
-		HostPort[] sortedHostPorts = new HostPort[srvRecords.length];
+		HostPort[] sortedServers = new HostPort[srvRecords.length];
 		for (int i = 0, start = -1, end = -1, hp = 0; i < srvRecords.length; i++) {
 
 			start = i;
-			while (i + 1 < srvRecords.length && srvRecords[i].priority == srvRecords[i + 1].priority) {
+			while (i + 1 < srvRecords.length
+					&& srvRecords[i].priority == srvRecords[i + 1].priority) {
 				i++;
 			}
 			end = i;
 
+			// TODO Log priority groups
 			System.out.printf("Start: %d, End: %d%n", start, end);
 
 			for (int repeat = 0; repeat < (end - start) + 1; repeat++) {
@@ -332,7 +387,7 @@ public class ActiveDirectoryServiceLocator {
 					SrvRecord srvRecord = srvRecords[k];
 
 					if (srvRecord != null && srvRecord.sum >= r) {
-						sortedHostPorts[hp++] = new HostPort(StringUtils.chop(srvRecord.target),
+						sortedServers[hp++] = new HostPort(StringUtils.chop(srvRecord.target),
 								srvRecord.port);
 						srvRecords[k] = null;
 					}
@@ -340,10 +395,32 @@ public class ActiveDirectoryServiceLocator {
 			}
 		}
 
-		return sortedHostPorts;
+		// TODO Log sortedServers
+
+		return sortedServers;
 	}
 
-	public HostPort[] locate(String service, String siteName, String domain) {
+	/**
+	 * Locates a desired service within an Active Directory site and domain, sorted and selected
+	 * according to RFC 2782.
+	 *
+	 * @param service
+	 *            the service to be located
+	 * @param site
+	 *            the Active Directory site the client resides in
+	 * @param domain
+	 *            the desired domain. Can be any naming context name.
+	 * @return the located servers or null of none found
+	 * @throws NullPointerException
+	 *             if service or domain is null
+	 * @throws IllegalArgumentException
+	 *             if service or domain is empty
+	 * @throws RuntimeException
+	 *             if an error has occured while creating the DNS directory context
+	 * @throws IllegalArgumentException
+	 *             if any of the provided arguments does not adhere to the RFC
+	 */
+	public HostPort[] locate(String service, String site, String domain) {
 		Validate.notEmpty(service, "service cannot be null or empty");
 		Validate.notEmpty(domain, "domain cannot be null or empty");
 
@@ -356,12 +433,15 @@ public class ActiveDirectoryServiceLocator {
 
 		SrvRecord[] srvRecords = null;
 
+		String lookupName;
+		if (StringUtils.isNotEmpty(site))
+			lookupName = String.format(SRV_RR_WITH_SITES_FORMAT, service, site, domain);
+		else
+			lookupName = String.format(SRV_RR_FORMAT, service, domain);
+
+		// TODO Log lookupName
 		try {
-			if (StringUtils.isNotEmpty(siteName))
-				srvRecords = lookUpSrvRecords(context,
-						String.format(SRV_RR_WITH_SITES_FORMAT, service, siteName, domain));
-			else
-				srvRecords = lookUpSrvRecords(context, String.format(SRV_RR_FORMAT, service, domain));
+			srvRecords = lookUpSrvRecords(context, lookupName);
 		} catch (NamingException e) {
 			// TODO Log this
 			return null;
@@ -373,13 +453,36 @@ public class ActiveDirectoryServiceLocator {
 			}
 		}
 
-		HostPort[] selectedHosts = sortByRfc2782(srvRecords);
-		if(selectedHosts != null && selectedHosts.length > maxBackupServers + 1)
-			return Arrays.copyOfRange(selectedHosts, 0, maxBackupServers + 1);
+		// TODO Log srvRecords
+		HostPort[] servers = sortByRfc2782(srvRecords);
 
-		return selectedHosts;
+		// We have more servers than requested, cut off
+		if (servers != null && servers.length > maxBackupServers + 1)
+			return Arrays.copyOfRange(servers, 0, maxBackupServers + 1);
+
+		// Log servers
+
+		return servers;
 	}
 
+	/**
+	 * Locates a desired service within an Active Directory domain, sorted and selected
+	 * according to RFC 2782.
+	 *
+	 * @param service
+	 *            the service to be located
+	 * @param domain
+	 *            the desired domain. Can be any naming context name.
+	 * @return the located servers or null of none found
+	 * @throws NullPointerException
+	 *             if service or domain is null
+	 * @throws IllegalArgumentException
+	 *             if service or domain is empty
+	 * @throws RuntimeException
+	 *             if an error has occured while creating the DNS directory context
+	 * @throws IllegalArgumentException
+	 *             if any of the provided arguments does not adhere to the RFC
+	 */
 	public HostPort[] locate(String service, String domain) {
 		return locate(service, null, domain);
 	}
