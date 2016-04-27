@@ -40,7 +40,7 @@ import org.ietf.jgss.Oid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.michaelo.dirctxsrc.ad.ActiveDirectoryServiceLocator;
+import net.sf.michaelo.dirctxsrc.ad.ActiveDirectoryDnsLocator;
 
 /**
  * A JNDI directory context factory returning ready-to-use {@link DirContext} objects. The basic
@@ -84,7 +84,7 @@ public class DirContextSource {
 	 * Constant that holds the name of the environment property for specifying the Active Directory
 	 * site within a domain or forest. This property may be specified in the environment, or a
 	 * system property. If it is not specified, no site will be assumed. this property has no effect
-	 * if no {@link ActiveDirectoryServiceLocator} has been configured for this
+	 * if no {@link ActiveDirectoryDnsLocator} has been configured for this
 	 * {@code DirContextSource}.
 	 *
 	 * <p>
@@ -156,7 +156,7 @@ public class DirContextSource {
 	private final int retries;
 	private final int retryWait;
 	private final Auth auth;
-	private final ActiveDirectoryServiceLocator serviceLocator;
+	private final ActiveDirectoryDnsLocator serviceLocator;
 
 	private DirContextSource(Builder builder) {
 		env = new Hashtable<String, Object>();
@@ -216,7 +216,7 @@ public class DirContextSource {
 		private String[] binaryAttributes;
 		private String referral;
 		private Hashtable<String, Object> additionalProperties;
-		private ActiveDirectoryServiceLocator serviceLocator;
+		private ActiveDirectoryDnsLocator serviceLocator;
 
 		private boolean done;
 
@@ -554,7 +554,7 @@ public class DirContextSource {
 			return this;
 		}
 
-		public Builder activeDirectoryServiceLocator(ActiveDirectoryServiceLocator serviceLocator) {
+		public Builder activeDirectoryServiceLocator(ActiveDirectoryDnsLocator serviceLocator) {
 			check();
 			this.serviceLocator = validateAndReturnObject("serviceLocator", serviceLocator);
 			this.serviceLocator = serviceLocator;

@@ -28,17 +28,17 @@ import org.slf4j.LoggerFactory;
  * with the limitation that only TCP is queried and the {@code _msdcs} subdomain is ignored. The
  * server selection algorithm for failover is fully implemented.
  * <p>
- * Here is a minimal example how to create an {@code ActiveDirectoryServiceLocator} with the
- * supplied builder:
+ * Here is a minimal example how to create a {@code ActiveDirectoryDnsLocator} with the supplied
+ * builder:
  *
  * <pre>
- * ActiveDirectoryServiceLocator.Builder builder = new DirContextSource.Builder();
- * ActiveDirectoryServiceLocator locator = builder.build();
+ * ActiveDirectoryDnsLocator.Builder builder = new DirContextSource.Builder();
+ * ActiveDirectoryDnsLocator locator = builder.build();
  * HostPort servers = locator.locate("ldap", "example.com");
  * </pre>
  *
- * An {@code ActiveDirectoryServiceLocator} object will be initially preconfigured by its builder
- * for you:
+ * An {@code ActiveDirectoryDnsLocator} object will be initially preconfigured by its builder for
+ * you:
  * <ol>
  * <li>The context factory is set by default to {@code com.sun.jndi.dns.DnsContextFactory}.</li>
  * <li>By default the maximum amount of backup servers is set to one which means that at least two
@@ -51,7 +51,7 @@ import org.slf4j.LoggerFactory;
  *
  * @version $Id$
  */
-public class ActiveDirectoryServiceLocator {
+public class ActiveDirectoryDnsLocator {
 
 	private static class SrvRecord implements Comparable<SrvRecord> {
 
@@ -163,15 +163,14 @@ public class ActiveDirectoryServiceLocator {
 	private static final String SRV_RR = "SRV";
 	private static final String[] SRV_RR_ATTR = new String[] { SRV_RR };
 
-	private static final Logger logger = LoggerFactory
-			.getLogger(ActiveDirectoryServiceLocator.class);
+	private static final Logger logger = LoggerFactory.getLogger(ActiveDirectoryDnsLocator.class);
 
 	private final Hashtable<String, Object> env;
 	private final int maxBackupServers;
 
 	Random random = new Random();
 
-	private ActiveDirectoryServiceLocator(Builder builder) {
+	private ActiveDirectoryDnsLocator(Builder builder) {
 		env = new Hashtable<String, Object>();
 		maxBackupServers = builder.maxBackupServers;
 		env.put(Context.INITIAL_CONTEXT_FACTORY, builder.contextFactory);
@@ -179,7 +178,7 @@ public class ActiveDirectoryServiceLocator {
 	}
 
 	/**
-	 * A builder to construct an {@link ActiveDirectoryServiceLocator} with a fluent interface.
+	 * A builder to construct an {@link ActiveDirectoryDnsLocator} with a fluent interface.
 	 *
 	 * <p>
 	 * <strong>Notes:</strong>
@@ -187,7 +186,7 @@ public class ActiveDirectoryServiceLocator {
 	 * <li>This class is not thread-safe. Configure the builder in your main thread, build the
 	 * object and pass it on to your forked threads.</li>
 	 * <li>An {@code IllegalStateException} is thrown if a property is modified after this builder
-	 * has already been used to build an {@code ActiveDirectoryServiceLocator}, simply create a new
+	 * has already been used to build an {@code ActiveDirectoryDnsLocator}, simply create a new
 	 * builder in this case.</li>
 	 * <li>All passed arrays will be defensively copied and null/empty values will be skipped except
 	 * when all elements are invalid, an exception will be raised.</li>
@@ -203,7 +202,7 @@ public class ActiveDirectoryServiceLocator {
 		private boolean done;
 
 		/**
-		 * Constructs a new builder for {@link ActiveDirectoryServiceLocator}.
+		 * Constructs a new builder for {@link ActiveDirectoryDnsLocator}.
 		 */
 		public Builder() {
 			// Initialize default values first as mentioned in the class' Javadoc
@@ -269,17 +268,17 @@ public class ActiveDirectoryServiceLocator {
 		}
 
 		/**
-		 * Builds an {@code ActiveDirectoryServiceLocator} and marks this builder as non-modifiable
-		 * for future use. You may call this method as often as you like, it will return a new
-		 * {@code ActiveDirectoryServiceLocator} instance on every call.
+		 * Builds an {@code ActiveDirectoryDnsLocator} and marks this builder as non-modifiable for
+		 * future use. You may call this method as often as you like, it will return a new
+		 * {@code ActiveDirectoryDnsLocator} instance on every call.
 		 *
 		 * @throws IllegalStateException
 		 *             if a combination of necessary attributes is not set
-		 * @return an {@code ActiveDirectoryServiceLocator} object
+		 * @return an {@code ActiveDirectoryDnsLocator} object
 		 */
-		public ActiveDirectoryServiceLocator build() {
+		public ActiveDirectoryDnsLocator build() {
 
-			ActiveDirectoryServiceLocator serviceLocator = new ActiveDirectoryServiceLocator(this);
+			ActiveDirectoryDnsLocator serviceLocator = new ActiveDirectoryDnsLocator(this);
 			done = true;
 
 			return serviceLocator;
@@ -476,8 +475,8 @@ public class ActiveDirectoryServiceLocator {
 	}
 
 	/**
-	 * Locates a desired service within an Active Directory domain, sorted and selected according to
-	 * RFC 2782.
+	 * Locates a desired service via DNS within an Active Directory domain, sorted and selected
+	 * according to RFC 2782.
 	 *
 	 * @param service
 	 *            the service to be located
