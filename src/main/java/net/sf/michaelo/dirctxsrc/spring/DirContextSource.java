@@ -140,6 +140,13 @@ public class DirContextSource implements ContextSource, InitializingBean {
 	}
 
 	/**
+	 * @see Builder#referral(String)
+	 */
+	public void setReferral(String referral) {
+		builder.referral(referral);
+	}
+
+	/**
 	 * @see Builder#additionalProperty(String, Object)
 	 */
 	public void setAdditionalProperties(Map<String, Object> additionalProperties) {
