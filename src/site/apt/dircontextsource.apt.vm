@@ -29,7 +29,7 @@
 Using DirContextSource
 
   This user guide is comprised of two examples of the <<<DirContextSource>>> and
-  also several notes on authentication and logging.
+  also several notes on authentication.
 
     Contents:
 
@@ -115,12 +115,3 @@ builder.gssApiAuth("MyAlternativeEntryName");
   for more details.
 
   []
-
-* Logging
-
-  This library was primarily created to be used within Apache Tomcat. More
-  precisely, in Tomcat's server class path. I wanted to keep the dependency
-  footprint as low as possible, therefore I have decided to use JUL for logging
-  purposes although I strongly prefer SLF4J. If you happen to use this library
-  not in the described environment, add the <<<jul-to-slf4j>>> artifact to your
-  class path and use SLF4J exclusively.

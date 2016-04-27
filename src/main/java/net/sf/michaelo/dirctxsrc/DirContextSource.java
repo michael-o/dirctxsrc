@@ -21,7 +21,6 @@ import java.security.PrivilegedExceptionAction;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
-import java.util.logging.Logger;
 
 import javax.naming.Context;
 import javax.naming.NamingException;
@@ -38,6 +37,8 @@ import org.ietf.jgss.GSSCredential;
 import org.ietf.jgss.GSSException;
 import org.ietf.jgss.GSSManager;
 import org.ietf.jgss.Oid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A JNDI directory context factory returning ready-to-use {@link DirContext} objects. The basic
@@ -51,7 +52,7 @@ import org.ietf.jgss.Oid;
  * <pre>
  * DirContextSource.Builder builder = new DirContextSource.Builder(&quot;ldap://hostname&quot;);
  * DirContextSource contextSource = builder.build();
- * // try and catch block omitted for the sake of brevity, handle NamingException as appropriate
+ * // try and catch block omitted for the sake of brevity, handle NamingException appropriately
  * DirContext context = contextSource.getDirContext();
  * // Perform operations
  * context.close();
@@ -121,7 +122,7 @@ public class DirContextSource {
 				super.close();
 			}
 
-			if(credential != null) {
+			if (credential != null) {
 				try {
 					credential.dispose();
 				} catch (GSSException e) {
@@ -132,7 +133,7 @@ public class DirContextSource {
 
 	}
 
-	private static final Logger logger = Logger.getLogger(DirContextSource.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(DirContextSource.class);
 	private final Hashtable<String, Object> env;
 	private final String loginEntryName;
 	private final int retries;
@@ -200,8 +201,9 @@ public class DirContextSource {
 		 * Constructs a new builder for {@link DirContextSource} with anonymous authentication.
 		 *
 		 * <p>
-		 * <strong>Note:</strong> The default context factory {@code com.sun.jndi.ldap.LdapCtxFactory} will
-		 * iterate through all URLs/servers until the first one is reachable/available.
+		 * <strong>Note:</strong> The default context factory
+		 * {@code com.sun.jndi.ldap.LdapCtxFactory} will iterate through all URLs/servers until the
+		 * first one is reachable/available.
 		 *
 		 * @param urls
 		 *            The URL(s) of a directory server. It/they may contain root DNs.
@@ -377,9 +379,9 @@ public class DirContextSource {
 		 * Sets the quality of protection in preference order with which the connection to the
 		 * directory server is secured. The first negotiated quality is used. Valid values are
 		 * {@code auth}, {@code auth-int}, and {@code auth-conf}. This only works with SASL
-		 * mechanisms which support this feature, e.g., Digest MD5 or GSS-API. See <a href=
-		 * "http://docs.oracle.com/javase/jndi/tutorial/ldap/security/sasl.html#qop" >here</a> for
-		 * details.
+		 * mechanisms which support this feature, e.g., Digest MD5 or GSS-API. See
+		 * <a href="http://docs.oracle.com/javase/jndi/tutorial/ldap/security/sasl.html#qop">here
+		 * </a> for details.
 		 *
 		 * @param qop
 		 *            the quality of protection for this directory context connection
@@ -472,8 +474,8 @@ public class DirContextSource {
 		/**
 		 * Sets those attributes which will be returned as {@code byte[]} instead of {@code String}.
 		 * See <a href=
-		 * "http://docs.oracle.com/javase/1.5.0/docs/guide/jndi/jndi-ldap-gl.html#LDAPPROPS"
-		 * >here</a> for details.
+		 * "http://docs.oracle.com/javase/1.5.0/docs/guide/jndi/jndi-ldap-gl.html#LDAPPROPS">here
+		 * </a> for details.
 		 *
 		 * @param attributes
 		 *            the attributes to be returned as byte array
@@ -553,8 +555,9 @@ public class DirContextSource {
 					GSSManager manager = GSSManager.getInstance();
 					GSSCredential credential;
 					try {
-						credential =  manager.createCredential(null, GSSCredential.INDEFINITE_LIFETIME,
-								KRB5_MECHANISM, GSSCredential.INITIATE_ONLY);
+						credential = manager.createCredential(null,
+								GSSCredential.INDEFINITE_LIFETIME, KRB5_MECHANISM,
+								GSSCredential.INITIATE_ONLY);
 					} catch (GSSException e) {
 						NamingException ne = new NamingException("Failed to obtain GSS credential");
 						ne.setRootCause(e);
@@ -574,10 +577,8 @@ public class DirContextSource {
 							if (r == 0)
 								throw e;
 
-							String msg = String.format(
-									"Connecting to '%s' failed (%s), remaining retries: %d",
-									env.get(Context.PROVIDER_URL), e, r);
-							logger.warning(msg);
+							logger.warn("Connecting to [{}] failed, remaining retries: {}",
+									env.get(Context.PROVIDER_URL), r, e);
 
 							try {
 								Thread.sleep(retryWait);
@@ -623,9 +624,8 @@ public class DirContextSource {
 				if (r == 0)
 					throw e;
 
-				String msg = String.format("Connecting to '%s' failed (%s), remaining retries: %d",
-						env.get(Context.PROVIDER_URL), e, r);
-				logger.warning(msg);
+				logger.warn("Connecting to [{}] failed, remaining retries: {}",
+						env.get(Context.PROVIDER_URL), r, e);
 
 				try {
 					Thread.sleep(retryWait);
