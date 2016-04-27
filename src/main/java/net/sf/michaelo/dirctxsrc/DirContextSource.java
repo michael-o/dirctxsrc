@@ -40,6 +40,8 @@ import org.ietf.jgss.Oid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.michaelo.dirctxsrc.ad.ActiveDirectoryServiceLocator;
+
 /**
  * A JNDI directory context factory returning ready-to-use {@link DirContext} objects. The basic
  * idea is borrowed from {@link javax.sql.DataSource} where you get a database connection. Same does
@@ -77,6 +79,21 @@ import org.slf4j.LoggerFactory;
  * @version $Id$
  */
 public class DirContextSource {
+
+	/**
+	 * Constant that holds the name of the environment property for specifying the Active Directory
+	 * site within a domain or forest. This property may be specified in the environment, or a
+	 * system property. If it is not specified, no site will be assumed. this property has no effect
+	 * if no {@link ActiveDirectoryServiceLocator} has been configured for this
+	 * {@code DirContextSource}.
+	 *
+	 * <p>
+	 * The value of this constant is "net.sf.michaelo.dirctxsrc.activedirectory.site".
+	 *
+	 * @see Context#addToEnvironment(String, Object)
+	 * @see Context#removeFromEnvironment(String)
+	 */
+	public static final String ACTIVE_DIRECTORY_SITE = "net.sf.michaelo.dirctxsrc.activedirectory.site";
 
 	/**
 	 * Enum containing all supported authentication mechanisms.
@@ -139,6 +156,7 @@ public class DirContextSource {
 	private final int retries;
 	private final int retryWait;
 	private final Auth auth;
+	private final ActiveDirectoryServiceLocator serviceLocator;
 
 	private DirContextSource(Builder builder) {
 		env = new Hashtable<String, Object>();
@@ -157,12 +175,13 @@ public class DirContextSource {
 			env.put("com.sun.jndi.ldap.trace.ber", builder.debugStream);
 		retries = builder.retries;
 		retryWait = builder.retryWait;
-		if(builder.referral != null)
+		if (builder.referral != null)
 			env.put(Context.REFERRAL, builder.referral);
 		if (builder.binaryAttributes != null)
 			env.put("java.naming.ldap.attributes.binary",
 					StringUtils.join(builder.binaryAttributes, ' '));
 		env.putAll(builder.additionalProperties);
+		serviceLocator = builder.serviceLocator;
 	}
 
 	/**
@@ -197,6 +216,7 @@ public class DirContextSource {
 		private String[] binaryAttributes;
 		private String referral;
 		private Hashtable<String, Object> additionalProperties;
+		private ActiveDirectoryServiceLocator serviceLocator;
 
 		private boolean done;
 
@@ -531,6 +551,13 @@ public class DirContextSource {
 			check();
 			Validate.notEmpty(name, "Additional property's name cannot be null or empty");
 			this.additionalProperties.put(name, value);
+			return this;
+		}
+
+		public Builder activeDirectoryServiceLocator(ActiveDirectoryServiceLocator serviceLocator) {
+			check();
+			this.serviceLocator = validateAndReturnObject("serviceLocator", serviceLocator);
+			this.serviceLocator = serviceLocator;
 			return this;
 		}
 
