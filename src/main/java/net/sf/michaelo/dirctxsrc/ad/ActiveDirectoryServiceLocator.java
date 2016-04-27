@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.Random;
 import java.util.Scanner;
-import java.util.logging.Logger;
 
 import javax.naming.Context;
 import javax.naming.InvalidNameException;
@@ -18,6 +17,8 @@ import javax.naming.directory.InitialDirContext;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A locator for various Active Directory services like LDAP, Global Catalog, Kerberos, etc. via DNS
@@ -162,8 +163,8 @@ public class ActiveDirectoryServiceLocator {
 	private static final String SRV_RR = "SRV";
 	private static final String[] SRV_RR_ATTR = new String[] { SRV_RR };
 
-	private static final Logger logger = Logger
-			.getLogger(ActiveDirectoryServiceLocator.class.getName());
+	private static final Logger logger = LoggerFactory
+			.getLogger(ActiveDirectoryServiceLocator.class);
 
 	private final Hashtable<String, Object> env;
 	private final int maxBackupServers;
@@ -358,7 +359,6 @@ public class ActiveDirectoryServiceLocator {
 
 		// Apply the server selection algorithm
 		Arrays.sort(srvRecords);
-		System.out.println(srvRecords.length + ": " + Arrays.toString(srvRecords));
 
 		HostPort[] sortedServers = new HostPort[srvRecords.length];
 		for (int i = 0, start = -1, end = -1, hp = 0; i < srvRecords.length; i++) {
@@ -369,9 +369,6 @@ public class ActiveDirectoryServiceLocator {
 				i++;
 			}
 			end = i;
-
-			// TODO Log priority groups
-			System.out.printf("Start: %d, End: %d%n", start, end);
 
 			for (int repeat = 0; repeat < (end - start) + 1; repeat++) {
 				int sum = 0;
@@ -394,8 +391,6 @@ public class ActiveDirectoryServiceLocator {
 				}
 			}
 		}
-
-		// TODO Log sortedServers
 
 		return sortedServers;
 	}
@@ -439,11 +434,13 @@ public class ActiveDirectoryServiceLocator {
 		else
 			lookupName = String.format(SRV_RR_FORMAT, service, domain);
 
-		// TODO Log lookupName
 		try {
+			logger.debug("Looking up SRV RRs for '{}'", lookupName);
+
 			srvRecords = lookUpSrvRecords(context, lookupName);
 		} catch (NamingException e) {
-			// TODO Log this
+			logger.warn("Failed to look up SRV RRs for '{}'", lookupName, e);
+
 			return null;
 		} finally {
 			try {
@@ -453,21 +450,34 @@ public class ActiveDirectoryServiceLocator {
 			}
 		}
 
-		// TODO Log srvRecords
+		if (srvRecords == null)
+			logger.debug("No SRV RRs for '{}' found", lookupName);
+		else if (logger.isTraceEnabled())
+			logger.trace("Found {} SRV RRs for '{}': {}", srvRecords.length, lookupName,
+					srvRecords);
+		else
+			logger.debug("Found {} SRV RRs for '{}'", srvRecords.length, lookupName);
+
 		HostPort[] servers = sortByRfc2782(srvRecords);
 
-		// We have more servers than requested, cut off
-		if (servers != null && servers.length > maxBackupServers + 1)
-			return Arrays.copyOfRange(servers, 0, maxBackupServers + 1);
+		if (servers == null)
+			return null;
 
-		// Log servers
+		// We have more servers than requested, cut off
+		if (servers.length > maxBackupServers + 1)
+			servers = Arrays.copyOfRange(servers, 0, maxBackupServers + 1);
+
+		if (logger.isTraceEnabled())
+			logger.trace("Selected {} servers for '{}': {}", servers.length, lookupName, servers);
+		else
+			logger.debug("Selected {} servers for '{}'", servers.length, lookupName);
 
 		return servers;
 	}
 
 	/**
-	 * Locates a desired service within an Active Directory domain, sorted and selected
-	 * according to RFC 2782.
+	 * Locates a desired service within an Active Directory domain, sorted and selected according to
+	 * RFC 2782.
 	 *
 	 * @param service
 	 *            the service to be located
