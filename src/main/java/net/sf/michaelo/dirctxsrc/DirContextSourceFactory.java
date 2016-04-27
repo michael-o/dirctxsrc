@@ -52,8 +52,8 @@ import org.apache.commons.lang3.math.NumberUtils;
  * &lt;/Context&gt;
  * </pre>
  *
- * For a complete reference, see <a
- * href="http://dirctxsrc.sourceforge.net/dircontextsourcefactory.html">documentation site</a>.
+ * For a complete reference, see
+ * <a href="http://dirctxsrc.sourceforge.net/dircontextsourcefactory.html">documentation site</a>.
  *
  * @version $Id$
  *
@@ -71,12 +71,14 @@ public class DirContextSourceFactory implements ObjectFactory {
 	protected static final String PROP_RETRIES = "retries";
 	protected static final String PROP_RETRY_WAIT = "retryWait";
 	protected static final String PROP_BINARY_ATTRIBUTES = "binaryAttributes";
+	protected static final String PROP_REFERRAL = "referral";
 	protected static final String PROP_ADDITIONAL_PROPERTIES = "additionalProperties";
 
-	protected static final List<String> PROPERTIES_NAMES = Collections.unmodifiableList(Arrays
-			.asList(PROP_CONTEXT_FACTORY, PROP_URLS, PROP_AUTH, PROP_LOGIN_ENTRY_NAME,
-					PROP_OBJECT_FACTORIES, PROP_MUTUAL_AUTH, PROP_QOP, PROP_DEBUG, PROP_RETRIES,
-					PROP_RETRY_WAIT, PROP_BINARY_ATTRIBUTES, PROP_ADDITIONAL_PROPERTIES));
+	protected static final List<String> PROPERTIES_NAMES = Collections
+			.unmodifiableList(Arrays.asList(PROP_CONTEXT_FACTORY, PROP_URLS, PROP_AUTH,
+					PROP_LOGIN_ENTRY_NAME, PROP_OBJECT_FACTORIES, PROP_MUTUAL_AUTH, PROP_QOP,
+					PROP_DEBUG, PROP_RETRIES, PROP_RETRY_WAIT, PROP_BINARY_ATTRIBUTES,
+					PROP_REFERRAL, PROP_ADDITIONAL_PROPERTIES));
 
 	protected final Properties properties = new Properties();
 
@@ -143,6 +145,10 @@ public class DirContextSourceFactory implements ObjectFactory {
 		str = getProperty(PROP_BINARY_ATTRIBUTES);
 		if (StringUtils.isNotEmpty(str))
 			builder.binaryAttributes(StringUtils.split(str));
+
+		str = getProperty(PROP_REFERRAL);
+		if (StringUtils.isNotEmpty(str))
+			builder.referral(str);
 
 		str = getProperty(PROP_ADDITIONAL_PROPERTIES);
 		if (StringUtils.isNotEmpty(str)) {

@@ -157,6 +157,8 @@ public class DirContextSource {
 			env.put("com.sun.jndi.ldap.trace.ber", builder.debugStream);
 		retries = builder.retries;
 		retryWait = builder.retryWait;
+		if(builder.referral != null)
+			env.put(Context.REFERRAL, builder.referral);
 		if (builder.binaryAttributes != null)
 			env.put("java.naming.ldap.attributes.binary",
 					StringUtils.join(builder.binaryAttributes, ' '));
@@ -193,6 +195,7 @@ public class DirContextSource {
 		private int retries;
 		private int retryWait;
 		private String[] binaryAttributes;
+		private String referral;
 		private Hashtable<String, Object> additionalProperties;
 
 		private boolean done;
@@ -488,6 +491,26 @@ public class DirContextSource {
 		public Builder binaryAttributes(String... attributes) {
 			check();
 			this.binaryAttributes = validateAndReturnStringArray("binaryAttributes", attributes);
+			return this;
+		}
+
+		/**
+		 * Sets the referral handling strategy. Valid values are {@code ignore}, {@code follow}, and
+		 * {@code throw}. See
+		 * <a href="http://docs.oracle.com/javase/jndi/tutorial/ldap/referral/jndi.html">here </a>
+		 * for details.
+		 *
+		 * @param referral
+		 *            the referral handling strate
+		 * @throws NullPointerException
+		 *             if {@code referral} is null
+		 * @throws IllegalArgumentException
+		 *             if {@code referral} is empty
+		 * @return this builder
+		 */
+		public Builder referral(String referral) {
+			check();
+			this.referral = validateAndReturnString("referral", referral);
 			return this;
 		}
 
