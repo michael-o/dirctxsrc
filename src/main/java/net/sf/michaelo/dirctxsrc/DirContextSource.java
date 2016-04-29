@@ -21,6 +21,8 @@ import java.security.PrivilegedExceptionAction;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.naming.Context;
 import javax.naming.NamingException;
@@ -37,8 +39,6 @@ import org.ietf.jgss.GSSCredential;
 import org.ietf.jgss.GSSException;
 import org.ietf.jgss.GSSManager;
 import org.ietf.jgss.Oid;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A JNDI directory context factory returning ready-to-use {@link DirContext} objects. The basic
@@ -82,8 +82,8 @@ public class DirContextSource {
 	 * Constant that holds the name of the environment property for specifying the Active Directory
 	 * site within a domain or forest. This property may be specified in the environment, or a
 	 * system property. If it is not specified, no site will be assumed. this property has no effect
-	 * if no {@link ActiveDirectoryDnsLocator} has been configured for this
-	 * {@code DirContextSource}.
+	 * if no {@link ActiveDirectoryDnsLocator} has been configured for this {@code DirContextSource}
+	 * .
 	 *
 	 * <p>
 	 * The value of this constant is "net.sf.michaelo.dirctxsrc.activedirectory.site".
@@ -148,12 +148,13 @@ public class DirContextSource {
 
 	}
 
-	private static final Logger logger = LoggerFactory.getLogger(DirContextSource.class);
+	private static final Logger logger = Logger.getLogger(DirContextSource.class.getName());
 	private final Hashtable<String, Object> env;
 	private final String loginEntryName;
 	private final int retries;
 	private final int retryWait;
 	private final Auth auth;
+
 	private DirContextSource(Builder builder) {
 		env = new Hashtable<String, Object>();
 
@@ -614,8 +615,10 @@ public class DirContextSource {
 							if (r == 0)
 								throw e;
 
-							logger.warn("Connecting to [{}] failed, remaining retries: {}",
-									env.get(Context.PROVIDER_URL), r, e);
+							logger.log(Level.WARNING,
+									String.format(
+											"Connecting to [%s] failed, remaining retries: %d",
+											env.get(Context.PROVIDER_URL), r), e);
 
 							try {
 								Thread.sleep(retryWait);
@@ -661,8 +664,10 @@ public class DirContextSource {
 				if (r == 0)
 					throw e;
 
-				logger.warn("Connecting to [{}] failed, remaining retries: {}",
-						env.get(Context.PROVIDER_URL), r, e);
+				logger.log(Level.WARNING,
+						String.format(
+								"Connecting to [%s] failed, remaining retries: %d",
+								env.get(Context.PROVIDER_URL), r), e);
 
 				try {
 					Thread.sleep(retryWait);
