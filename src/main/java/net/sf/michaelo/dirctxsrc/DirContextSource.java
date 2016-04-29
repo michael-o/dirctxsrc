@@ -40,8 +40,6 @@ import org.ietf.jgss.Oid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.michaelo.dirctxsrc.ad.ActiveDirectoryDnsLocator;
-
 /**
  * A JNDI directory context factory returning ready-to-use {@link DirContext} objects. The basic
  * idea is borrowed from {@link javax.sql.DataSource} where you get a database connection. Same does
@@ -156,8 +154,6 @@ public class DirContextSource {
 	private final int retries;
 	private final int retryWait;
 	private final Auth auth;
-	private final ActiveDirectoryDnsLocator serviceLocator;
-
 	private DirContextSource(Builder builder) {
 		env = new Hashtable<String, Object>();
 
@@ -181,7 +177,6 @@ public class DirContextSource {
 			env.put("java.naming.ldap.attributes.binary",
 					StringUtils.join(builder.binaryAttributes, ' '));
 		env.putAll(builder.additionalProperties);
-		serviceLocator = builder.serviceLocator;
 	}
 
 	/**
@@ -216,7 +211,6 @@ public class DirContextSource {
 		private String[] binaryAttributes;
 		private String referral;
 		private Hashtable<String, Object> additionalProperties;
-		private ActiveDirectoryDnsLocator serviceLocator;
 
 		private boolean done;
 
@@ -551,13 +545,6 @@ public class DirContextSource {
 			check();
 			Validate.notEmpty(name, "Additional property's name cannot be null or empty");
 			this.additionalProperties.put(name, value);
-			return this;
-		}
-
-		public Builder activeDirectoryServiceLocator(ActiveDirectoryDnsLocator serviceLocator) {
-			check();
-			this.serviceLocator = validateAndReturnObject("serviceLocator", serviceLocator);
-			this.serviceLocator = serviceLocator;
 			return this;
 		}
 
