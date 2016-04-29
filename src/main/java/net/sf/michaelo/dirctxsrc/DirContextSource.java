@@ -79,21 +79,6 @@ import org.ietf.jgss.Oid;
 public class DirContextSource {
 
 	/**
-	 * Constant that holds the name of the environment property for specifying the Active Directory
-	 * site within a domain or forest. This property may be specified in the environment, or a
-	 * system property. If it is not specified, no site will be assumed. this property has no effect
-	 * if no {@link ActiveDirectoryDnsLocator} has been configured for this {@code DirContextSource}
-	 * .
-	 *
-	 * <p>
-	 * The value of this constant is "net.sf.michaelo.dirctxsrc.activedirectory.site".
-	 *
-	 * @see Context#addToEnvironment(String, Object)
-	 * @see Context#removeFromEnvironment(String)
-	 */
-	public static final String ACTIVE_DIRECTORY_SITE = "net.sf.michaelo.dirctxsrc.activedirectory.site";
-
-	/**
 	 * Enum containing all supported authentication mechanisms.
 	 */
 	public static enum Auth {
