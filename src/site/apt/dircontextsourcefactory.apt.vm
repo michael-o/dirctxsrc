@@ -174,7 +174,7 @@ context.close();
 *------------+---------------------+-----------+-----------------+--------------------------+
 | binaryAttributes | <<<binaryAttributes(String$ellipsis)>>> | yes      | A list or attribute names | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadocs}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+
-| referral | <<<referral(String)>>> | yes       | <<<ignore>>, <<throw>>> or <<<follow>> | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadocs}}. |
+| referral | <<<referral(String)>>> | yes       | <<<ignore>>>, <<<throw>>> or <<<follow>>> | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadocs}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+
 | additionalProperties | <<<additionalProperty(String, Object)>>> | yes  | A list of properties and values | Semicolon-separated name value pairs: <<<name=value;name2=value2;$ellipsis>>>. See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadocs}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+
