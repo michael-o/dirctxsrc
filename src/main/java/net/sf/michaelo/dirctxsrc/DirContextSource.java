@@ -336,7 +336,10 @@ public class DirContextSource {
 		 */
 
 		public Builder gssApiAuth(String loginEntryName) {
-			return auth(Auth.GSSAPI).loginEntryName(loginEntryName);
+			auth(Auth.GSSAPI).loginEntryName(loginEntryName);
+			// Workaround for a bug in the SASL GSSAPI plugin where RFC 4752 is violated
+			mutualAuth().qop("auth-int");
+			return this;
 		}
 
 		/**
