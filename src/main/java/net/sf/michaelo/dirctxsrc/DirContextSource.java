@@ -150,15 +150,17 @@ public class DirContextSource {
 		loginEntryName = builder.loginEntryName;
 		if (builder.objectFactories != null)
 			env.put(Context.OBJECT_FACTORIES, StringUtils.join(builder.objectFactories, ':'));
-		env.put("javax.security.sasl.server.authentication", Boolean.toString(builder.mutualAuth));
+		env.put(Sasl.SERVER_AUTH, Boolean.toString(builder.mutualAuth));
 		if (builder.qop != null)
-			env.put("javax.security.sasl.qop", StringUtils.join(builder.qop, ','));
+			env.put(Sasl.QOP, StringUtils.join(builder.qop, ','));
+		// No constant available
 		if (builder.debug)
 			env.put("com.sun.jndi.ldap.trace.ber", builder.debugStream);
 		retries = builder.retries;
 		retryWait = builder.retryWait;
 		if (builder.referral != null)
 			env.put(Context.REFERRAL, builder.referral);
+		// No public constant available
 		if (builder.binaryAttributes != null)
 			env.put("java.naming.ldap.attributes.binary",
 					StringUtils.join(builder.binaryAttributes, ' '));
