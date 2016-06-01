@@ -319,7 +319,7 @@ public class DirContextSource {
 		 * @return this builder
 		 */
 		public Builder gssApiAuth() {
-			return auth(Auth.GSSAPI).loginEntryName("DirContextSource");
+			return gssApiAuth("DirContextSource");
 		}
 
 		/**
