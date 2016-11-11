@@ -24,11 +24,9 @@
                                  2013-02-01
                             ----------------------
 
-#macro(property $property)${project.properties.get($property)}#end
-
 User Guide
 
-  To make use of this library you must run at least Java #property("maven.compiler.target").
+  To make use of this library you must run at least Java $context.get("maven.compiler.target").
 
   This site will guide you through the components of this library:
 
