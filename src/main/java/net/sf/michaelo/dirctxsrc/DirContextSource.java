@@ -284,6 +284,12 @@ public class DirContextSource {
 		public Builder auth(Auth auth) {
 			check();
 			this.auth = validateAndReturnObject("auth", auth);
+
+			// Workaround for a bug in the SASL GSSAPI plugin where RFC 4752 is violated
+			// https://bugs.openjdk.java.net/browse/JDK-8160818
+			if (auth == Auth.GSSAPI)
+				mutualAuth().qop("auth-int");
+
 			return this;
 		}
 
@@ -337,8 +343,6 @@ public class DirContextSource {
 
 		public Builder gssApiAuth(String loginEntryName) {
 			auth(Auth.GSSAPI).loginEntryName(loginEntryName);
-			// Workaround for a bug in the SASL GSSAPI plugin where RFC 4752 is violated
-			mutualAuth().qop("auth-int");
 			return this;
 		}
 
