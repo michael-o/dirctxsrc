@@ -128,7 +128,7 @@ public class DirContextSourceFactory implements ObjectFactory {
 
 		str = getProperty(PROP_RETRIES);
 		if (StringUtils.isNotEmpty(str)) {
-			if (NumberUtils.isNumber(str))
+			if (NumberUtils.isCreatable(str))
 				builder.retries(NumberUtils.toInt(str));
 			else
 				throw new IllegalArgumentException("Property 'retries' must be a number");
@@ -136,7 +136,7 @@ public class DirContextSourceFactory implements ObjectFactory {
 
 		str = getProperty(PROP_RETRY_WAIT);
 		if (StringUtils.isNotEmpty(str)) {
-			if (NumberUtils.isNumber(str))
+			if (NumberUtils.isCreatable(str))
 				builder.retryWait(NumberUtils.toInt(str));
 			else
 				throw new IllegalArgumentException("Property 'retryWait' must be a number");
