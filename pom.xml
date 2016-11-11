@@ -64,7 +64,7 @@
 	</distributionManagement>
 
 	<properties>
-		<tomcat.version>6.0.45</tomcat.version>
+		<tomcat.version>8.5.6</tomcat.version>
 		<slf4j.version>1.7.21</slf4j.version>
 		<spring-ldap.version>2.0.4.RELEASE</spring-ldap.version>
 		<spring.version>3.2.16.RELEASE</spring.version>
@@ -92,55 +92,6 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.11</version>
-			<scope>test</scope>
-		</dependency>
-		<!-- Not directly used, rather abused as a dependency aggregator for JUnit tests -->
-		<dependency>
-			<groupId>org.apache.directory.server</groupId>
-			<artifactId>apacheds-core-integ</artifactId>
-			<version>1.5.7</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-simple</artifactId>
-			<version>${slf4j.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.tomcat</groupId>
-			<artifactId>catalina</artifactId>
-			<version>${tomcat.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.tomcat</groupId>
-			<artifactId>coyote</artifactId>
-			<version>${tomcat.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.tomcat</groupId>
-			<artifactId>jasper</artifactId>
-			<version>${tomcat.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.tomcat</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>${tomcat.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
-			<version>2.4</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

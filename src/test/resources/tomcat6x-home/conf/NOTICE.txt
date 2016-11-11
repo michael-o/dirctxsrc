@@ -1,6 +1,0 @@
-The following files are licences under the ASL 2.0 and were taken from the
-Apache Tomcat 6.0.41 binary distribution:
-
-  - catalina.properties
-  - context.xml
-  - web.xml
