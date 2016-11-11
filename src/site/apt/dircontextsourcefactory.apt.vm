@@ -32,17 +32,13 @@ Using DirContextSourceFactory
   servlet container but not a JNDI <<<DirContext>>>? Now it is!
 
   Most containers support resource management for a webapp through factories by
-  implementing {{{http://docs.oracle.com/javase/6/docs/api/javax/naming/spi/ObjectFactory.html}<<<javax.naming.spi.ObjectFactory>>>}}.
+  implementing {{{http://docs.oracle.com/javase/7/docs/api/javax/naming/spi/ObjectFactory.html}<<<javax.naming.spi.ObjectFactory>>>}}.
   This factory implements the {{{ObjectFactory}}} interface and allows you to use the <<<DirContextSource>>>
   in your webapp but fully managed by your container.
 
   Contents:
 
 %{toc|fromDepth=2}
-
-    [Notice] I have not tried this in any other container except Apache Tomcat
-             6.0 but it should work everywhere JNDI and the <<<InitialContext>>>
-             are supported. I would be glad to hear your success stories.
 
 * Resource Declaration Examples
 
