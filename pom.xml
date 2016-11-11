@@ -64,7 +64,6 @@
 	</distributionManagement>
 
 	<properties>
-		<slf4j.version>1.7.21</slf4j.version>
 		<spring-ldap.version>2.2.0.RELEASE</spring-ldap.version>
 		<spring.version>4.3.4.RELEASE</spring.version>
 	</properties>
