@@ -34,7 +34,7 @@ import javax.security.auth.login.LoginException;
 import javax.security.sasl.Sasl;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.Validate;
+import static org.apache.commons.lang3.Validate.*;
 import org.ietf.jgss.GSSCredential;
 import org.ietf.jgss.GSSException;
 import org.ietf.jgss.GSSManager;
@@ -246,24 +246,24 @@ public class DirContextSource {
 		}
 
 		private String[] validateAndReturnStringArray(String name, String[] value) {
-			Validate.notEmpty(value, "Property '%s' cannot be null or empty", name);
+			notEmpty(value, "Property '%s' cannot be null or empty", name);
 
 			List<String> validatedElements = new ArrayList<String>();
 			for (String elem : value)
 				if (StringUtils.isNotEmpty(elem))
 					validatedElements.add(elem);
 
-			Validate.notEmpty(validatedElements, "Property '%s' cannot be null or empty", name);
+			notEmpty(validatedElements, "Property '%s' cannot be null or empty", name);
 
 			return validatedElements.toArray(new String[validatedElements.size()]);
 		}
 
 		private String validateAndReturnString(String name, String value) {
-			return Validate.notEmpty(value, "Property '%s' cannot be null or empty", name);
+			return notEmpty(value, "Property '%s' cannot be null or empty", name);
 		}
 
 		private <T> T validateAndReturnObject(String name, T value) {
-			return Validate.notNull(value, "Property '%s' cannot be null", name);
+			return notNull(value, "Property '%s' cannot be null", name);
 		}
 
 		private Builder urls(String... urls) {
@@ -460,8 +460,7 @@ public class DirContextSource {
 		 */
 		public Builder retries(int retries) {
 			check();
-			Validate.isTrue(retries > 0, "Property 'retries' must be greater than zero but is %d",
-					retries);
+			isTrue(retries > 0, "Property 'retries' must be greater than zero but is %d", retries);
 			this.retries = retries;
 			return this;
 		}
@@ -477,8 +476,8 @@ public class DirContextSource {
 		 */
 		public Builder retryWait(int retryWait) {
 			check();
-			Validate.isTrue(retryWait > 0,
-					"Property 'retryWait' must be greater than zero but is %d", retryWait);
+			isTrue(retryWait > 0, "Property 'retryWait' must be greater than zero but is %d",
+					retryWait);
 			this.retryWait = retryWait;
 			return this;
 		}
@@ -538,7 +537,7 @@ public class DirContextSource {
 		 */
 		public Builder additionalProperty(String name, Object value) {
 			check();
-			Validate.notEmpty(name, "Additional property's name cannot be null or empty");
+			notEmpty(name, "Additional property's name cannot be null or empty");
 			this.additionalProperties.put(name, value);
 			return this;
 		}

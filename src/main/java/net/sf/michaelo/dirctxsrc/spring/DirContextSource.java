@@ -12,8 +12,8 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.ldap.core.ContextSource;
 
 /**
- * A Spring LDAP {@link ContextSource} wrapper for
- * {@link net.sf.michaelo.dirctxsrc.DirContextSource DirContextSource}.
+ * A Spring LDAP {@link ContextSource} wrapper for {@link net.sf.michaelo.dirctxsrc.DirContextSource
+ * DirContextSource}.
  * <p>
  * Here is a minimal example how to create a {@code DirContextSource} with the supplied builder:
  *
