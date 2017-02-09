@@ -21,9 +21,6 @@ import java.util.Properties;
 import javax.naming.NamingException;
 import javax.security.auth.login.LoginException;
 
-import org.apache.commons.lang3.JavaVersion;
-import org.apache.commons.lang3.SystemUtils;
-import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -38,10 +35,8 @@ public class DirContextSourceGssApiAuthTest {
 		loginConfDirectory = new File(buildDirectory, "test-classes");
 	}
 
-	@Test(expected = SecurityException.class)
+	@Test(expected = LoginException.class)
 	public void gssApiAuthNoLoginConfFile() throws Throwable {
-		Assume.assumeTrue(!SystemUtils.isJavaVersionAtLeast(JavaVersion.JAVA_1_7));
-
 		DirContextSource.Builder builder = new DirContextSource.Builder("ldap://localhost:11389");
 		DirContextSource contextSource = builder.gssApiAuth().build();
 		try {
@@ -58,7 +53,7 @@ public class DirContextSourceGssApiAuthTest {
 		systemProperties.putAll(System.getProperties());
 
 		System.setProperty("java.security.auth.login.config",
-				loginConfDirectory + System.getProperty("file.separator") + "login.conf");
+				new File(loginConfDirectory, "login.conf").getAbsolutePath());
 
 		DirContextSource.Builder builder = new DirContextSource.Builder("ldap://localhost:11389");
 		DirContextSource contextSource = builder.gssApiAuth("NonExistingEntry").build();
@@ -78,7 +73,7 @@ public class DirContextSourceGssApiAuthTest {
 		systemProperties.putAll(System.getProperties());
 
 		System.setProperty("java.security.auth.login.config",
-				loginConfDirectory + System.getProperty("file.separator") + "login.conf");
+				new File(loginConfDirectory, "login.conf").getAbsolutePath());
 
 		DirContextSource.Builder builder = new DirContextSource.Builder("ldap://localhost:11389");
 		DirContextSource contextSource = builder.gssApiAuth().build();

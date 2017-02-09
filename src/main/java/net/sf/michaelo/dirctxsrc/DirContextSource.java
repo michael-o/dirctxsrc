@@ -102,7 +102,7 @@ public class DirContextSource {
 		try {
 			KRB5_MECHANISM = new Oid("1.2.840.113554.1.2.2");
 		} catch (GSSException e) {
-			throw new IllegalStateException("Failed to create OID for Kerberos 5 mechanism");
+			throw new IllegalStateException("failed to create OID for Kerberos 5 mechanism");
 		}
 	}
 
@@ -153,14 +153,12 @@ public class DirContextSource {
 		env.put(Sasl.SERVER_AUTH, Boolean.toString(builder.mutualAuth));
 		if (builder.qop != null)
 			env.put(Sasl.QOP, StringUtils.join(builder.qop, ','));
-		// No constant available
 		if (builder.debug)
 			env.put("com.sun.jndi.ldap.trace.ber", builder.debugStream);
 		retries = builder.retries;
 		retryWait = builder.retryWait;
 		if (builder.referral != null)
 			env.put(Context.REFERRAL, builder.referral);
-		// No public constant available
 		if (builder.binaryAttributes != null)
 			env.put("java.naming.ldap.attributes.binary",
 					StringUtils.join(builder.binaryAttributes, ' '));
@@ -246,24 +244,24 @@ public class DirContextSource {
 		}
 
 		private String[] validateAndReturnStringArray(String name, String[] value) {
-			notEmpty(value, "Property '%s' cannot be null or empty", name);
+			notEmpty(value, "property '%s' cannot be null or empty", name);
 
 			List<String> validatedElements = new ArrayList<String>();
 			for (String elem : value)
 				if (StringUtils.isNotEmpty(elem))
 					validatedElements.add(elem);
 
-			notEmpty(validatedElements, "Property '%s' cannot be null or empty", name);
+			notEmpty(validatedElements, "property '%s' cannot be null or empty", name);
 
 			return validatedElements.toArray(new String[validatedElements.size()]);
 		}
 
 		private String validateAndReturnString(String name, String value) {
-			return notEmpty(value, "Property '%s' cannot be null or empty", name);
+			return notEmpty(value, "property '%s' cannot be null or empty", name);
 		}
 
 		private <T> T validateAndReturnObject(String name, T value) {
-			return notNull(value, "Property '%s' cannot be null", name);
+			return notNull(value, "property '%s' cannot be null", name);
 		}
 
 		private Builder urls(String... urls) {
@@ -460,7 +458,7 @@ public class DirContextSource {
 		 */
 		public Builder retries(int retries) {
 			check();
-			isTrue(retries > 0, "Property 'retries' must be greater than zero but is %d", retries);
+			isTrue(retries > 0, "property 'retries' must be greater than zero but is %d", retries);
 			this.retries = retries;
 			return this;
 		}
@@ -476,7 +474,7 @@ public class DirContextSource {
 		 */
 		public Builder retryWait(int retryWait) {
 			check();
-			isTrue(retryWait > 0, "Property 'retryWait' must be greater than zero but is %d",
+			isTrue(retryWait > 0, "property 'retryWait' must be greater than zero but is %d",
 					retryWait);
 			this.retryWait = retryWait;
 			return this;
@@ -537,7 +535,7 @@ public class DirContextSource {
 		 */
 		public Builder additionalProperty(String name, Object value) {
 			check();
-			notEmpty(name, "Additional property's name cannot be null or empty");
+			notEmpty(name, "additional property's name cannot be null or empty");
 			this.additionalProperties.put(name, value);
 			return this;
 		}
@@ -555,7 +553,7 @@ public class DirContextSource {
 
 			if (auth == Auth.GSSAPI && StringUtils.isEmpty(loginEntryName))
 				throw new IllegalStateException(
-						"Auth 'GSS-API' is set but no login entry name configured");
+						"auth 'GSS-API' is set but no login entry name configured");
 
 			DirContextSource contextSource = new DirContextSource(this);
 			done = true;
@@ -565,7 +563,7 @@ public class DirContextSource {
 
 		private void check() {
 			if (done)
-				throw new IllegalStateException("Cannot modify an already used builder");
+				throw new IllegalStateException("cannot modify an already used builder");
 		}
 
 	}
@@ -590,7 +588,7 @@ public class DirContextSource {
 								GSSCredential.INDEFINITE_LIFETIME, KRB5_MECHANISM,
 								GSSCredential.INITIATE_ONLY);
 					} catch (GSSException e) {
-						NamingException ne = new NamingException("Failed to obtain GSS credential");
+						NamingException ne = new NamingException("failed to obtain GSS credential");
 						ne.setRootCause(e);
 						throw ne;
 					}
