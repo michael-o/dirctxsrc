@@ -137,6 +137,7 @@
 										<include>org/apache/commons/lang3/Validate.class</include>
 										<include>org/apache/commons/lang3/BooleanUtils.class</include>
 										<include>org/apache/commons/lang3/SystemUtils.class</include>
+										<include>org/apache/commons/lang3/JavaVersion.class</include>
 										<include>org/apache/commons/lang3/math/NumberUtils.class</include>
 									</includes>
 								</filter>
