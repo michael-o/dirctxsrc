@@ -5,6 +5,7 @@
 
 	<body>
 		<release version="2.1-SNAPSHOT" date="TBD" description="Overhaul for Tomcat 8.5">
+			<action type="update" dev="michael-o">Default value of retries changed to 1</action>
 			<action type="remove" dev="michael-o">Complete removal of uploads to SourceForge</action>
 			<action type="fix" dev="michael-o">Fixed missing classes in shaded JAR</action>
 		</release>

@@ -66,8 +66,8 @@ import org.ietf.jgss.Oid;
  * <li>The default authentication scheme is set to none/anonymous.</li>
  * <li>If GSS-API authentication is used the login entry name defaults to {@code DirContextSource}.
  * </li>
- * <li>By default a context source will retry up to three (3) times to connect and will wait for
- * 2000 ms between retries.</li>
+ * <li>By default a context source will try once to connect and will wait for 2000 ms between
+ * retries.</li>
  * </ol>
  *
  * A complete overview of all {@code DirContext} properties can be found
@@ -219,7 +219,7 @@ public class DirContextSource {
 			// Initialize default values first as mentioned in the class' Javadoc
 			contextFactory("com.sun.jndi.ldap.LdapCtxFactory");
 			auth(Auth.NONE);
-			retries(3);
+			retries(1);
 			retryWait(2000);
 			additionalProperties = new Hashtable<String, Object>();
 
