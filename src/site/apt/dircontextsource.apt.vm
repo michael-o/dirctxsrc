@@ -101,7 +101,7 @@ builder.gssApiAuth();
 +--------------
 
     The above example presumes that you have configured your JAAS login file with
-    the default login entry name <<<DirContentSource>>>. If you prefer an alternative
+    the default login entry name <<<DirContextSource>>>. If you prefer an alternative
     name configure as follows:
 
 +--------------

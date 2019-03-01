@@ -122,11 +122,11 @@ context.close();
   {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}<<<Builder>>>}}
   class. Due to this fact, please note the following prior setting up a resource:
 
-  [[1]] All values are passed as strings but are preprocessed by the builder
+  [[1]] Though all values are passed as strings, they are preprocessed by the builder
         before building the actual context source. Incompatible values will cause
         an exception to be thrown.
 
-  [[2]] Multi valued attributes may be passed separated by a whitespace character.
+  [[2]] Multivalued attributes may be passed separated by a whitespace character.
 
   [[3]] Omitted attributes are subject to the default values set by the builder.
         See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.html}Javadoc}} for details.

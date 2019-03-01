@@ -59,7 +59,9 @@ import org.ietf.jgss.Oid;
  * </pre>
  *
  * Before returning a {@code DirContext} the source will loop several times until a connection has
- * been established or the number of retries are exhausted, which ever comes first. <br>
+ * been established or the number of retries are exhausted, which ever comes first.
+ *
+ * <p>
  * A {@code DirContextSource} object will be initially preconfigured by its builder for you:
  * <ol>
  * <li>The context factory is set by default to {@code com.sun.jndi.ldap.LdapCtxFactory}.</li>
@@ -70,6 +72,7 @@ import org.ietf.jgss.Oid;
  * retries.</li>
  * </ol>
  *
+ * <p>
  * A complete overview of all {@code DirContext} properties can be found
  * <a href= "https://docs.oracle.com/javase/7/docs/technotes/guides/jndi/jndi-ldap.html">here</a>.
  * Make sure that you pass reasonable/valid values only otherwise the behavior is undefined.
@@ -81,7 +84,7 @@ public class DirContextSource {
 	/**
 	 * Enum containing all supported authentication mechanisms.
 	 */
-	public static enum Auth {
+	public enum Auth {
 
 		NONE("none"), GSSAPI("GSSAPI");
 
@@ -390,7 +393,7 @@ public class DirContextSource {
 		 * directory server is secured. The first negotiated quality is used. Valid values are
 		 * {@code auth}, {@code auth-int}, and {@code auth-conf}. This only works with SASL
 		 * mechanisms which support this feature, e.g., Digest MD5 or GSS-API. See
-		 * <a href="http://docs.oracle.com/javase/jndi/tutorial/ldap/security/sasl.html#qop">here
+		 * <a href="https://docs.oracle.com/javase/7/docs/technotes/guides/jndi/jndi-ldap-gl.html#qop">here
 		 * </a> for details.
 		 *
 		 * @param qop
@@ -483,7 +486,7 @@ public class DirContextSource {
 		/**
 		 * Sets those attributes which will be returned as {@code byte[]} instead of {@code String}.
 		 * See <a href=
-		 * "http://docs.oracle.com/javase/1.5.0/docs/guide/jndi/jndi-ldap-gl.html#LDAPPROPS">here
+		 * "https://docs.oracle.com/javase/7/docs/technotes/guides/jndi/jndi-ldap-gl.html#binary">here
 		 * </a> for details.
 		 *
 		 * @param attributes
@@ -503,7 +506,7 @@ public class DirContextSource {
 		/**
 		 * Sets the referral handling strategy. Valid values are {@code ignore}, {@code follow}, and
 		 * {@code throw}. See
-		 * <a href="http://docs.oracle.com/javase/jndi/tutorial/ldap/referral/jndi.html">here </a>
+		 * <a href="https://docs.oracle.com/javase/7/docs/technotes/guides/jndi/jndi-ldap-gl.html#referral">here </a>
 		 * for details.
 		 *
 		 * @param referral

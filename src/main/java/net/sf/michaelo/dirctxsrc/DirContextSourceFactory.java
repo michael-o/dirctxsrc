@@ -53,7 +53,7 @@ import org.apache.commons.lang3.math.NumberUtils;
  * </pre>
  *
  * For a complete reference, see
- * <a href="http://dirctxsrc.sourceforge.net/dircontextsourcefactory.html">documentation site</a>.
+ * <a href="https://dirctxsrc.sourceforge.net/dircontextsourcefactory.html">documentation site</a>.
  *
  * @version $Id$
  *
