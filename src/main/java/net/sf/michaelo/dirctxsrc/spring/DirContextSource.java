@@ -87,7 +87,7 @@ public class DirContextSource implements ContextSource, InitializingBean {
 	@Override
 	public DirContext getContext(String principal, String credentials) {
 		throw new UnsupportedOperationException(
-				"a dir context can only be created explicitly with a login config name");
+				"A dir context can only be created explicitly with a login config name");
 	}
 
 	/**
