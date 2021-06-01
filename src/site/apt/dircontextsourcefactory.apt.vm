@@ -1,5 +1,5 @@
 #*
- * Copyright 2013–2019 Michael Osipov
+ * Copyright 2013–2021 Michael Osipov
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,8 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *#
-
-## $Id$
 
                             ----------------------
                          Using DirContextSourceFactory
@@ -142,7 +140,7 @@ context.close();
 *------------+---------------------+-----------+-----------------+--------------------------+
 | factory    | \u2013              | no        | <<<net.sf.michaelo.dirctxsrc.DirContextSourceFactory>>> | Preset class name of this resource's factory. |
 *------------+---------------------+-----------+-----------------+--------------------------+
-| contextFactory | <<<contextFactory(String)>>> | yes       | Any class (name) implementing the <<<{{{http://docs.oracle.com/javase/6/docs/api/javax/naming/spi/InitialContextFactory.html}InitialContentFactory}}>>> interface | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadoc}}. |
+| contextFactory | <<<contextFactory(String)>>> | yes       | Any class (name) implementing the <<<{{{http://docs.oracle.com/javase/7/docs/api/javax/naming/spi/InitialContextFactory.html}InitialContentFactory}}>>> interface | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadoc}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+
 | urls       | <<<Builder(String$ellipsis)>>> | no   | A list of LDAP URLs | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadoc}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+
@@ -150,7 +148,7 @@ context.close();
 *------------+---------------------+-----------+-----------------+--------------------------+
 | loginEntryName | <<<loginEntryName(String)>>> | yes       | any string      | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadoc}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+
-| objectFactories | <<<objectFactories(String$ellipsis)>>> | yes       | A list of classes (names) implementing either the <<<{{{http://docs.oracle.com/javase/6/docs/api/javax/naming/spi/ObjectFactory.html}ObjectFactory}}>>> or the <<<{{{http://docs.oracle.com/javase/6/docs/api/javax/naming/spi/DirObjectFactory.html}DirObjectFactory}}>>> interface | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadoc}}. |
+| objectFactories | <<<objectFactories(String$ellipsis)>>> | yes       | A list of classes (names) implementing either the <<<{{{http://docs.oracle.com/javase/7/docs/api/javax/naming/spi/ObjectFactory.html}ObjectFactory}}>>> or the <<<{{{http://docs.oracle.com/javase/7/docs/api/javax/naming/spi/DirObjectFactory.html}DirObjectFactory}}>>> interface | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadoc}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+
 | mutualAuth | <<<mutualAuth(boolean)>>> | yes | <<<true>>> or <<<false>>> (boolean) | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadoc}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+
