@@ -31,7 +31,7 @@
           <ul class="breadcrumb">
         <li id="publishDate">Last Published: 2021-06-01<span class="divider">|</span>
 </li>
-          <li id="projectVersion">Version: 2.2.1-SNAPSHOT</li>
+          <li id="projectVersion">Version: 2.3.0-SNAPSHOT</li>
           </ul>
         </div>
       </header>
@@ -86,7 +86,7 @@ DirContext context = contextSource.getDirContext();
 context.close();
 [&#x2026;]</pre></div></section><section>
 <h3><a name="Advanced_Example"></a>Advanced Example</h3>
-<p>A more complex example includes several configuration options as described in the builder's <a href="./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html">Javadoc</a>:</p>
+<p>A more complex example includes several configuration options as described in the builder's <a href="./dirctxsrc/apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html">Javadoc</a>:</p>
 <div class="source"><pre class="prettyprint">import net.sf.michaelo.dirctxsrc.DirContextSource;
 import javax.naming.directory.DirContext;
 [&#x2026;]
@@ -109,7 +109,7 @@ context.close();
 <p>The <code>DirContextSource</code> supports two types of authentication mechanisms, none/anonymous and GSS-API with Kerberos 5.</p>
 <dl>
 <dt>Note</dt>
-<dd>Other mechanisms are not directly supported because I never needed them. If you need any, please file a <a href="./issue-tracking.html">ticket</a>.</dd></dl>
+<dd>Other mechanisms are not directly supported because I never needed them. If you need any, please file an <a href="./issue-management.html">issue</a>.</dd></dl>
 <ul>
 <li><i>Anonymous</i> auth: works out of the box, the builder is configured for this mechanism by default.</li>
 <li><i>GSS-API (Kerberos 5)</i> auth: requires a bit more work. Make sure that JVM is properly configured for Kerberos and add the following to the basic example builder:
@@ -120,7 +120,7 @@ builder.gssApiAuth();
 <div class="source"><pre class="prettyprint">[&#x2026;]
 builder.gssApiAuth(&quot;MyAlternativeEntryName&quot;);
 [&#x2026;]</pre></div>
-<p>There are a few more options for this authentication mechanism, like mutual auth or auth integrity and/or privacy protection. See the builder's <a href="./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html">Javadoc</a> for more details.</p></li></ul></section></section>
+<p>There are a few more options for this authentication mechanism, like mutual auth or auth integrity and/or privacy protection. See the builder's <a href="./dirctxsrc/apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html">Javadoc</a> for more details.</p></li></ul></section></section>
         </main>
       </div>
     </div>

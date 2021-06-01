@@ -31,7 +31,7 @@
           <ul class="breadcrumb">
         <li id="publishDate">Last Published: 2021-06-01<span class="divider">|</span>
 </li>
-          <li id="projectVersion">Version: 2.2.1-SNAPSHOT</li>
+          <li id="projectVersion">Version: 2.3.0-SNAPSHOT</li>
           </ul>
         </div>
       </header>
@@ -66,10 +66,10 @@
         <main id="bodyColumn"  class="span10" >
 <section>
 <h2><a name="Using_DirContextSource_with_Spring_LDAP"></a>Using DirContextSource with Spring LDAP</h2>
-<p><code>DirContextSource</code> nicely intergrates with Spring LDAP by providing a thin wrapper around <code>DirContextSource.Builder</code> exposed as a <code>ContextSource</code> implementation: <a href="./apidocs/net/sf/michaelo/dirctxsrc/spring/DirContextSource.html"><code>net.sf.michaelo.dirctxsrc.spring.DirContextSource</code></a>.</p>
+<p><code>DirContextSource</code> nicely intergrates with Spring LDAP by providing a thin wrapper around <code>DirContextSource.Builder</code> exposed as a <code>ContextSource</code> implementation: <a href="./dirctxsrc/apidocs/net/sf/michaelo/dirctxsrc/spring/DirContextSource.html"><code>net.sf.michaelo.dirctxsrc.spring.DirContextSource</code></a>.</p>
 <dl>
 <dt>Attention</dt>
-<dd>Contrary to previous statements, this library has to reside in the webapp classpath along with its dependencies (<code>spring-ldap-core</code> 2.3.1.RELEASE+ and <code>spring-beans</code> 4.3.22.RELEASE+) to work properly.</dd></dl>
+<dd>Contrary to previous statements, this library has to reside in the webapp classpath along with its dependencies (<code>spring-ldap-core</code> 2.3.4.RELEASE+ and <code>spring-beans</code> 4.3.30.RELEASE+) to work properly.</dd></dl>
 <p>In the first step, you have to tell Spring to create a bean and in the second step, let Spring autowire this bean to your class.</p>
 <p>Add this to your <code>beans.xml</code>, e.g., <code>root-context.xml</code> or <code>servlet-context.xml</code>:</p>
 <div class="source"><pre class="prettyprint">&lt;beans &#x2026;&gt;
