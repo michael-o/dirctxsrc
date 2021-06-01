@@ -1,5 +1,5 @@
 /*
- * Copyright 2013–2019 Michael Osipov
+ * Copyright 2013–2021 Michael Osipov
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -53,10 +53,7 @@ import org.apache.commons.lang3.math.NumberUtils;
  * </pre>
  *
  * For a complete reference, see
- * <a href="https://dirctxsrc.sourceforge.net/dircontextsourcefactory.html">documentation site</a>.
- *
- * @version $Id$
- *
+ * <a href="https://michael-o.github.io/dirctxsrc/dircontextsourcefactory.html">documentation site</a>.
  */
 public class DirContextSourceFactory implements ObjectFactory {
 

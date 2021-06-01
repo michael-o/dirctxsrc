@@ -1,5 +1,5 @@
 /*
- * Copyright 2012–2019 Michael Osipov
+ * Copyright 2012–2021 Michael Osipov
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,5 @@
 /**
  * The base package for {@link net.sf.michaelo.dirctxsrc.DirContextSource} wrappers for the
  * Spring Framework.
- *
- * @version $Id$
  */
 package net.sf.michaelo.dirctxsrc.spring;

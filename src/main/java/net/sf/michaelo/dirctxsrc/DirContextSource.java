@@ -1,5 +1,5 @@
 /*
- * Copyright 2012–2019 Michael Osipov
+ * Copyright 2012–2021 Michael Osipov
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -76,8 +76,6 @@ import org.ietf.jgss.Oid;
  * A complete overview of all {@code DirContext} properties can be found
  * <a href= "https://docs.oracle.com/javase/7/docs/technotes/guides/jndi/jndi-ldap.html">here</a>.
  * Make sure that you pass reasonable/valid values only otherwise the behavior is undefined.
- *
- * @version $Id$
  */
 public class DirContextSource {
 

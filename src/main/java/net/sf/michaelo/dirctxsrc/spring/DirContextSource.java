@@ -1,5 +1,5 @@
 /*
- * Copyright 2012–2019 Michael Osipov
+ * Copyright 2012–2021 Michael Osipov
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -50,7 +50,6 @@ import org.springframework.ldap.core.ContextSource;
  * </ol>
  *
  * @see net.sf.michaelo.dirctxsrc.DirContextSource
- * @version $Id$
  */
 public class DirContextSource implements ContextSource, InitializingBean {
 
