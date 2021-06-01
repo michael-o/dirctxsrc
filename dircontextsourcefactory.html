@@ -124,11 +124,11 @@ DirContext context = contextSource.getDirContext();
 context.close();
 [&#x2026;]</pre></div></section></section><section>
 <h3><a name="Configuration_Options"></a>Configuration Options</h3>
-<p>The factory offers the same configuration properties as the builder class but exposes them as XML attributes. I.e., this factory is fully backed by the <a href="./dirctxsrc/apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html"><code>Builder</code></a> class. Due to this fact, please note the following prior setting up a resource:</p>
+<p>The factory offers the same configuration properties as the builder class but exposes them as XML attributes. I.e., this factory is fully backed by the <a href="./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html"><code>Builder</code></a> class. Due to this fact, please note the following prior setting up a resource:</p>
 <ol style="list-style-type: decimal">
 <li>Though all values are passed as strings, they are preprocessed by the builder before building the actual context source. Incompatible values will cause an exception to be thrown.</li>
 <li>Multivalued attributes may be passed separated by a whitespace character.</li>
-<li>Omitted attributes are subject to the default values set by the builder. See <a href="./dirctxsrc/apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.html">Javadoc</a> for details.</li></ol>
+<li>Omitted attributes are subject to the default values set by the builder. See <a href="./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.html">Javadoc</a> for details.</li></ol>
 <table border="1" class="table table-striped">
 <tr class="a">
 <th align="center">Attribute</th>
@@ -159,79 +159,79 @@ context.close();
 <td align="left"><code>contextFactory(String)</code></td>
 <td align="left">yes</td>
 <td align="left">Any class (name) implementing the <code><a class="externalLink" href="http://docs.oracle.com/javase/7/docs/api/javax/naming/spi/InitialContextFactory.html">InitialContentFactory</a></code> interface</td>
-<td align="left">See <a href="./dirctxsrc/apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html">Javadoc</a>.</td></tr>
+<td align="left">See <a href="./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html">Javadoc</a>.</td></tr>
 <tr class="b">
 <td align="left">urls</td>
 <td align="left"><code>Builder(String&#x2026;)</code></td>
 <td align="left">no</td>
 <td align="left">A list of LDAP URLs</td>
-<td align="left">See <a href="./dirctxsrc/apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html">Javadoc</a>.</td></tr>
+<td align="left">See <a href="./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html">Javadoc</a>.</td></tr>
 <tr class="a">
 <td align="left">auth</td>
 <td align="left"><code>auth(Auth)</code></td>
 <td align="left">yes</td>
 <td align="left"><code>none</code> or <code>gssapi</code> (case-insensitive)</td>
-<td align="left">See <a href="./dirctxsrc/apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html">Javadoc</a>.</td></tr>
+<td align="left">See <a href="./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html">Javadoc</a>.</td></tr>
 <tr class="b">
 <td align="left">loginEntryName</td>
 <td align="left"><code>loginEntryName(String)</code></td>
 <td align="left">yes</td>
 <td align="left">any string</td>
-<td align="left">See <a href="./dirctxsrc/apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html">Javadoc</a>.</td></tr>
+<td align="left">See <a href="./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html">Javadoc</a>.</td></tr>
 <tr class="a">
 <td align="left">objectFactories</td>
 <td align="left"><code>objectFactories(String&#x2026;)</code></td>
 <td align="left">yes</td>
 <td align="left">A list of classes (names) implementing either the <code><a class="externalLink" href="http://docs.oracle.com/javase/7/docs/api/javax/naming/spi/ObjectFactory.html">ObjectFactory</a></code> or the <code><a class="externalLink" href="http://docs.oracle.com/javase/7/docs/api/javax/naming/spi/DirObjectFactory.html">DirObjectFactory</a></code> interface</td>
-<td align="left">See <a href="./dirctxsrc/apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html">Javadoc</a>.</td></tr>
+<td align="left">See <a href="./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html">Javadoc</a>.</td></tr>
 <tr class="b">
 <td align="left">mutualAuth</td>
 <td align="left"><code>mutualAuth(boolean)</code></td>
 <td align="left">yes</td>
 <td align="left"><code>true</code> or <code>false</code> (boolean)</td>
-<td align="left">See <a href="./dirctxsrc/apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html">Javadoc</a>.</td></tr>
+<td align="left">See <a href="./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html">Javadoc</a>.</td></tr>
 <tr class="a">
 <td align="left">qop</td>
 <td align="left"><code>qop(String&#x2026;)</code></td>
 <td align="left">yes</td>
 <td align="left">A list of <code>auth</code>, <code>auth-int</code> and/or <code>auth-conf</code></td>
-<td align="left">See <a href="./dirctxsrc/apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html">Javadoc</a>.</td></tr>
+<td align="left">See <a href="./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html">Javadoc</a>.</td></tr>
 <tr class="b">
 <td align="left">debug</td>
 <td align="left"><code>debug(boolean)</code></td>
 <td align="left">yes</td>
 <td align="left"><code>true</code> or <code>false</code> (boolean)</td>
-<td align="left">See <a href="./dirctxsrc/apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html">Javadoc</a>.</td></tr>
+<td align="left">See <a href="./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html">Javadoc</a>.</td></tr>
 <tr class="a">
 <td align="left">retries</td>
 <td align="left"><code>retries(int)</code></td>
 <td align="left">yes</td>
 <td align="left">positive integer</td>
-<td align="left">See <a href="./dirctxsrc/apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html">Javadoc</a>.</td></tr>
+<td align="left">See <a href="./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html">Javadoc</a>.</td></tr>
 <tr class="b">
 <td align="left">retryWait</td>
 <td align="left"><code>retryWait(int)</code></td>
 <td align="left">yes</td>
 <td align="left">positive integer</td>
-<td align="left">See <a href="./dirctxsrc/apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html">Javadoc</a>.</td></tr>
+<td align="left">See <a href="./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html">Javadoc</a>.</td></tr>
 <tr class="a">
 <td align="left">binaryAttributes</td>
 <td align="left"><code>binaryAttributes(String&#x2026;)</code></td>
 <td align="left">yes</td>
 <td align="left">A list or attribute names</td>
-<td align="left">See <a href="./dirctxsrc/apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html">Javadoc</a>.</td></tr>
+<td align="left">See <a href="./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html">Javadoc</a>.</td></tr>
 <tr class="b">
 <td align="left">referral</td>
 <td align="left"><code>referral(String)</code></td>
 <td align="left">yes</td>
 <td align="left"><code>ignore</code>, <code>throw</code> or <code>follow</code></td>
-<td align="left">See <a href="./dirctxsrc/apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html">Javadoc</a>.</td></tr>
+<td align="left">See <a href="./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html">Javadoc</a>.</td></tr>
 <tr class="a">
 <td align="left">additionalProperties</td>
 <td align="left"><code>additionalProperty(String, Object)</code></td>
 <td align="left">yes</td>
 <td align="left">A list of properties and values</td>
-<td align="left">Semicolon-separated name value pairs: <code>name=value;name2=value2;&#x2026;</code>. See <a href="./dirctxsrc/apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html">Javadoc</a>.</td></tr></table></section></section>
+<td align="left">Semicolon-separated name value pairs: <code>name=value;name2=value2;&#x2026;</code>. See <a href="./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html">Javadoc</a>.</td></tr></table></section></section>
         </main>
       </div>
     </div>
