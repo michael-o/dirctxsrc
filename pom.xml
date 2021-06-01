@@ -52,7 +52,7 @@
 
 	<properties>
 		<spring-ldap.version>2.3.4.RELEASE</spring-ldap.version>
-		<spring.version>4.3.22.RELEASE</spring.version>
+		<spring.version>4.3.30.RELEASE</spring.version>
 	</properties>
 
 	<dependencies>
