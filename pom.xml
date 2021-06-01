@@ -51,7 +51,7 @@
 	</distributionManagement>
 
 	<properties>
-		<spring-ldap.version>2.3.1.RELEASE</spring-ldap.version>
+		<spring-ldap.version>2.3.4.RELEASE</spring-ldap.version>
 		<spring.version>4.3.22.RELEASE</spring.version>
 	</properties>
 
