@@ -30,24 +30,23 @@
 
 	<name>JNDI DirContextSource</name>
 	<description>A JNDI DirContext factory which works very much like a JDBC DataSource returning ready-to-use DirContext objects.</description>
-	<url>https://dirctxsrc.sourceforge.net</url>
+	<url>https://michael-o.github.io/dirctxsrc/</url>
 	<inceptionYear>2012</inceptionYear>
 
 	<scm>
-		<connection>scm:svn:https://svn.code.sf.net/p/dirctxsrc/code/trunk</connection>
-		<developerConnection>scm:svn:https://svn.code.sf.net/p/dirctxsrc/code/trunk</developerConnection>
-		<url>https://sourceforge.net/p/dirctxsrc/code/HEAD/tree/trunk</url>
+		<connection>scm:git:https://github.com/michael-o/dirctxsrc.git</connection>
+		<developerConnection>scm:git:https://github.com/michael-o/dirctxsrc.git</developerConnection>
+		<url>https://github.com/michael-o/dirctxsrc</url>
 	</scm>
 	<issueManagement>
-		<system>SourceForge.net Tickets</system>
-		<url>https://sourceforge.net/p/dirctxsrc/tickets</url>
+		<system>GitHub</system>
+		<url>https://github.com/michael-o/dirctxsrc/issues</url>
 	</issueManagement>
 
 	<distributionManagement>
 		<site>
-			<id>sourceforge.net</id>
-			<name>SourceForge.net Project Web</name>
-			<url>scp://shell.sourceforge.net/home/project-web/dirctxsrc/htdocs</url>
+			<id>github</id>
+			<url>scm:git:https://github.com/michael-o/dirctxsrc.git</url>
 		</site>
 	</distributionManagement>
 
