@@ -59,7 +59,7 @@ import org.ietf.jgss.Oid;
  * </pre>
  *
  * Before returning a {@code DirContext} the source will loop several times until a connection has
- * been established or the number of retries are exhausted, which ever comes first.
+ * been established or the number of retries are exhausted, whichever comes first.
  *
  * <p>
  * A {@code DirContextSource} object will be initially preconfigured by its builder for you:
