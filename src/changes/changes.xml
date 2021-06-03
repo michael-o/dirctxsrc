@@ -5,6 +5,7 @@
 
 	<body>
 		<release version="2.3.1-SNAPSHOT" date="TBD" description="Bugfixes">
+			<action type="remove" dev="michael-o">Remove incorrect workaround for JDK-8160818</action>
 			<action type="fix" dev="michael-o">Fix incorrect setting of mutual auth</action>
 		</release>
 		<release version="2.3.0" date="2021-06-02" description="Non-functional changes">
