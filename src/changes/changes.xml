@@ -4,7 +4,7 @@
 						http://maven.apache.org/xsd/changes-1.0.0.xsd">
 
 	<body>
-		<release version="2.3.0-SNAPSHOT" date="TBD" description="Non-functional changes">
+		<release version="2.3.0" date="2021-06-02" description="Non-functional changes">
 			<action type="update" dev="michael-o">Improve exception messages</action>
 			<action type="update" dev="michael-o">Upgrade to Spring Framework 4.3.30.RELEASE</action>
 			<action type="update" dev="michael-o">Upgrade to Spring LDAP 2.3.4.RELEASE</action>
