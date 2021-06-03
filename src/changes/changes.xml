@@ -4,6 +4,9 @@
 						http://maven.apache.org/xsd/changes-1.0.0.xsd">
 
 	<body>
+		<release version="2.3.1-SNAPSHOT" date="TBD" description="Bugfixes">
+			<action type="fix" dev="michael-o">Fix incorrect setting of mutual auth</action>
+		</release>
 		<release version="2.3.0" date="2021-06-02" description="Non-functional changes">
 			<action type="update" dev="michael-o">Improve exception messages</action>
 			<action type="update" dev="michael-o">Upgrade to Spring Framework 4.3.30.RELEASE</action>

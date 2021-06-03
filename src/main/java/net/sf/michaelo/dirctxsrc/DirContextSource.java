@@ -151,7 +151,8 @@ public class DirContextSource {
 		loginEntryName = builder.loginEntryName;
 		if (builder.objectFactories != null)
 			env.put(Context.OBJECT_FACTORIES, StringUtils.join(builder.objectFactories, ':'));
-		env.put(Sasl.SERVER_AUTH, Boolean.toString(builder.mutualAuth));
+		if (builder.mutualAuth != null)
+			env.put(Sasl.SERVER_AUTH, Boolean.toString(builder.mutualAuth));
 		if (builder.qop != null)
 			env.put(Sasl.QOP, StringUtils.join(builder.qop, ','));
 		if (builder.debug)
@@ -189,7 +190,7 @@ public class DirContextSource {
 		private Auth auth;
 		private String loginEntryName;
 		private String[] objectFactories;
-		private boolean mutualAuth;
+		private Boolean mutualAuth;
 		private String[] qop;
 		private boolean debug;
 		private OutputStream debugStream;
