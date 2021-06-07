@@ -134,7 +134,7 @@ public class DirContextSource {
 
 	}
 
-	private static final Logger logger = Logger.getLogger(DirContextSource.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(DirContextSource.class.getName());
 	private final Hashtable<String, Object> env;
 	private final String loginEntryName;
 	private final int retries;
@@ -602,7 +602,7 @@ public class DirContextSource {
 							if (r == 0)
 								throw e;
 
-							logger.log(Level.WARNING,
+							LOGGER.log(Level.WARNING,
 									String.format(
 											"Connecting to [%s] failed, remaining retries: %d",
 											env.get(Context.PROVIDER_URL), r), e);
@@ -651,7 +651,7 @@ public class DirContextSource {
 				if (r == 0)
 					throw e;
 
-				logger.log(Level.WARNING,
+				LOGGER.log(Level.WARNING,
 						String.format(
 								"Connecting to [%s] failed, remaining retries: %d",
 								env.get(Context.PROVIDER_URL), r), e);
