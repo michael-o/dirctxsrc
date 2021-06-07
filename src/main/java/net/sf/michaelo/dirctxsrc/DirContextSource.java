@@ -28,6 +28,9 @@ import javax.naming.Context;
 import javax.naming.NamingException;
 import javax.naming.directory.DirContext;
 import javax.naming.directory.InitialDirContext;
+import javax.naming.ldap.Control;
+import javax.naming.ldap.InitialLdapContext;
+import javax.naming.ldap.LdapContext;
 import javax.security.auth.Subject;
 import javax.security.auth.login.LoginContext;
 import javax.security.auth.login.LoginException;
@@ -107,10 +110,11 @@ public class DirContextSource {
 		}
 	}
 
-	private static class GSSInitialDirContext extends InitialDirContext {
+	private static class GSSLdapInitialContext extends InitialLdapContext {
 
-		public GSSInitialDirContext(Hashtable<?, ?> environment) throws NamingException {
-			super(environment);
+		public GSSLdapInitialContext(Hashtable<?, ?> environment, Control[] connCtls)
+				throws NamingException {
+			super(environment, connCtls);
 		}
 
 		@Override
@@ -590,13 +594,13 @@ public class DirContextSource {
 					}
 
 					int r = retries;
-					InitialDirContext idc = null;
+					LdapContext idc = null;
 
 					while (r-- > 0) {
 
 						try {
 							env.put(Sasl.CREDENTIALS, credential);
-							idc = new GSSInitialDirContext(env);
+							idc = new GSSLdapInitialContext(env, null);
 							break;
 						} catch (NamingException e) {
 							if (r == 0)
@@ -645,7 +649,7 @@ public class DirContextSource {
 		while (r-- > 0) {
 
 			try {
-				context = new InitialDirContext(env);
+				context = new InitialLdapContext(env, null);
 				break;
 			} catch (NamingException e) {
 				if (r == 0)
