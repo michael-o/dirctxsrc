@@ -56,8 +56,8 @@
 		<maven.compiler.source>${javaVersion}</maven.compiler.source>
 		<maven.compiler.target>${javaVersion}</maven.compiler.target>
 
-		<spring-ldap.version>2.4.4</spring-ldap.version>
-		<spring.version>5.3.39</spring.version>
+		<springLdapVersion>2.4.4</springLdapVersion>
+		<springVersion>5.3.39</springVersion>
 	</properties>
 
 	<dependencies>
@@ -69,13 +69,13 @@
 		<dependency>
 			<groupId>org.springframework.ldap</groupId>
 			<artifactId>spring-ldap-core</artifactId>
-			<version>${spring-ldap.version}</version>
+			<version>${springLdapVersion}</version>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-beans</artifactId>
-			<version>${spring.version}</version>
+			<version>${springVersion}</version>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
@@ -187,8 +187,8 @@
 				<configuration>
 					<locale>en</locale>
 					<links>
-						<link>https://docs.spring.io/spring-ldap/docs/${spring-ldap.version}/apidocs</link>
-						<link>https://docs.spring.io/spring/docs/${spring.version}/javadoc-api</link>
+						<link>https://docs.spring.io/spring-ldap/docs/${springLdapVersion}/api</link>
+						<link>https://docs.spring.io/spring-framework/docs/${springVersion}/javadoc-api</link>
 					</links>
 				</configuration>
 			</plugin>
@@ -202,8 +202,8 @@
 				<configuration>
 					<locale>en</locale>
 					<links>
-						<link>https://docs.spring.io/spring-ldap/docs/${spring-ldap.version}/apidocs</link>
-						<link>https://docs.spring.io/spring/docs/${spring.version}/javadoc-api</link>
+						<link>https://docs.spring.io/spring-ldap/docs/${springLdapVersion}/api</link>
+						<link>https://docs.spring.io/spring-framework/docs/${springVersion}/javadoc-api</link>
 					</links>
 				</configuration>
 			</plugin>
