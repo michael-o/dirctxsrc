@@ -56,7 +56,7 @@
 		<maven.compiler.source>${javaVersion}</maven.compiler.source>
 		<maven.compiler.target>${javaVersion}</maven.compiler.target>
 
-		<spring-ldap.version>2.3.4.RELEASE</spring-ldap.version>
+		<spring-ldap.version>2.4.4</spring-ldap.version>
 		<spring.version>4.3.30.RELEASE</spring.version>
 	</properties>
 
