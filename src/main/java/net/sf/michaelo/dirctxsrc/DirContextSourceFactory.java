@@ -1,5 +1,5 @@
 /*
- * Copyright 2013–2021 Michael Osipov
+ * Copyright 2013–2025 Michael Osipov
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,9 +28,7 @@ import javax.naming.RefAddr;
 import javax.naming.Reference;
 import javax.naming.spi.ObjectFactory;
 
-import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.math.NumberUtils;
 
 /**
  * An object factory for creating {@link DirContextSource} instances backed by a
@@ -114,30 +112,22 @@ public class DirContextSourceFactory implements ObjectFactory {
 			builder.loginEntryName(str);
 
 		str = getProperty(PROP_MUTUAL_AUTH);
-		builder.mutualAuth(BooleanUtils.toBoolean(str));
+		builder.mutualAuth(Boolean.parseBoolean(str));
 
 		str = getProperty(PROP_QOP);
 		if (StringUtils.isNotEmpty(str))
 			builder.qop(StringUtils.split(str));
 
 		str = getProperty(PROP_DEBUG);
-		builder.debug(BooleanUtils.toBoolean(str));
+		builder.debug(Boolean.parseBoolean(str));
 
 		str = getProperty(PROP_RETRIES);
-		if (StringUtils.isNotEmpty(str)) {
-			if (NumberUtils.isCreatable(str))
-				builder.retries(NumberUtils.toInt(str));
-			else
-				throw new IllegalArgumentException("Property 'retries' must be a number");
-		}
+		if (StringUtils.isNotEmpty(str))
+			builder.retries(parseInt(PROP_RETRIES, str));
 
 		str = getProperty(PROP_RETRY_WAIT);
-		if (StringUtils.isNotEmpty(str)) {
-			if (NumberUtils.isCreatable(str))
-				builder.retryWait(NumberUtils.toInt(str));
-			else
-				throw new IllegalArgumentException("Property 'retryWait' must be a number");
-		}
+		if (StringUtils.isNotEmpty(str))
+			builder.retryWait(parseInt(PROP_RETRY_WAIT, str));
 
 		str = getProperty(PROP_BINARY_ATTRIBUTES);
 		if (StringUtils.isNotEmpty(str))
@@ -163,6 +153,14 @@ public class DirContextSourceFactory implements ObjectFactory {
 
 	protected String getProperty(String propertyName) {
 		return properties.getProperty(propertyName);
+	}
+
+	protected int parseInt(String name, String value) {
+		try {
+			return Integer.parseInt(value);
+		} catch (NumberFormatException e) {
+			throw new IllegalArgumentException(String.format("Property '%s' must be an integer", name));
+		}
 	}
 
 }

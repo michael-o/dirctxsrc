@@ -131,10 +131,9 @@
 									<includes>
 										<include>org/apache/commons/lang3/StringUtils.class</include>
 										<include>org/apache/commons/lang3/Validate.class</include>
-										<include>org/apache/commons/lang3/BooleanUtils.class</include>
-										<include>org/apache/commons/lang3/SystemUtils.class</include>
-										<include>org/apache/commons/lang3/JavaVersion.class</include>
-										<include>org/apache/commons/lang3/math/NumberUtils.class</include>
+										<!-- Transitive classes -->
+										<include>org/apache/commons/lang3/ArrayUtils.class</include>
+										<include>org/apache/commons/lang3/stream/Streams.class</include>
 									</includes>
 								</filter>
 							</filters>

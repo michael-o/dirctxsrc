@@ -34,7 +34,9 @@ import javax.security.auth.login.LoginException;
 import javax.security.sasl.Sasl;
 
 import org.apache.commons.lang3.StringUtils;
-import static org.apache.commons.lang3.Validate.*;
+import static org.apache.commons.lang3.Validate.isTrue;
+import static org.apache.commons.lang3.Validate.notNull;
+import static org.apache.commons.lang3.Validate.notEmpty;
 import org.ietf.jgss.GSSCredential;
 import org.ietf.jgss.GSSException;
 import org.ietf.jgss.GSSManager;
@@ -145,16 +147,16 @@ public class DirContextSource {
 		env = new Hashtable<String, Object>();
 
 		env.put(Context.INITIAL_CONTEXT_FACTORY, builder.contextFactory);
-		env.put(Context.PROVIDER_URL, StringUtils.join(builder.urls, ' '));
+		env.put(Context.PROVIDER_URL, String.join(" ", builder.urls));
 		env.put(Context.SECURITY_AUTHENTICATION, builder.auth.getSecurityAuthName());
 		auth = builder.auth;
 		loginEntryName = builder.loginEntryName;
 		if (builder.objectFactories != null)
-			env.put(Context.OBJECT_FACTORIES, StringUtils.join(builder.objectFactories, ':'));
+			env.put(Context.OBJECT_FACTORIES, String.join(":", builder.objectFactories));
 		if (builder.mutualAuth != null)
 			env.put(Sasl.SERVER_AUTH, Boolean.toString(builder.mutualAuth));
 		if (builder.qop != null)
-			env.put(Sasl.QOP, StringUtils.join(builder.qop, ','));
+			env.put(Sasl.QOP, String.join(",", builder.qop));
 		if (builder.debug)
 			env.put("com.sun.jndi.ldap.trace.ber", builder.debugStream);
 		retries = builder.retries;
@@ -163,7 +165,7 @@ public class DirContextSource {
 			env.put(Context.REFERRAL, builder.referral);
 		if (builder.binaryAttributes != null)
 			env.put("java.naming.ldap.attributes.binary",
-					StringUtils.join(builder.binaryAttributes, ' '));
+					String.join(" ", builder.binaryAttributes));
 		env.putAll(builder.additionalProperties);
 	}
 
