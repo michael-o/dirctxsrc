@@ -182,6 +182,13 @@ public class DirContextSource implements ContextSource, InitializingBean {
 	}
 
 	/**
+	 * @see Builder#readTimeout(int)
+	 */
+	public void setReadTimeout(int readTimeout) {
+		builder.readTimeout(readTimeout);
+	}
+
+	/**
 	 * @see Builder#additionalProperty(String, Object)
 	 */
 	public void setAdditionalProperties(Map<String, Object> additionalProperties) {
