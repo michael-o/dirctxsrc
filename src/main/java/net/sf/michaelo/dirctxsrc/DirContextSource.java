@@ -1,5 +1,5 @@
 /*
- * Copyright 2012–2021 Michael Osipov
+ * Copyright 2012–2025 Michael Osipov
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -386,8 +386,8 @@ public class DirContextSource {
 		 * directory server is secured. The first negotiated quality is used. Valid values are
 		 * {@code auth}, {@code auth-int}, and {@code auth-conf}. This only works with SASL
 		 * mechanisms which support this feature, e.g., Digest MD5 or GSS-API. See
-		 * <a href="https://docs.oracle.com/javase/7/docs/technotes/guides/jndi/jndi-ldap-gl.html#qop">here
-		 * </a> for details.
+		 * <a href="https://docs.oracle.com/javase/7/docs/technotes/guides/jndi/jndi-ldap-gl.html#qop">here</a>
+		 * for details.
 		 *
 		 * @param qop
 		 *            the quality of protection for this directory context connection
@@ -479,8 +479,8 @@ public class DirContextSource {
 		/**
 		 * Sets those attributes which will be returned as {@code byte[]} instead of {@code String}.
 		 * See <a href=
-		 * "https://docs.oracle.com/javase/7/docs/technotes/guides/jndi/jndi-ldap-gl.html#binary">here
-		 * </a> for details.
+		 * "https://docs.oracle.com/javase/7/docs/technotes/guides/jndi/jndi-ldap-gl.html#binary">here</a>
+		 * for details.
 		 *
 		 * @param attributes
 		 *            the attributes to be returned as byte array
@@ -499,11 +499,11 @@ public class DirContextSource {
 		/**
 		 * Sets the referral handling strategy. Valid values are {@code ignore}, {@code follow}, and
 		 * {@code throw}. See
-		 * <a href="https://docs.oracle.com/javase/7/docs/technotes/guides/jndi/jndi-ldap-gl.html#referral">here </a>
+		 * <a href="https://docs.oracle.com/javase/7/docs/technotes/guides/jndi/jndi-ldap-gl.html#referral">here</a>
 		 * for details.
 		 *
 		 * @param referral
-		 *            the referral handling strate
+		 *            the referral handling strategy
 		 * @throws NullPointerException
 		 *             if {@code referral} is null
 		 * @throws IllegalArgumentException
