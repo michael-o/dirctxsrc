@@ -68,7 +68,7 @@ import org.ietf.jgss.Oid;
  * <li>The default authentication scheme is set to none/anonymous.</li>
  * <li>If GSS-API authentication is used the login entry name defaults to {@code DirContextSource}.
  * </li>
- * <li>By default a context source will try once to connect and will wait for 2000 ms between
+ * <li>By default a context source will try connect only once and will wait for 2000 ms between
  * retries.</li>
  * </ol>
  *
