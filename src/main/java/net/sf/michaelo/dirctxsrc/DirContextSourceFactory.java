@@ -69,13 +69,15 @@ public class DirContextSourceFactory implements ObjectFactory {
 	protected static final String PROP_REFERRAL = "referral";
 	protected static final String PROP_DEREF_ALIASES = "derefAliases";
 	protected static final String PROP_VERSION = "version";
+	protected static final String PROP_CONNECT_TIMEOUT = "connectTimeout";
 	protected static final String PROP_ADDITIONAL_PROPERTIES = "additionalProperties";
 
 	protected static final List<String> PROPERTIES_NAMES = Collections
 			.unmodifiableList(Arrays.asList(PROP_CONTEXT_FACTORY, PROP_URLS, PROP_AUTH,
 					PROP_LOGIN_ENTRY_NAME, PROP_OBJECT_FACTORIES, PROP_MUTUAL_AUTH, PROP_QOP,
 					PROP_DEBUG, PROP_RETRIES, PROP_RETRY_WAIT, PROP_BINARY_ATTRIBUTES,
-					PROP_REFERRAL, PROP_DEREF_ALIASES, PROP_VERSION, PROP_ADDITIONAL_PROPERTIES));
+					PROP_REFERRAL, PROP_DEREF_ALIASES, PROP_VERSION, PROP_CONNECT_TIMEOUT,
+					PROP_ADDITIONAL_PROPERTIES));
 
 	protected final Properties properties = new Properties();
 
@@ -146,6 +148,10 @@ public class DirContextSourceFactory implements ObjectFactory {
 		str = getProperty(PROP_VERSION);
 		if (StringUtils.isNotEmpty(str))
 			builder.version(parseInt(PROP_VERSION, str));
+
+		str = getProperty(PROP_CONNECT_TIMEOUT);
+		if (StringUtils.isNotEmpty(str))
+			builder.connectTimeout(parseInt(PROP_CONNECT_TIMEOUT, str));
 
 		str = getProperty(PROP_ADDITIONAL_PROPERTIES);
 		if (StringUtils.isNotEmpty(str)) {

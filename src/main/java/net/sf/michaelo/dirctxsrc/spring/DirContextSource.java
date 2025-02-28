@@ -175,6 +175,13 @@ public class DirContextSource implements ContextSource, InitializingBean {
 	}
 
 	/**
+	 * @see Builder#connectTimeout(int)
+	 */
+	public void setConnectTimeout(int connectTimeout) {
+		builder.connectTimeout(connectTimeout);
+	}
+
+	/**
 	 * @see Builder#additionalProperty(String, Object)
 	 */
 	public void setAdditionalProperties(Map<String, Object> additionalProperties) {

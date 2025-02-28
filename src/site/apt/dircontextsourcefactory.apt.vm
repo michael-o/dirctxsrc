@@ -168,5 +168,7 @@ context.close();
 *------------+---------------------+-----------+-----------------+--------------------------+
 | version    | <<<version(int)>>>  | yes       | <<<2>>>, <<<3>>> (positive integer) | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadoc}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+
+| connectTimeout  | <<<connectTimeout(int)>>> | yes      | positive integer | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadoc}}. |
+*------------+---------------------+-----------+-----------------+--------------------------+
 | additionalProperties | <<<additionalProperty(String, Object)>>> | yes  | A list of properties and values | Semicolon-separated name value pairs: <<<name=value;name2=value2;$ellipsis>>>. See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadoc}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+

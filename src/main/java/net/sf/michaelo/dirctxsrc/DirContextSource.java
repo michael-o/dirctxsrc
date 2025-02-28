@@ -170,6 +170,8 @@ public class DirContextSource {
 			env.put("java.naming.ldap.derefAliases", builder.derefAliases);
 		if (builder.version > 0)
 			env.put("java.naming.ldap.version", String.valueOf(builder.version));
+		if (builder.connectTimeout > 0)
+			env.put("com.sun.jndi.ldap.connect.timeout", String.valueOf(builder.connectTimeout));
 		env.putAll(builder.additionalProperties);
 	}
 
@@ -206,6 +208,7 @@ public class DirContextSource {
 		private String referral;
 		private String derefAliases;
 		private int version;
+		private int connectTimeout = -1;
 		private Hashtable<String, Object> additionalProperties;
 
 		private boolean done;
@@ -558,6 +561,22 @@ public class DirContextSource {
 			check();
 			isTrue(version > 0, "Property 'version' must be greater than zero but is %d", version);
 			this.version = version;
+			return this;
+		}
+
+		/**
+		 * Sets the connect timeout in milliseconds.
+		 *
+		 * @param connectTimeout
+		 *            The connect timeout in milliseconds. This value must be a positive integer.
+		 * @throws IllegalArgumentException
+		 *             if {@code connectTimeout} is not a positive integer
+		 * @return this builder
+		 */
+		public Builder connectTimeout(int connectTimeout) {
+			check();
+			isTrue(connectTimeout > 0, "Property 'connectTimeout' must be greater than zero but is %d", connectTimeout);
+			this.connectTimeout = connectTimeout;
 			return this;
 		}
 

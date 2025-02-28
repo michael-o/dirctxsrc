@@ -136,6 +136,11 @@ public class DirContextSourceBuilderConfigurationTest {
 	}
 
 	@Test
+	public void configureConnectTimeout() {
+		assertNotNull(newInstance().connectTimeout(500));
+	}
+
+	@Test
 	public void configureAdditionalProperty() {
 		assertNotNull(newInstance().additionalProperty("magic", "shazam"));
 	}
