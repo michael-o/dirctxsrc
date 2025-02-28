@@ -168,6 +168,8 @@ public class DirContextSource {
 					String.join(" ", builder.binaryAttributes));
 		if (builder.derefAliases != null)
 			env.put("java.naming.ldap.derefAliases", builder.derefAliases);
+		if (builder.version > 0)
+			env.put("java.naming.ldap.version", String.valueOf(builder.version));
 		env.putAll(builder.additionalProperties);
 	}
 
@@ -203,6 +205,7 @@ public class DirContextSource {
 		private String[] binaryAttributes;
 		private String referral;
 		private String derefAliases;
+		private int version;
 		private Hashtable<String, Object> additionalProperties;
 
 		private boolean done;
@@ -538,6 +541,23 @@ public class DirContextSource {
 		public Builder derefAliases(String derefAliases) {
 			check();
 			this.derefAliases = validateAndReturnString("derefAliases", derefAliases);
+			return this;
+		}
+
+		/**
+		 * Sets the LDAP version. Valid values are {@code 2} and {@code 3}. See
+		 * <a href="https://docs.oracle.com/javase/7/docs/technotes/guides/jndi/jndi-ldap-gl.html#version">here</a>
+		 *
+		 * @param version
+		 *            The LDAP version. This value must be a positive integer.
+		 * @throws IllegalArgumentException
+		 *             if {@code version} is not a positive integer
+		 * @return this builder
+		 */
+		public Builder version(int version) {
+			check();
+			isTrue(version > 0, "Property 'version' must be greater than zero but is %d", version);
+			this.version = version;
 			return this;
 		}
 

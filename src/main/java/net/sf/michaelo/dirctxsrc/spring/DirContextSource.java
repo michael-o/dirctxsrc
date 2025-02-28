@@ -168,6 +168,13 @@ public class DirContextSource implements ContextSource, InitializingBean {
 	}
 
 	/**
+	 * @see Builder#version(int)
+	 */
+	public void setVersion(int version) {
+		builder.version(version);
+	}
+
+	/**
 	 * @see Builder#additionalProperty(String, Object)
 	 */
 	public void setAdditionalProperties(Map<String, Object> additionalProperties) {

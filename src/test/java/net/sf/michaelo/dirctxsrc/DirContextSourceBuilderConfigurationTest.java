@@ -129,7 +129,12 @@ public class DirContextSourceBuilderConfigurationTest {
 	public void configureDerefAliases() {
 		assertNotNull(newInstance().derefAliases("never"));
 	}
-	
+
+	@Test
+	public void configureVersion() {
+		assertNotNull(newInstance().version(3));
+	}
+
 	@Test
 	public void configureAdditionalProperty() {
 		assertNotNull(newInstance().additionalProperty("magic", "shazam"));
