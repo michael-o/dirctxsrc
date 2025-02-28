@@ -124,6 +124,11 @@ public class DirContextSourceBuilderConfigurationTest {
 	public void configureReferral() {
 		assertNotNull(newInstance().referral("ignore"));
 	}
+
+	@Test
+	public void configureDerefAliases() {
+		assertNotNull(newInstance().derefAliases("never"));
+	}
 	
 	@Test
 	public void configureAdditionalProperty() {

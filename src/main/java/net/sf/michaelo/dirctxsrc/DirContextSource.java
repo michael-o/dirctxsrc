@@ -166,6 +166,8 @@ public class DirContextSource {
 		if (builder.binaryAttributes != null)
 			env.put("java.naming.ldap.attributes.binary",
 					String.join(" ", builder.binaryAttributes));
+		if (builder.derefAliases != null)
+			env.put("java.naming.ldap.derefAliases", builder.derefAliases);
 		env.putAll(builder.additionalProperties);
 	}
 
@@ -200,6 +202,7 @@ public class DirContextSource {
 		private int retryWait;
 		private String[] binaryAttributes;
 		private String referral;
+		private String derefAliases;
 		private Hashtable<String, Object> additionalProperties;
 
 		private boolean done;
@@ -515,6 +518,26 @@ public class DirContextSource {
 		public Builder referral(String referral) {
 			check();
 			this.referral = validateAndReturnString("referral", referral);
+			return this;
+		}
+
+		/**
+		 * Sets how aliases are dereferenced. Valid values are {@code always}, {@code never},
+		 * {@code finding}, and {@code searching}. See
+		 * <a href="https://docs.oracle.com/javase/7/docs/technotes/guides/jndi/jndi-ldap-gl.html#derefAliases">here</a>
+		 * for details.
+		 *
+		 * @param derefAliases
+		 *            the aliases dereferencing strategy
+		 * @throws NullPointerException
+		 *             if {@code derefAliases} is null
+		 * @throws IllegalArgumentException
+		 *             if {@code derefAliases} is empty
+		 * @return this builder
+		 */
+		public Builder derefAliases(String derefAliases) {
+			check();
+			this.derefAliases = validateAndReturnString("derefAliases", derefAliases);
 			return this;
 		}
 

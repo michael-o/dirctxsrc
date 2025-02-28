@@ -1,5 +1,5 @@
 #*
- * Copyright 2013–2021 Michael Osipov
+ * Copyright 2013–2025 Michael Osipov
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -163,6 +163,8 @@ context.close();
 | binaryAttributes | <<<binaryAttributes(String$ellipsis)>>> | yes      | A list or attribute names | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadoc}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+
 | referral | <<<referral(String)>>> | yes       | <<<ignore>>>, <<<throw>>> or <<<follow>>> | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadoc}}. |
+*------------+---------------------+-----------+-----------------+--------------------------+
+| derefAliases | <<<derefAliases(String)>>> | yes       | <<<always>>>, <<<never>>>, <<<finding>>> or <<<searching>>> | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadoc}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+
 | additionalProperties | <<<additionalProperty(String, Object)>>> | yes  | A list of properties and values | Semicolon-separated name value pairs: <<<name=value;name2=value2;$ellipsis>>>. See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadoc}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+

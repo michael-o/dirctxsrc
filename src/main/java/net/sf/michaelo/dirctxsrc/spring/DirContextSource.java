@@ -1,5 +1,5 @@
 /*
- * Copyright 2012–2021 Michael Osipov
+ * Copyright 2012–2025 Michael Osipov
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -158,6 +158,13 @@ public class DirContextSource implements ContextSource, InitializingBean {
 	 */
 	public void setReferral(String referral) {
 		builder.referral(referral);
+	}
+
+	/**
+	 * @see Builder#derefAliases(String)
+	 */
+	public void setDerefAliases(String derefAliases) {
+		builder.derefAliases(derefAliases);
 	}
 
 	/**
