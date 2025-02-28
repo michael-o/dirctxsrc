@@ -37,8 +37,8 @@
 		<connection>scm:git:https://github.com/michael-o/dirctxsrc.git</connection>
 		<developerConnection>scm:git:https://github.com/michael-o/dirctxsrc.git</developerConnection>
 		<url>https://github.com/michael-o/dirctxsrc</url>
-	  <tag>HEAD</tag>
-  </scm>
+		<tag>HEAD</tag>
+	</scm>
 	<issueManagement>
 		<system>GitHub</system>
 		<url>https://github.com/michael-o/dirctxsrc/issues</url>
