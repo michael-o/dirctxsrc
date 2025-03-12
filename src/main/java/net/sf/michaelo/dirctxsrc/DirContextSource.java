@@ -419,7 +419,8 @@ public class DirContextSource {
 		}
 
 		/**
-		 * Enables the redirection of the LDAP debug output to {@code System.err}.
+		 * Enables the redirection of the LDAP debug output to {@code System.err}. This only works
+		 * if the {@link #contextFactory(String)} is {@code com.sun.jndi.ldap.LdapCtxFactory}.
 		 *
 		 * @see #debug(boolean)
 		 * @return this builder
@@ -429,7 +430,8 @@ public class DirContextSource {
 		}
 
 		/**
-		 * Enables or disables the redirection of the LDAP debug output to {@code System.err}.
+		 * Enables or disables the redirection of the LDAP debug output to {@code System.err}. This
+		 * only works if the {@link #contextFactory(String)} is {@code com.sun.jndi.ldap.LdapCtxFactory}.
 		 *
 		 * @param debug
 		 *            the debug flag
@@ -443,7 +445,8 @@ public class DirContextSource {
 		}
 
 		/**
-		 * Redirects the LDAP debug output to an {@link OutputStream}.
+		 * Redirects the LDAP debug output to an {@link OutputStream}. This only works if the
+		 * {@link #contextFactory(String)} is {@code com.sun.jndi.ldap.LdapCtxFactory}.
 		 *
 		 * @param stream
 		 *            an {@code OutputStream} where debug output will be written to
@@ -569,7 +572,8 @@ public class DirContextSource {
 		}
 
 		/**
-		 * Sets the connect timeout in milliseconds.
+		 * Sets the connect timeout in milliseconds. This only works if the
+		 * {@link #contextFactory(String)} is {@code com.sun.jndi.ldap.LdapCtxFactory}.
 		 *
 		 * @param connectTimeout
 		 *            The connect timeout in milliseconds. This value must be a positive integer.
@@ -585,7 +589,8 @@ public class DirContextSource {
 		}
 
 		/**
-		 * Sets the read timeout in milliseconds.
+		 * Sets the read timeout in milliseconds. This only works if the
+		 * {@link #contextFactory(String)} is {@code com.sun.jndi.ldap.LdapCtxFactory}.
 		 *
 		 * @param readTimeout
 		 *            The read timeout in milliseconds. This value must be a positive integer.
