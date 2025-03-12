@@ -25,7 +25,7 @@
 
 	<groupId>net.sf.michael-o.dirctxsrc</groupId>
 	<artifactId>dircontextsource</artifactId>
-	<version>2.4.0</version>
+	<version>2.4.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>JNDI DirContextSource</name>
@@ -37,7 +37,7 @@
 		<connection>scm:git:https://github.com/michael-o/dirctxsrc.git</connection>
 		<developerConnection>scm:git:https://github.com/michael-o/dirctxsrc.git</developerConnection>
 		<url>https://github.com/michael-o/dirctxsrc</url>
-		<tag>2.4.0</tag>
+		<tag>HEAD</tag>
 	</scm>
 	<issueManagement>
 		<system>GitHub</system>
