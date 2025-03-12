@@ -76,7 +76,7 @@ import org.ietf.jgss.Oid;
  *
  * <p>
  * A complete overview of all {@code DirContext} properties can be found
- * <a href= "https://docs.oracle.com/javase/7/docs/technotes/guides/jndi/jndi-ldap.html">here</a>.
+ * <a href= "https://docs.oracle.com/javase/8/docs/technotes/guides/jndi/jndi-ldap.html">here</a>.
  * Make sure that you pass reasonable/valid values only otherwise the behavior is undefined.
  */
 public class DirContextSource {
@@ -401,7 +401,7 @@ public class DirContextSource {
 		 * directory server is secured. The first negotiated quality is used. Valid values are
 		 * {@code auth}, {@code auth-int}, and {@code auth-conf}. This only works with SASL
 		 * mechanisms which support this feature, e.g., Digest MD5 or GSS-API. See
-		 * <a href="https://docs.oracle.com/javase/7/docs/technotes/guides/jndi/jndi-ldap-gl.html#qop">here</a>
+		 * <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/jndi/jndi-ldap-gl.html#qop">here</a>
 		 * for details.
 		 *
 		 * @param qop
@@ -497,7 +497,7 @@ public class DirContextSource {
 		/**
 		 * Sets those attributes which will be returned as {@code byte[]} instead of {@code String}.
 		 * See <a href=
-		 * "https://docs.oracle.com/javase/7/docs/technotes/guides/jndi/jndi-ldap-gl.html#binary">here</a>
+		 * "https://docs.oracle.com/javase/8/docs/technotes/guides/jndi/jndi-ldap-gl.html#binary">here</a>
 		 * for details.
 		 *
 		 * @param attributes
@@ -517,7 +517,7 @@ public class DirContextSource {
 		/**
 		 * Sets the referral handling strategy. Valid values are {@code ignore}, {@code follow}, and
 		 * {@code throw}. See
-		 * <a href="https://docs.oracle.com/javase/7/docs/technotes/guides/jndi/jndi-ldap-gl.html#referral">here</a>
+		 * <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/jndi/jndi-ldap-gl.html#referral">here</a>
 		 * for details.
 		 *
 		 * @param referral
@@ -537,7 +537,7 @@ public class DirContextSource {
 		/**
 		 * Sets how aliases are dereferenced. Valid values are {@code always}, {@code never},
 		 * {@code finding}, and {@code searching}. See
-		 * <a href="https://docs.oracle.com/javase/7/docs/technotes/guides/jndi/jndi-ldap-gl.html#derefAliases">here</a>
+		 * <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/jndi/jndi-ldap-gl.html#derefAliases">here</a>
 		 * for details.
 		 *
 		 * @param derefAliases
@@ -556,7 +556,7 @@ public class DirContextSource {
 
 		/**
 		 * Sets the LDAP version. Valid values are {@code 2} and {@code 3}. See
-		 * <a href="https://docs.oracle.com/javase/7/docs/technotes/guides/jndi/jndi-ldap-gl.html#version">here</a>
+		 * <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/jndi/jndi-ldap-gl.html#version">here</a>
 		 *
 		 * @param version
 		 *            The LDAP version. This value must be a positive integer.

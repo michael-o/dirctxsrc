@@ -30,7 +30,7 @@ Using DirContextSourceFactory
   servlet container but not a JNDI <<<DirContext>>>? Now it is!
 
   Most containers support resource management for a webapp through factories by
-  implementing {{{http://docs.oracle.com/javase/7/docs/api/javax/naming/spi/ObjectFactory.html}<<<javax.naming.spi.ObjectFactory>>>}}.
+  implementing {{{https://docs.oracle.com/javase/8/docs/api/javax/naming/spi/ObjectFactory.html}<<<javax.naming.spi.ObjectFactory>>>}}.
   This factory implements the {{{ObjectFactory}}} interface and allows you to use the <<<DirContextSource>>>
   in your webapp but fully managed by your container.
 
@@ -140,7 +140,7 @@ context.close();
 *------------+---------------------+-----------+-----------------+--------------------------+
 | factory    | \u2013              | no        | <<<net.sf.michaelo.dirctxsrc.DirContextSourceFactory>>> | Preset class name of this resource's factory. |
 *------------+---------------------+-----------+-----------------+--------------------------+
-| contextFactory | <<<contextFactory(String)>>> | yes       | Any class (name) implementing the <<<{{{http://docs.oracle.com/javase/7/docs/api/javax/naming/spi/InitialContextFactory.html}InitialContentFactory}}>>> interface | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadoc}}. |
+| contextFactory | <<<contextFactory(String)>>> | yes       | Any class (name) implementing the <<<{{{https://docs.oracle.com/javase/8/docs/api/javax/naming/spi/InitialContextFactory.html}InitialContentFactory}}>>> interface | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadoc}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+
 | urls       | <<<Builder(String$ellipsis)>>> | no   | A list of LDAP URLs | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadoc}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+
@@ -148,7 +148,7 @@ context.close();
 *------------+---------------------+-----------+-----------------+--------------------------+
 | loginEntryName | <<<loginEntryName(String)>>> | yes       | any string      | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadoc}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+
-| objectFactories | <<<objectFactories(String$ellipsis)>>> | yes       | A list of classes (names) implementing either the <<<{{{http://docs.oracle.com/javase/7/docs/api/javax/naming/spi/ObjectFactory.html}ObjectFactory}}>>> or the <<<{{{http://docs.oracle.com/javase/7/docs/api/javax/naming/spi/DirObjectFactory.html}DirObjectFactory}}>>> interface | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadoc}}. |
+| objectFactories | <<<objectFactories(String$ellipsis)>>> | yes       | A list of classes (names) implementing either the <<<{{{https://docs.oracle.com/javase/8/docs/api/javax/naming/spi/ObjectFactory.html}ObjectFactory}}>>> or the <<<{{{https://docs.oracle.com/javase/8/docs/api/javax/naming/spi/DirObjectFactory.html}DirObjectFactory}}>>> interface | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadoc}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+
 | mutualAuth | <<<mutualAuth(boolean)>>> | yes | <<<true>>> or <<<false>>> (boolean) | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadoc}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+
