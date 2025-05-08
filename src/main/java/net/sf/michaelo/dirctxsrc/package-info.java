@@ -1,5 +1,5 @@
 /*
- * Copyright 2012–2021 Michael Osipov
+ * Copyright 2012–2025 Michael Osipov
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,5 @@
  * limitations under the License.
  */
 
-/**
- * The base package for {@link net.sf.michaelo.dirctxsrc.DirContextSource}.
- */
+/** The base package for {@link net.sf.michaelo.dirctxsrc.DirContextSource}. */
 package net.sf.michaelo.dirctxsrc;

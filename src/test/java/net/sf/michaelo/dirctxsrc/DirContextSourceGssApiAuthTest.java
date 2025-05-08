@@ -1,5 +1,5 @@
 /*
- * Copyright 2013–2021 Michael Osipov
+ * Copyright 2013–2025 Michael Osipov
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -51,8 +51,8 @@ public class DirContextSourceGssApiAuthTest {
 		Properties systemProperties = new Properties();
 		systemProperties.putAll(System.getProperties());
 
-		System.setProperty("java.security.auth.login.config",
-				new File(loginConfDirectory, "login.conf").getAbsolutePath());
+		System.setProperty(
+				"java.security.auth.login.config", new File(loginConfDirectory, "login.conf").getAbsolutePath());
 
 		DirContextSource.Builder builder = new DirContextSource.Builder("ldap://localhost:11389");
 		DirContextSource contextSource = builder.gssApiAuth("NonExistingEntry").build();
@@ -71,8 +71,8 @@ public class DirContextSourceGssApiAuthTest {
 		Properties systemProperties = new Properties();
 		systemProperties.putAll(System.getProperties());
 
-		System.setProperty("java.security.auth.login.config",
-				new File(loginConfDirectory, "login.conf").getAbsolutePath());
+		System.setProperty(
+				"java.security.auth.login.config", new File(loginConfDirectory, "login.conf").getAbsolutePath());
 
 		DirContextSource.Builder builder = new DirContextSource.Builder("ldap://localhost:11389");
 		DirContextSource contextSource = builder.gssApiAuth().build();
@@ -84,5 +84,4 @@ public class DirContextSourceGssApiAuthTest {
 			System.setProperties(systemProperties);
 		}
 	}
-
 }

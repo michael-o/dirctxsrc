@@ -31,13 +31,12 @@ import javax.naming.spi.ObjectFactory;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * An object factory for creating {@link DirContextSource} instances backed by a
- * {@link DirContextSource.Builder}.
+ * An object factory for creating {@link DirContextSource} instances backed by a {@link DirContextSource.Builder}.
  *
- * This factory should work in any servlet container with JNDI support, but was tested under Apache
- * Tomcat 8.5.x only.
- * <p>
- * Integration in your {@code context.xml} is as simple as:
+ * <p>This factory should work in any servlet container with JNDI support, but was tested under Apache Tomcat 8.5.x
+ * only.
+ *
+ * <p>Integration in your {@code context.xml} is as simple as:
  *
  * <pre>
  * &lt;Context&gt;
@@ -50,8 +49,8 @@ import org.apache.commons.lang3.StringUtils;
  * &lt;/Context&gt;
  * </pre>
  *
- * For a complete reference, see
- * <a href="https://michael-o.github.io/dirctxsrc/dircontextsourcefactory.html">documentation site</a>.
+ * For a complete reference, see <a
+ * href="https://michael-o.github.io/dirctxsrc/dircontextsourcefactory.html">documentation site</a>.
  */
 public class DirContextSourceFactory implements ObjectFactory {
 
@@ -73,25 +72,34 @@ public class DirContextSourceFactory implements ObjectFactory {
 	protected static final String PROP_READ_TIMEOUT = "readTimeout";
 	protected static final String PROP_ADDITIONAL_PROPERTIES = "additionalProperties";
 
-	protected static final List<String> PROPERTIES_NAMES = Collections
-			.unmodifiableList(Arrays.asList(PROP_CONTEXT_FACTORY, PROP_URLS, PROP_AUTH,
-					PROP_LOGIN_ENTRY_NAME, PROP_OBJECT_FACTORIES, PROP_MUTUAL_AUTH, PROP_QOP,
-					PROP_DEBUG, PROP_RETRIES, PROP_RETRY_WAIT, PROP_BINARY_ATTRIBUTES,
-					PROP_REFERRAL, PROP_DEREF_ALIASES, PROP_VERSION, PROP_CONNECT_TIMEOUT,
-					PROP_READ_TIMEOUT, PROP_ADDITIONAL_PROPERTIES));
+	protected static final List<String> PROPERTIES_NAMES = Collections.unmodifiableList(Arrays.asList(
+			PROP_CONTEXT_FACTORY,
+			PROP_URLS,
+			PROP_AUTH,
+			PROP_LOGIN_ENTRY_NAME,
+			PROP_OBJECT_FACTORIES,
+			PROP_MUTUAL_AUTH,
+			PROP_QOP,
+			PROP_DEBUG,
+			PROP_RETRIES,
+			PROP_RETRY_WAIT,
+			PROP_BINARY_ATTRIBUTES,
+			PROP_REFERRAL,
+			PROP_DEREF_ALIASES,
+			PROP_VERSION,
+			PROP_CONNECT_TIMEOUT,
+			PROP_READ_TIMEOUT,
+			PROP_ADDITIONAL_PROPERTIES));
 
 	protected final Properties properties = new Properties();
 
 	@Override
-	public Object getObjectInstance(Object obj, Name name, Context ctx, Hashtable<?, ?> environment)
-			throws Exception {
+	public Object getObjectInstance(Object obj, Name name, Context ctx, Hashtable<?, ?> environment) throws Exception {
 
-		if (obj == null || !(obj instanceof Reference))
-			return null;
+		if (obj == null || !(obj instanceof Reference)) return null;
 
 		Reference ref = (Reference) obj;
-		if (!ref.getClassName().equals(DirContextSource.class.getName()))
-			return null;
+		if (!ref.getClassName().equals(DirContextSource.class.getName())) return null;
 
 		for (String propertyName : PROPERTIES_NAMES) {
 			RefAddr ra = ref.get(propertyName);
@@ -105,58 +113,46 @@ public class DirContextSourceFactory implements ObjectFactory {
 		DirContextSource.Builder builder = new DirContextSource.Builder(StringUtils.split(str));
 
 		str = getProperty(PROP_CONTEXT_FACTORY);
-		if (StringUtils.isNotEmpty(str))
-			builder.contextFactory(str);
+		if (StringUtils.isNotEmpty(str)) builder.contextFactory(str);
 
 		str = getProperty(PROP_AUTH);
-		if (StringUtils.isNotEmpty(str))
-			builder.auth(DirContextSource.Auth.valueOf(str.toUpperCase(Locale.ENGLISH)));
+		if (StringUtils.isNotEmpty(str)) builder.auth(DirContextSource.Auth.valueOf(str.toUpperCase(Locale.ENGLISH)));
 
 		str = getProperty(PROP_LOGIN_ENTRY_NAME);
-		if (StringUtils.isNotEmpty(str))
-			builder.loginEntryName(str);
+		if (StringUtils.isNotEmpty(str)) builder.loginEntryName(str);
 
 		str = getProperty(PROP_MUTUAL_AUTH);
 		builder.mutualAuth(Boolean.parseBoolean(str));
 
 		str = getProperty(PROP_QOP);
-		if (StringUtils.isNotEmpty(str))
-			builder.qop(StringUtils.split(str));
+		if (StringUtils.isNotEmpty(str)) builder.qop(StringUtils.split(str));
 
 		str = getProperty(PROP_DEBUG);
 		builder.debug(Boolean.parseBoolean(str));
 
 		str = getProperty(PROP_RETRIES);
-		if (StringUtils.isNotEmpty(str))
-			builder.retries(parseInt(PROP_RETRIES, str));
+		if (StringUtils.isNotEmpty(str)) builder.retries(parseInt(PROP_RETRIES, str));
 
 		str = getProperty(PROP_RETRY_WAIT);
-		if (StringUtils.isNotEmpty(str))
-			builder.retryWait(parseInt(PROP_RETRY_WAIT, str));
+		if (StringUtils.isNotEmpty(str)) builder.retryWait(parseInt(PROP_RETRY_WAIT, str));
 
 		str = getProperty(PROP_BINARY_ATTRIBUTES);
-		if (StringUtils.isNotEmpty(str))
-			builder.binaryAttributes(StringUtils.split(str));
+		if (StringUtils.isNotEmpty(str)) builder.binaryAttributes(StringUtils.split(str));
 
 		str = getProperty(PROP_REFERRAL);
-		if (StringUtils.isNotEmpty(str))
-			builder.referral(str);
+		if (StringUtils.isNotEmpty(str)) builder.referral(str);
 
 		str = getProperty(PROP_DEREF_ALIASES);
-		if (StringUtils.isNotEmpty(str))
-			builder.derefAliases(str);
+		if (StringUtils.isNotEmpty(str)) builder.derefAliases(str);
 
 		str = getProperty(PROP_VERSION);
-		if (StringUtils.isNotEmpty(str))
-			builder.version(parseInt(PROP_VERSION, str));
+		if (StringUtils.isNotEmpty(str)) builder.version(parseInt(PROP_VERSION, str));
 
 		str = getProperty(PROP_CONNECT_TIMEOUT);
-		if (StringUtils.isNotEmpty(str))
-			builder.connectTimeout(parseInt(PROP_CONNECT_TIMEOUT, str));
+		if (StringUtils.isNotEmpty(str)) builder.connectTimeout(parseInt(PROP_CONNECT_TIMEOUT, str));
 
 		str = getProperty(PROP_READ_TIMEOUT);
-		if (StringUtils.isNotEmpty(str))
-			builder.readTimeout(parseInt(PROP_READ_TIMEOUT, str));
+		if (StringUtils.isNotEmpty(str)) builder.readTimeout(parseInt(PROP_READ_TIMEOUT, str));
 
 		str = getProperty(PROP_ADDITIONAL_PROPERTIES);
 		if (StringUtils.isNotEmpty(str)) {
@@ -164,8 +160,7 @@ public class DirContextSourceFactory implements ObjectFactory {
 			String[] splittedAdditionalProperty;
 			for (String additionalProperty : additionalProperties) {
 				splittedAdditionalProperty = StringUtils.split(additionalProperty, "=");
-				builder.additionalProperty(splittedAdditionalProperty[0],
-						splittedAdditionalProperty[1]);
+				builder.additionalProperty(splittedAdditionalProperty[0], splittedAdditionalProperty[1]);
 			}
 		}
 
@@ -183,5 +178,4 @@ public class DirContextSourceFactory implements ObjectFactory {
 			throw new IllegalArgumentException(String.format("Property '%s' must be an integer", name));
 		}
 	}
-
 }

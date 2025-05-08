@@ -20,7 +20,7 @@
 	<parent>
 		<groupId>net.sf.michael-o</groupId>
 		<artifactId>michael-o-parent</artifactId>
-		<version>19</version>
+		<version>20</version>
 	</parent>
 
 	<groupId>net.sf.michael-o.dirctxsrc</groupId>
@@ -36,8 +36,8 @@
 	<scm>
 		<connection>scm:git:https://github.com/michael-o/dirctxsrc.git</connection>
 		<developerConnection>scm:git:https://github.com/michael-o/dirctxsrc.git</developerConnection>
-		<url>https://github.com/michael-o/dirctxsrc</url>
 		<tag>HEAD</tag>
+		<url>https://github.com/michael-o/dirctxsrc</url>
 	</scm>
 	<issueManagement>
 		<system>GitHub</system>
@@ -94,10 +94,10 @@
 				<executions>
 					<execution>
 						<id>delete-dependency-reduced-pom</id>
-						<phase>clean</phase>
 						<goals>
 							<goal>clean</goal>
 						</goals>
+						<phase>clean</phase>
 						<configuration>
 							<filesets>
 								<filesets>
@@ -115,10 +115,10 @@
 				<artifactId>maven-shade-plugin</artifactId>
 				<executions>
 					<execution>
-						<phase>package</phase>
 						<goals>
 							<goal>shade</goal>
 						</goals>
+						<phase>package</phase>
 						<configuration>
 							<artifactSet>
 								<includes>
@@ -161,10 +161,10 @@
 				<executions>
 					<execution>
 						<id>unpack-site-resources</id>
-						<phase>pre-site</phase>
 						<goals>
 							<goal>unpack</goal>
 						</goals>
+						<phase>pre-site</phase>
 						<configuration>
 							<artifactItems>
 								<artifactItem>

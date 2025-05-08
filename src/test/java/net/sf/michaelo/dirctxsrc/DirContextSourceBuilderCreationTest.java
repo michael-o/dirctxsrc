@@ -1,5 +1,5 @@
 /*
- * Copyright 2013–2021 Michael Osipov
+ * Copyright 2013–2025 Michael Osipov
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,14 +37,11 @@ public class DirContextSourceBuilderCreationTest {
 
 	@Test
 	public void someInvalidUrls() {
-		Assert.assertNotNull(new DirContextSource.Builder("ldap://one", "ldap://two", "", null,
-				"ldap://three"));
+		Assert.assertNotNull(new DirContextSource.Builder("ldap://one", "ldap://two", "", null, "ldap://three"));
 	}
 
 	@Test
 	public void validUrls() {
-		Assert.assertNotNull(new DirContextSource.Builder("ldap://one", "ldap://two",
-				"ldap://three"));
+		Assert.assertNotNull(new DirContextSource.Builder("ldap://one", "ldap://two", "ldap://three"));
 	}
-
 }

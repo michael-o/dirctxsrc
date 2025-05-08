@@ -15,8 +15,9 @@
  */
 package net.sf.michaelo.dirctxsrc;
 
-import static org.junit.Assert.*;
 import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 public class DirContextSourceBuilderConfigurationTest {
 
@@ -76,8 +77,9 @@ public class DirContextSourceBuilderConfigurationTest {
 
 	@Test
 	public void configureObjectFactories() {
-		assertNotNull(newInstance().objectFactories("net.sf.michaelo.dirctxsrc.NoOpFactory",
-				"net.sf.michaelo.dirctxsrc.SuperNoOpFactory"));
+		assertNotNull(newInstance()
+				.objectFactories(
+						"net.sf.michaelo.dirctxsrc.NoOpFactory", "net.sf.michaelo.dirctxsrc.SuperNoOpFactory"));
 	}
 
 	@Test
