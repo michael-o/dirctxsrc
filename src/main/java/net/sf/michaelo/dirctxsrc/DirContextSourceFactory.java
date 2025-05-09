@@ -28,8 +28,6 @@ import javax.naming.RefAddr;
 import javax.naming.Reference;
 import javax.naming.spi.ObjectFactory;
 
-import org.apache.commons.lang3.StringUtils;
-
 /**
  * An object factory for creating {@link DirContextSource} instances backed by a {@link DirContextSource.Builder}.
  *
@@ -156,7 +154,7 @@ public class DirContextSourceFactory implements ObjectFactory {
 
 		str = getProperty(PROP_ADDITIONAL_PROPERTIES);
 		if (StringUtils.isNotEmpty(str)) {
-			String[] additionalProperties = StringUtils.split(str, ';');
+			String[] additionalProperties = StringUtils.split(str, ";");
 			String[] splittedAdditionalProperty;
 			for (String additionalProperty : additionalProperties) {
 				splittedAdditionalProperty = StringUtils.split(additionalProperty, "=");

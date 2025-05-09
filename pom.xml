@@ -129,11 +129,7 @@
 								<filter>
 									<artifact>org.apache.commons:commons-lang3</artifact>
 									<includes>
-										<include>org/apache/commons/lang3/StringUtils.class</include>
 										<include>org/apache/commons/lang3/Validate.class</include>
-										<!-- Transitive classes -->
-										<include>org/apache/commons/lang3/ArrayUtils.class</include>
-										<include>org/apache/commons/lang3/stream/Streams.class</include>
 									</includes>
 								</filter>
 							</filters>
