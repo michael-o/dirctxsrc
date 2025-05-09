@@ -1,5 +1,5 @@
 #*
- * Copyright 2013–2021 Michael Osipov
+ * Copyright 2013–2025 Michael Osipov
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +29,10 @@ Using DirContextSource
   This user guide is comprised of two examples of the <<<DirContextSource>>> and
   also several notes on authentication.
 
-    Contents:
+    [TIP] If you are using Actve Directory then this component is best combined with my
+          {{{https://michael-o.github.io/active-directory-dc-locator/ldap-dns-provider.html}Active Directory JNDI/LDAP DNS Provider Implementation}}.
+
+  Contents:
 
 %{toc|fromDepth=2}
 

@@ -75,8 +75,15 @@ import static org.apache.commons.lang3.Validate.notNull;
  * <p>A complete overview of all {@code DirContext} properties can be found <a href=
  * "https://docs.oracle.com/javase/8/docs/technotes/guides/jndi/jndi-ldap.html">here</a>. Make sure that you pass
  * reasonable/valid values only otherwise the behavior is undefined.
+ *
+ * <p><strong>Tip:</strong> If you are using Actve Directory then this component is best combined with my <a
+ * href="https://michael-o.github.io/active-directory-dc-locator/ldap-dns-provider.html">Active Directory JNDI/LDAP DNS
+ * Provider Implementation</a>.
  */
 public class DirContextSource {
+
+	private static final String AD_LDAP_DNS_PROVIDER_READ_TIMEOUT_PROPERTY =
+			"net.sf.michaelo.activedirectory.readTimeout";
 
 	/** Enum containing all supported authentication mechanisms. */
 	public enum Auth {
@@ -525,7 +532,9 @@ public class DirContextSource {
 
 		/**
 		 * Sets the read timeout in milliseconds. This only works if the {@link #contextFactory(String)} is
-		 * {@code com.sun.jndi.ldap.LdapCtxFactory}.
+		 * {@code com.sun.jndi.ldap.LdapCtxFactory}. This value will be implicitly propagated to <a
+		 * href="https://michael-o.github.io/active-directory-dc-locator/active-directory-jndi-ldap-dns-provider/apidocs/net/sf/michaelo/activedirectory/ActiveDirectoryLdapDnsProvider.html">
+		 * <code>ActiveDirectoryLdapDnsProvider</code></a>.
 		 *
 		 * @param readTimeout The read timeout in milliseconds. This value must be a positive integer.
 		 * @throws IllegalArgumentException if {@code readTimeout} is not a positive integer
@@ -535,6 +544,7 @@ public class DirContextSource {
 			check();
 			isTrue(readTimeout > 0, "Property 'readTimeout' must be greater than zero but is %d", readTimeout);
 			this.readTimeout = readTimeout;
+			additionalProperty(AD_LDAP_DNS_PROVIDER_READ_TIMEOUT_PROPERTY, String.valueOf(readTimeout));
 			return this;
 		}
 

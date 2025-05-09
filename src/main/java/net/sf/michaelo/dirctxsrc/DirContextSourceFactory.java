@@ -33,7 +33,7 @@ import org.apache.commons.lang3.StringUtils;
 /**
  * An object factory for creating {@link DirContextSource} instances backed by a {@link DirContextSource.Builder}.
  *
- * <p>This factory should work in any servlet container with JNDI support, but was tested under Apache Tomcat 8.5.x
+ * <p>This factory should work in any servlet container with JNDI support, but was tested under Apache Tomcat 9.0.x
  * only.
  *
  * <p>Integration in your {@code context.xml} is as simple as:
