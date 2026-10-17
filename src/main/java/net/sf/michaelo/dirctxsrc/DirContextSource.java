@@ -1,5 +1,5 @@
 /*
- * Copyright 2012–2025 Michael Osipov
+ * Copyright 2012–2026 Michael Osipov
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -76,7 +76,10 @@ import static org.apache.commons.lang3.Validate.notNull;
  * "https://docs.oracle.com/javase/8/docs/technotes/guides/jndi/jndi-ldap.html">here</a>. Make sure that you pass
  * reasonable/valid values only otherwise the behavior is undefined.
  *
- * <p><strong>Tip:</strong> If you are using Actve Directory then this component is best combined with my <a
+ * <p>A built {@code DirContextSource} is safe for concurrent {@link #getDirContext()} calls from multiple threads,
+ * except for one caveat: see {@link Builder#additionalProperty(String, Object)}.
+ *
+ * <p><strong>Tip:</strong> If you are using Active Directory then this component is best combined with my <a
  * href="https://michael-o.github.io/active-directory-dc-locator/ldap-dns-provider.html">Active Directory JNDI/LDAP DNS
  * Provider Implementation</a>.
  */

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012–2025 Michael Osipov
+ * Copyright 2012–2026 Michael Osipov
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -120,7 +120,8 @@ public class DirContextSource implements ContextSource, InitializingBean {
 
 	/**
 	 * @see Builder#retries(int)
-	 * @deprecated {@link Builder#retries(int)} is a no-op now; this setter has no effect anymore.
+	 * @deprecated {@link Builder#retries(int)} is a no-op kept for API compatibility; this setter has no effect anymore
+	 *     and triggers a warning logged by the underlying builder.
 	 */
 	@Deprecated
 	public void setRetries(int retries) {
@@ -129,7 +130,8 @@ public class DirContextSource implements ContextSource, InitializingBean {
 
 	/**
 	 * @see Builder#retryWait(int)
-	 * @deprecated {@link Builder#retryWait(int)} is a no-op now; this setter has no effect anymore.
+	 * @deprecated {@link Builder#retryWait(int)} is a no-op kept for API compatibility; this setter has no effect
+	 *     anymore and triggers a warning logged by the underlying builder.
 	 */
 	@Deprecated
 	public void setRetryWait(int retryWait) {

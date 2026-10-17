@@ -1,5 +1,5 @@
 #*
- * Copyright 2013–2025 Michael Osipov
+ * Copyright 2013–2026 Michael Osipov
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -140,7 +140,7 @@ context.close();
 *------------+---------------------+-----------+-----------------+--------------------------+
 | factory    | \u2013              | no        | <<<net.sf.michaelo.dirctxsrc.DirContextSourceFactory>>> | Preset class name of this resource's factory. |
 *------------+---------------------+-----------+-----------------+--------------------------+
-| contextFactory | <<<contextFactory(String)>>> | yes       | Any class (name) implementing the <<<{{{https://docs.oracle.com/javase/8/docs/api/javax/naming/spi/InitialContextFactory.html}InitialContentFactory}}>>> interface | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadoc}}. |
+| contextFactory | <<<contextFactory(String)>>> | yes       | Any class (name) implementing the <<<{{{https://docs.oracle.com/javase/8/docs/api/javax/naming/spi/InitialContextFactory.html}InitialContextFactory}}>>> interface | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadoc}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+
 | urls       | <<<Builder(String$ellipsis)>>> | no   | A list of LDAP URLs | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadoc}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+
@@ -170,7 +170,7 @@ context.close();
 *------------+---------------------+-----------+-----------------+--------------------------+
 | connectTimeout  | <<<connectTimeout(int)>>> | yes      | positive integer | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadoc}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+
-| readTimeout  | <<<readtTimeout(int)>>> | yes      | positive integer | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadoc}}. |
+| readTimeout  | <<<readTimeout(int)>>> | yes      | positive integer | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadoc}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+
 | additionalProperties | <<<additionalProperty(String, Object)>>> | yes  | A list of properties and values | Semicolon-separated name value pairs: <<<name=value;name2=value2;$ellipsis>>>. See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadoc}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+
