@@ -21,6 +21,7 @@ import java.security.PrivilegedExceptionAction;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.naming.Context;
@@ -597,36 +598,45 @@ public class DirContextSource {
 			LoginContext lc = new LoginContext(loginEntryName);
 			lc.login();
 
-			context = Subject.doAs(lc.getSubject(), new PrivilegedExceptionAction<DirContext>() {
+			try {
+				context = Subject.doAs(lc.getSubject(), new PrivilegedExceptionAction<DirContext>() {
 
-				public DirContext run() throws NamingException {
+					public DirContext run() throws NamingException {
 
-					GSSManager manager = GSSManager.getInstance();
-					GSSCredential credential;
-					try {
-						credential = manager.createCredential(
-								null, GSSCredential.INDEFINITE_LIFETIME, KRB5_MECHANISM, GSSCredential.INITIATE_ONLY);
-					} catch (GSSException e) {
-						NamingException ne = new NamingException("Failed to obtain GSS credential");
-						ne.setRootCause(e);
-						throw ne;
-					}
-
-					try {
-						env.put(Sasl.CREDENTIALS, credential);
-						return new GSSInitialDirContext(env);
-					} catch (NamingException e) {
+						GSSManager manager = GSSManager.getInstance();
+						GSSCredential credential;
 						try {
-							credential.dispose();
-						} catch (GSSException e1) {
-							// ignore
+							credential = manager.createCredential(
+									null,
+									GSSCredential.INDEFINITE_LIFETIME,
+									KRB5_MECHANISM,
+									GSSCredential.INITIATE_ONLY);
+						} catch (GSSException e) {
+							NamingException ne = new NamingException("Failed to obtain GSS credential");
+							ne.setRootCause(e);
+							throw ne;
 						}
-						throw e;
-					}
-				}
-			});
 
-			lc.logout();
+						try {
+							env.put(Sasl.CREDENTIALS, credential);
+							return new GSSInitialDirContext(env);
+						} catch (NamingException e) {
+							try {
+								credential.dispose();
+							} catch (GSSException e1) {
+								// ignore
+							}
+							throw e;
+						}
+					}
+				});
+			} finally {
+				try {
+					lc.logout();
+				} catch (LoginException e) {
+					LOGGER.log(Level.WARNING, "Failed to log out login context '" + loginEntryName + "'", e);
+				}
+			}
 		} catch (LoginException e) {
 			NamingException ne = new NamingException(e.getMessage());
 			ne.initCause(e);
