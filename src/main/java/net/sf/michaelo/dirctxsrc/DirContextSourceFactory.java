@@ -1,5 +1,5 @@
 /*
- * Copyright 2013–2025 Michael Osipov
+ * Copyright 2013–2026 Michael Osipov
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -60,8 +60,13 @@ public class DirContextSourceFactory implements ObjectFactory {
 	protected static final String PROP_MUTUAL_AUTH = "mutualAuth";
 	protected static final String PROP_QOP = "qop";
 	protected static final String PROP_DEBUG = "debug";
+	/** @deprecated {@link DirContextSource.Builder#retries(int)} is a no-op; this property has no effect anymore. */
+	@Deprecated
 	protected static final String PROP_RETRIES = "retries";
+	/** @deprecated {@link DirContextSource.Builder#retryWait(int)} is a no-op; this property has no effect anymore. */
+	@Deprecated
 	protected static final String PROP_RETRY_WAIT = "retryWait";
+
 	protected static final String PROP_BINARY_ATTRIBUTES = "binaryAttributes";
 	protected static final String PROP_REFERRAL = "referral";
 	protected static final String PROP_DEREF_ALIASES = "derefAliases";
