@@ -553,6 +553,11 @@ public class DirContextSource {
 		/**
 		 * Sets an additional property not available through the builder interface.
 		 *
+		 * <p><strong>Note:</strong> If {@code value} is a stateful object, it will be shared, as-is, across every
+		 * {@link DirContextSource#getDirContext()} call and every thread using the resulting {@code DirContextSource}.
+		 * Ensuring such an object's thread-safety is your responsibility; this class cannot do so for an opaque
+		 * {@code Object}.
+		 *
 		 * @param name name of the property
 		 * @param value value of the property
 		 * @throws NullPointerException if {@code name} is null
