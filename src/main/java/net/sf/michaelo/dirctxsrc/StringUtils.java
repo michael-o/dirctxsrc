@@ -34,10 +34,14 @@ public class StringUtils {
 	}
 
 	public static String[] split(String str, String separatorChars) {
+		return split(str, separatorChars, 0);
+	}
+
+	public static String[] split(String str, String separatorChars, int limit) {
 		if (str == null) return null;
 
 		if (str.isEmpty()) return EMPTY_STRING_ARRRAY;
 
-		return str.split(Pattern.quote(separatorChars));
+		return str.split(Pattern.quote(separatorChars), limit);
 	}
 }

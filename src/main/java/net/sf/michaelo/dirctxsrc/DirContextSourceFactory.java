@@ -160,9 +160,11 @@ public class DirContextSourceFactory implements ObjectFactory {
 		str = getProperty(PROP_ADDITIONAL_PROPERTIES);
 		if (StringUtils.isNotEmpty(str)) {
 			String[] additionalProperties = StringUtils.split(str, ";");
-			String[] splittedAdditionalProperty;
 			for (String additionalProperty : additionalProperties) {
-				splittedAdditionalProperty = StringUtils.split(additionalProperty, "=");
+				String[] splittedAdditionalProperty = StringUtils.split(additionalProperty, "=", 2);
+				if (splittedAdditionalProperty.length != 2)
+					throw new IllegalArgumentException(String.format(
+							"Additional property '%s' must be in the form 'name=value'", additionalProperty));
 				builder.additionalProperty(splittedAdditionalProperty[0], splittedAdditionalProperty[1]);
 			}
 		}
