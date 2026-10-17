@@ -612,8 +612,17 @@ public class DirContextSource {
 						throw ne;
 					}
 
-					env.put(Sasl.CREDENTIALS, credential);
-					return new GSSInitialDirContext(env);
+					try {
+						env.put(Sasl.CREDENTIALS, credential);
+						return new GSSInitialDirContext(env);
+					} catch (NamingException e) {
+						try {
+							credential.dispose();
+						} catch (GSSException e1) {
+							// ignore
+						}
+						throw e;
+					}
 				}
 			});
 
