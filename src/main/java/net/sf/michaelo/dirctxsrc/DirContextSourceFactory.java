@@ -125,13 +125,13 @@ public class DirContextSourceFactory implements ObjectFactory {
 		if (StringUtils.isNotEmpty(str)) builder.loginEntryName(str);
 
 		str = getProperty(PROP_MUTUAL_AUTH);
-		builder.mutualAuth(Boolean.parseBoolean(str));
+		if (StringUtils.isNotEmpty(str)) builder.mutualAuth(Boolean.parseBoolean(str));
 
 		str = getProperty(PROP_QOP);
 		if (StringUtils.isNotEmpty(str)) builder.qop(StringUtils.split(str));
 
 		str = getProperty(PROP_DEBUG);
-		builder.debug(Boolean.parseBoolean(str));
+		if (StringUtils.isNotEmpty(str)) builder.debug(Boolean.parseBoolean(str));
 
 		str = getProperty(PROP_RETRIES);
 		if (StringUtils.isNotEmpty(str)) builder.retries(parseInt(PROP_RETRIES, str));
