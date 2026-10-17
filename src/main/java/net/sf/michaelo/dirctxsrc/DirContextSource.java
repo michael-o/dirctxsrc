@@ -618,8 +618,9 @@ public class DirContextSource {
 						}
 
 						try {
-							env.put(Sasl.CREDENTIALS, credential);
-							return new GSSInitialDirContext(env);
+							Hashtable<String, Object> callEnv = new Hashtable<String, Object>(env);
+							callEnv.put(Sasl.CREDENTIALS, credential);
+							return new GSSInitialDirContext(callEnv);
 						} catch (NamingException e) {
 							try {
 								credential.dispose();
