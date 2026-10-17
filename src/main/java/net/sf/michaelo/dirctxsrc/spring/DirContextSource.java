@@ -118,12 +118,20 @@ public class DirContextSource implements ContextSource, InitializingBean {
 		builder.mutualAuth(mutualAuth);
 	}
 
-	/** @see Builder#retries(int) */
+	/**
+	 * @see Builder#retries(int)
+	 * @deprecated {@link Builder#retries(int)} is a no-op now; this setter has no effect anymore.
+	 */
+	@Deprecated
 	public void setRetries(int retries) {
 		builder.retries(retries);
 	}
 
-	/** @see Builder#retryWait(int) */
+	/**
+	 * @see Builder#retryWait(int)
+	 * @deprecated {@link Builder#retryWait(int)} is a no-op now; this setter has no effect anymore.
+	 */
+	@Deprecated
 	public void setRetryWait(int retryWait) {
 		builder.retryWait(retryWait);
 	}

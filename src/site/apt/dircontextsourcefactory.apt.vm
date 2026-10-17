@@ -156,9 +156,9 @@ context.close();
 *------------+---------------------+-----------+-----------------+--------------------------+
 | debug      | <<<debug(boolean)>>> | yes      | <<<true>>> or <<<false>>> (boolean) | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadoc}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+
-| retries    | <<<retries(int)>>>  | yes       | positive integer | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadoc}}. |
+| retries    | <<<retries(int)>>>  | yes       | positive integer | <<Deprecated>>, no-op. See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadoc}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+
-| retryWait  | <<<retryWait(int)>>> | yes      | positive integer | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadoc}}. |
+| retryWait  | <<<retryWait(int)>>> | yes      | positive integer | <<Deprecated>>, no-op. See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadoc}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+
 | binaryAttributes | <<<binaryAttributes(String$ellipsis)>>> | yes      | A list or attribute names | See {{{./apidocs/net/sf/michaelo/dirctxsrc/DirContextSource.Builder.html}Javadoc}}. |
 *------------+---------------------+-----------+-----------------+--------------------------+
