@@ -21,7 +21,6 @@ import java.security.PrivilegedExceptionAction;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.naming.Context;
@@ -59,17 +58,18 @@ import static org.apache.commons.lang3.Validate.notNull;
  * context.close();
  * </pre>
  *
- * Before returning a {@code DirContext} the source will loop several times until a connection has been established or
- * the number of retries are exhausted, whichever comes first.
- *
  * <p>A {@code DirContextSource} object will be initially preconfigured by its builder for you:
  *
  * <ol>
  *   <li>The context factory is set by default to {@code com.sun.jndi.ldap.LdapCtxFactory}.
  *   <li>The default authentication scheme is set to none/anonymous.
  *   <li>If GSS-API authentication is used the login entry name defaults to {@code DirContextSource}.
- *   <li>By default a context source will try connect only once and will wait for 2000 ms between retries.
  * </ol>
+ *
+ * <p><strong>Note:</strong> This class no longer retries a failed connection attempt itself. If you need resilient
+ * failover, supply multiple URLs or, for Active Directory, use my <a
+ * href="https://michael-o.github.io/active-directory-dc-locator/ldap-dns-provider.html">Active Directory JNDI/LDAP DNS
+ * Provider Implementation</a> below.
  *
  * <p>A complete overview of all {@code DirContext} properties can be found <a href=
  * "https://docs.oracle.com/javase/8/docs/technotes/guides/jndi/jndi-ldap.html">here</a>. Make sure that you pass
@@ -139,8 +139,6 @@ public class DirContextSource {
 	private static final Logger LOGGER = Logger.getLogger(DirContextSource.class.getName());
 	private final Hashtable<String, Object> env;
 	private final String loginEntryName;
-	private final int retries;
-	private final int retryWait;
 	private final Auth auth;
 
 	private DirContextSource(Builder builder) {
@@ -156,8 +154,6 @@ public class DirContextSource {
 		if (builder.mutualAuth != null) env.put(Sasl.SERVER_AUTH, Boolean.toString(builder.mutualAuth));
 		if (builder.qop != null) env.put(Sasl.QOP, String.join(",", builder.qop));
 		if (builder.debug) env.put("com.sun.jndi.ldap.trace.ber", builder.debugStream);
-		retries = builder.retries;
-		retryWait = builder.retryWait;
 		if (builder.referral != null) env.put(Context.REFERRAL, builder.referral);
 		if (builder.binaryAttributes != null)
 			env.put("java.naming.ldap.attributes.binary", String.join(" ", builder.binaryAttributes));
@@ -196,8 +192,6 @@ public class DirContextSource {
 		private String[] qop;
 		private boolean debug;
 		private OutputStream debugStream;
-		private int retries;
-		private int retryWait;
 		private String[] binaryAttributes;
 		private String referral;
 		private String derefAliases;
@@ -222,8 +216,6 @@ public class DirContextSource {
 			// Initialize default values first as mentioned in the class' Javadoc
 			contextFactory("com.sun.jndi.ldap.LdapCtxFactory");
 			auth(Auth.NONE);
-			retries(1);
-			retryWait(2000);
 			additionalProperties = new Hashtable<String, Object>();
 
 			urls(urls);
@@ -424,16 +416,21 @@ public class DirContextSource {
 		}
 
 		/**
-		 * Sets the number or connection retries.
+		 * Sets the number of connection retries.
 		 *
 		 * @param retries The number of retries. This value must be a positive integer.
 		 * @throws IllegalArgumentException if {@code retries} is not a positive integer
 		 * @return this builder
+		 * @deprecated The retry mechanism has been removed in favor of proper DC location/failover, e.g., via my <a
+		 *     href="https://michael-o.github.io/active-directory-dc-locator/ldap-dns-provider.html">Active Directory
+		 *     JNDI/LDAP DNS Provider Implementation</a>. This method is a no-op kept for API compatibility and logs a
+		 *     warning when called.
 		 */
+		@Deprecated
 		public Builder retries(int retries) {
 			check();
 			isTrue(retries > 0, "Property 'retries' must be greater than zero but is %d", retries);
-			this.retries = retries;
+			LOGGER.warning("Property 'retries' is deprecated and has no effect anymore");
 			return this;
 		}
 
@@ -443,11 +440,16 @@ public class DirContextSource {
 		 * @param retryWait The wait time in milliseconds. This value must be a positive integer.
 		 * @throws IllegalArgumentException if {@code retryWait} is not a positive integer
 		 * @return this builder
+		 * @deprecated The retry mechanism has been removed in favor of proper DC location/failover, e.g., via my <a
+		 *     href="https://michael-o.github.io/active-directory-dc-locator/ldap-dns-provider.html">Active Directory
+		 *     JNDI/LDAP DNS Provider Implementation</a>. This method is a no-op kept for API compatibility and logs a
+		 *     warning when called.
 		 */
+		@Deprecated
 		public Builder retryWait(int retryWait) {
 			check();
 			isTrue(retryWait > 0, "Property 'retryWait' must be greater than zero but is %d", retryWait);
-			this.retryWait = retryWait;
+			LOGGER.warning("Property 'retryWait' is deprecated and has no effect anymore");
 			return this;
 		}
 
@@ -610,34 +612,8 @@ public class DirContextSource {
 						throw ne;
 					}
 
-					int r = retries;
-					InitialDirContext idc = null;
-
-					while (r-- > 0) {
-
-						try {
-							env.put(Sasl.CREDENTIALS, credential);
-							idc = new GSSInitialDirContext(env);
-							break;
-						} catch (NamingException e) {
-							if (r == 0) throw e;
-
-							LOGGER.log(
-									Level.WARNING,
-									String.format(
-											"Connecting to [%s] failed, remaining retries: %d",
-											env.get(Context.PROVIDER_URL), r),
-									e);
-
-							try {
-								Thread.sleep(retryWait);
-							} catch (InterruptedException e1) {
-								throw new NamingException(e1.getMessage());
-							}
-						}
-					}
-
-					return idc;
+					env.put(Sasl.CREDENTIALS, credential);
+					return new GSSInitialDirContext(env);
 				}
 			});
 
@@ -658,34 +634,7 @@ public class DirContextSource {
 	}
 
 	protected DirContext getAnonymousDirContext() throws NamingException {
-
-		DirContext context = null;
-
-		int r = retries;
-
-		while (r-- > 0) {
-
-			try {
-				context = new InitialDirContext(env);
-				break;
-			} catch (NamingException e) {
-				if (r == 0) throw e;
-
-				LOGGER.log(
-						Level.WARNING,
-						String.format(
-								"Connecting to [%s] failed, remaining retries: %d", env.get(Context.PROVIDER_URL), r),
-						e);
-
-				try {
-					Thread.sleep(retryWait);
-				} catch (InterruptedException e1) {
-					throw new NamingException(e1.getMessage());
-				}
-			}
-		}
-
-		return context;
+		return new InitialDirContext(env);
 	}
 
 	/**

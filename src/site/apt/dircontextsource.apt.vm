@@ -68,8 +68,6 @@ DirContextSource.Builder builder = new DirContextSource.Builder("ldap://hostname
                                  "ldap://hostname2", "ldap://distant-hostname");
 // I'd like to see all comm on System.err
 builder.debug();
-// Hosts are unreliable, so keep trying
-builder.retries(5).retryWait(5000);
 
 DirContextSource contextSource = builder.build();
 // try and catch block omitted for the sake of brevity,
